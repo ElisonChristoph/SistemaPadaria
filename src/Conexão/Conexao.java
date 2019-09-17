@@ -22,6 +22,7 @@ public class Conexao {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/Sistema_padaria", "root","");
             return conn;
         }catch(Exception e){
+            System.out.println("erro na conexão");
             JOptionPane.showMessageDialog(null, e);
             return null;
         }
