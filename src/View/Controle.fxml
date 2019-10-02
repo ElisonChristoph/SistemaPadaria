@@ -1,15 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ControleController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #BEBEBE;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ControleController">
    <children>
-      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true">
-         <image>
-            <Image url="@../Imagens/fundo2.jpg" />
-         </image>
-      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="299.0" layoutX="260.0" layoutY="17.0" stroke="BLACK" strokeType="INSIDE" width="725.0" />
+      <AnchorPane focusTraversable="true" layoutX="14.0" layoutY="17.0" prefHeight="700.0" prefWidth="256.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="682.0" stroke="BLACK" strokeType="INSIDE" width="237.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000032" height="56.0" layoutX="24.0" layoutY="205.0" stroke="BLACK" strokeType="INSIDE" width="191.0" />
+            <Label layoutX="39.0" layoutY="173.0" prefHeight="32.0" prefWidth="161.0" text="Elison Christoph">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="77.0" layoutY="214.0" text="Usuário:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="77.0" layoutY="233.0" prefHeight="18.0" prefWidth="85.0" text="Padrão" />
+            <Button layoutX="22.0" layoutY="541.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="161.0" style="-fx-background-color: #FF0000;" text="Sair" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <MenuButton layoutX="690.0" layoutY="115.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Cadastrar">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Produto" />
+          <MenuItem mnemonicParsing="false" text="Categoria" />
+            <MenuItem mnemonicParsing="false" text="Ingrediente" />
+            <MenuItem mnemonicParsing="false" text="Cliente" />
+            <MenuItem mnemonicParsing="false" text="Fornecedor" />
+            <MenuItem mnemonicParsing="false" text="Funcionario" />
+            <MenuItem mnemonicParsing="false" text="Usuario" />
+        </items>
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </MenuButton>
+      <MenuButton layoutX="566.0" layoutY="115.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Verificar">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Estoque" />
+            <MenuItem mnemonicParsing="false" text="Situação Cliente" />
+            <MenuItem mnemonicParsing="false" text="Situação Fornecedor" />
+            <MenuItem mnemonicParsing="false" text="Situação Usuario/Funcionario" />
+         </items>
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </MenuButton>
+      <MenuButton layoutX="443.0" layoutY="115.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Emitir">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Produtos em Estoque" />
+            <MenuItem mnemonicParsing="false" text="Produtos em Falta" />
+            <MenuItem mnemonicParsing="false" text="Categoria de Produtos" />
+            <MenuItem mnemonicParsing="false" text="Clientes" />
+            <MenuItem mnemonicParsing="false" text="Fornecedores" />
+            <MenuItem mnemonicParsing="false" text="Funcionarios" />
+            <MenuItem mnemonicParsing="false" text="Usuarios" />
+         </items>
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </MenuButton>
+      <MenuButton layoutX="271.0" layoutY="115.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="161.0" text="Movimentação">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Entrada de Materia Prima" />
+            <MenuItem mnemonicParsing="false" text="Venda de Produtos" />
+         </items>
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </MenuButton>
+      <Button layoutX="270.0" layoutY="260.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Adicionar Estoque" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="509.0" layoutY="260.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Vender">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="392.0" layoutY="260.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Fazer Pedido">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <AnchorPane layoutX="14.0" layoutY="15.0" prefHeight="113.0" prefWidth="337.0" />
    </children>
 </AnchorPane>

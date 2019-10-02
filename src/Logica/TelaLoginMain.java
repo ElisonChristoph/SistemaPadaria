@@ -19,9 +19,9 @@ import javafx.stage.StageStyle;
  *
  * @author Elison Christoph
  */
-public class Inicio extends Application {
-
-   private static Stage stage;
+public class TelaLoginMain extends Application {
+    
+    private static Stage stage;
 
      public static void main(String[] args) {
         launch(args);
@@ -48,13 +48,11 @@ public class Inicio extends Application {
     }
 
     public static void setStage(Stage stage) {
-        Inicio.stage = stage;
+        TelaLoginMain.stage = stage;
     }
 
    public void fecha() {
-        Inicio.getStage().close();
+        TelaLoginMain.getStage().close();
     }
-
-   
     
 }
