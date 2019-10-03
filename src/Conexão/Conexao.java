@@ -7,6 +7,11 @@ package Conexão;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,18 +19,65 @@ import javax.swing.JOptionPane;
  * @author Elison Christoph
  */
 public class Conexao {
-    
-    Connection conn = null;
-    public static Connection ConnectDB(){
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/Sistema_padaria", "root","");
-            return conn;
-        }catch(Exception e){
-            System.out.println("erro na conexão");
-            JOptionPane.showMessageDialog(null, e);
-            return null;
+
+    private final String DRIVER = "com.mysql.jdbc.Driver";
+    private final String URL = "jdbc:mysql://localhost:3306/sistema_padaria";
+    private final String USER = "root";
+    private final String PASS = "";
+
+    public Connection getConnection() {
+        try {
+            Class.forName(DRIVER);
+
+            return DriverManager.getConnection(URL, USER, PASS);
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            throw new RuntimeException("Erro na conexão!", ex);
+        }
+
+    }
+
+    public static void closeConnection(Connection con) {
+
+        if (con != null) {
+
+            try {
+
+                con.close();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-    
+
+    public static void closeConnection(Connection con, PreparedStatement stmt) {
+        closeConnection(con);
+        try {
+
+            if (stmt != null) {
+
+                stmt.close();
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void closeConnection(Connection con, PreparedStatement stmt, ResultSet rs) {
+        closeConnection(con, stmt);
+        try {
+
+            if (rs != null) {
+
+                rs.close();
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
+
+

@@ -5,7 +5,7 @@
  */
 package View;
 
-import Logica.ControleMain;
+import Logica.HomeMain;
 import Logica.TelaLoginMain;
 
 import java.net.URL;
@@ -69,29 +69,17 @@ public class TelaLoginController implements Initializable {
                 
                 //seta valor do user
                 user.setValue("admin");
-                ControleMain p = new ControleMain();
+                HomeMain h = new HomeMain();
                 try {
-                    p.start(new Stage());
+                    h.start(new Stage());
                     
                    //fecha();
                 } catch (Exception ex) {
-                    Logger.getLogger(ControleMain.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HomeMain.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("erro aqui");
                 }
             } 
-            if (tflogin.getText().equals("cliente") && pfsenha.getText().equals("cliente")) {
-                
-                //seta valor do user
-                user.setValue("cliente");
-                ControleMain p = new ControleMain();
-                
-                try {
-                    p.start(new Stage());
-                    
-                    //fecha();
-                } catch (Exception ex) {
-                    Logger.getLogger(TelaLoginController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            
 //            }else{
 //                Alert alert = new Alert(Alert.AlertType.ERROR);
 //                alert.setTitle("Erro");

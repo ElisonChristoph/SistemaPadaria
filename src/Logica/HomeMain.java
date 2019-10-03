@@ -5,7 +5,7 @@
  */
 package Logica;
 
-import static Logica.TelaLoginMain.setStage;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,20 +19,16 @@ import javafx.stage.StageStyle;
  *
  * @author Elison Christoph
  */
-public class ControleMain extends Application {
-
+public class HomeMain extends Application {
+    
     private static Stage stage;
 
-     public static void main(String[] args) {
-        launch(args);
-    }
-
+    
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/View/Controle.fxml"));
+    public void start(Stage stage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Home.fxml"));
         stage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root);
-        //stage.setFullScreen(true);
         stage.setScene(scene);
         stage.show();
         setStage(stage);
@@ -44,16 +40,25 @@ public class ControleMain extends Application {
         });
     }
 
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
+    public void fecha() {
+        TelaLoginMain.getStage().close();
+    }
+
     public static Stage getStage() {
         return stage;
     }
 
     public static void setStage(Stage stage) {
-        ControleMain.stage = stage;
+        HomeMain.stage = stage;
     }
     
-    public void fecha() {
-        ControleMain.getStage().close();
-    }
+    
     
 }
