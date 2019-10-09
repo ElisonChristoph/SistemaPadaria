@@ -64,7 +64,7 @@ public class TelaLoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
           bacessar.setOnMouseClicked((MouseEvent e) -> {
-              System.out.println("acessar");
+             
             if (tflogin.getText().equals("admin") && pfsenha.getText().equals("admin")) {
                 
                 //seta valor do user

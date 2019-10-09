@@ -35,13 +35,13 @@
       </AnchorPane>
       <MenuButton layoutX="690.0" layoutY="115.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Cadastrar">
         <items>
-          <MenuItem mnemonicParsing="false" text="Produto" />
-          <MenuItem mnemonicParsing="false" text="Categoria" />
-            <MenuItem mnemonicParsing="false" text="Ingrediente" />
-            <MenuItem mnemonicParsing="false" text="Cliente" />
-            <MenuItem mnemonicParsing="false" text="Fornecedor" />
-            <MenuItem mnemonicParsing="false" text="Funcionario" />
-            <MenuItem mnemonicParsing="false" text="Usuario" />
+          <MenuItem mnemonicParsing="false" onAction="#CadastroProduto" text="Produto" />
+          <MenuItem mnemonicParsing="false" onAction="#CadastroCategoria" text="Categoria" />
+            <MenuItem mnemonicParsing="false" onAction="#CadastroIngrediente" text="Ingrediente" />
+            <MenuItem mnemonicParsing="false" onAction="#CadastroCliente" text="Cliente" />
+            <MenuItem mnemonicParsing="false" onAction="#CadastroFornecedor" text="Fornecedor" />
+            <MenuItem mnemonicParsing="false" onAction="#CadastroFuncionario" text="Funcionario" />
+            <MenuItem mnemonicParsing="false" onAction="#CadastroUsuario" text="Usuario" />
         </items>
          <font>
             <Font name="System Bold" size="16.0" />

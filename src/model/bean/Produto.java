@@ -14,8 +14,8 @@ public class Produto {
     private int id;	
     private String categoria;	
     private String nome;
-    private float valor;	
-    private int validade;	
+    private double valor;	
+    private String validade;	
     private String ingredientes;
 
     public int getId() {
@@ -42,7 +42,7 @@ public class Produto {
         this.nome = nome;
     }
 
-    public float getValor() {
+    public double getValor() {
         return valor;
     }
 
@@ -50,11 +50,11 @@ public class Produto {
         this.valor = valor;
     }
 
-    public int getValidade() {
+    public String getValidade() {
         return validade;
     }
 
-    public void setValidade(int validade) {
+    public void setValidade(String validade) {
         this.validade = validade;
     }
 

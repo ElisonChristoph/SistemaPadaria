@@ -25,17 +25,16 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <TextField layoutX="44.0" layoutY="180.0" />
-      <ChoiceBox layoutX="44.0" layoutY="119.0" prefWidth="150.0" />
+      <TextField fx:id="txtNome" layoutX="44.0" layoutY="180.0" />
+      <ChoiceBox fx:id="cbCategorias" layoutX="44.0" layoutY="119.0" prefWidth="150.0" />
       <Label layoutX="42.0" layoutY="102.0" text="Categoria" />
       <Label layoutX="44.0" layoutY="157.0" text="Nome" />
       <Label layoutX="46.0" layoutY="227.0" text="Valor do Kg" />
       <Label layoutX="243.0" layoutY="102.0" text="Ingredientes" />
-      <TextField layoutX="44.0" layoutY="254.0" />
+      <TextField fx:id="txtValor" layoutX="44.0" layoutY="254.0" />
       <Label layoutX="42.0" layoutY="294.0" text="Consumir em: (Dias)" />
-      <TextField layoutX="44.0" layoutY="324.0" />
-      <TextArea layoutX="232.0" layoutY="135.0" prefHeight="209.0" prefWidth="234.0" wrapText="true" />
-      <Button layoutX="184.0" layoutY="382.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #00FF00;" text="Cadastrar" textFill="WHITE">
+      <TextField fx:id="txtConsumir" layoutX="44.0" layoutY="324.0" />
+      <Button layoutX="184.0" layoutY="382.0" mnemonicParsing="false" onAction="#CadastrarProduto" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #00FF00;" text="Cadastrar" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -50,5 +49,6 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
+      <TextArea fx:id="txtaIngredientes" layoutX="243.0" layoutY="143.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

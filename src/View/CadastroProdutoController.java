@@ -5,7 +5,6 @@
  */
 package View;
 
-import Conexão.Conexao;
 import java.awt.TextField;
 import java.net.URL;
 import java.sql.Connection;
@@ -16,7 +15,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
+import model.bean.Produto;
+import model.dao.ProdutoDAO;
 
 /**
  *
@@ -36,11 +37,20 @@ public class CadastroProdutoController implements Initializable {
     private TextField txtConsumir;
     @FXML
     private ChoiceBox cbCategorias;
+    @FXML
+    private TextArea txtaIngredientes;
     
     @FXML
     private void CadastrarProduto(ActionEvent event){
         
+        Produto p = new Produto();
+        ProdutoDAO dao = new ProdutoDAO();
         
+        p.setNome(txtNome.getText());
+        p.setCategoria((String) cbCategorias.getSelectionModel().getSelectedItem());
+        p.setIngredientes(txtaIngredientes.getText());
+        p.setValidade(txtConsumir.getText());
+        p.setValor(Float.parseFloat(txtValor.getText()));
         
     }
     
@@ -56,7 +66,7 @@ public class CadastroProdutoController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle rb) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
