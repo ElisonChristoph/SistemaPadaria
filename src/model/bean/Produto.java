@@ -12,11 +12,24 @@ package model.bean;
 public class Produto {
     
     private int id;	
-    private String categoria;	
+    private Categoria categoria;	
     private String nome;
     private double valor;	
-    private String validade;	
-    private String ingredientes;
+    private int validade;	
+    private Ingrediente ingredientes;
+
+    public Produto(int id, Categoria categoria, String nome, double valor, int validade, Ingrediente ingredientes) {
+        this.id = id;
+        this.categoria = categoria;
+        this.nome = nome;
+        this.valor = valor;
+        this.validade = validade;
+        this.ingredientes = ingredientes;
+    }
+    
+    public Produto(){
+        
+    }
 
     public int getId() {
         return id;
@@ -26,11 +39,11 @@ public class Produto {
         this.id = id;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
@@ -50,19 +63,19 @@ public class Produto {
         this.valor = valor;
     }
 
-    public String getValidade() {
+    public int getValidade() {
         return validade;
     }
 
-    public void setValidade(String validade) {
+    public void setValidade(int validade) {
         this.validade = validade;
     }
 
-    public String getIngredientes() {
+    public Ingrediente getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(String ingredientes) {
+    public void setIngredientes(Ingrediente ingredientes) {
         this.ingredientes = ingredientes;
     }
     

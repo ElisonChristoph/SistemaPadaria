@@ -48,7 +48,7 @@ public class HomeMain extends Application {
     }
     
     public void fecha() {
-        TelaLoginMain.getStage().close();
+        HomeMain.getStage().close();
     }
 
     public static Stage getStage() {

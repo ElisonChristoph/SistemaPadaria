@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 public class Conexao {
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/sistema_padaria";
+    private static final String URL = "jdbc:mysql://localhost:3306/dbpadaria";
     private static final String USER = "root";
     private static final String PASS = "";
 

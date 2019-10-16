@@ -11,11 +11,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import model.bean.Categoria;
 import model.bean.Produto;
 import model.dao.ProdutoDAO;
 
@@ -29,6 +31,8 @@ public class CadastroProdutoController implements Initializable {
     PreparedStatement pst = null;
     ResultSet rs = null;
     
+    private ObservableList<Categoria> list;
+    
     @FXML
     private TextField txtNome;
     @FXML
@@ -36,7 +40,7 @@ public class CadastroProdutoController implements Initializable {
     @FXML
     private TextField txtConsumir;
     @FXML
-    private ChoiceBox cbCategorias;
+    private ComboBox combobox;
     @FXML
     private TextArea txtaIngredientes;
     
@@ -47,9 +51,9 @@ public class CadastroProdutoController implements Initializable {
         ProdutoDAO dao = new ProdutoDAO();
         
         p.setNome(txtNome.getText());
-        p.setCategoria((String) cbCategorias.getSelectionModel().getSelectedItem());
-        p.setIngredientes(txtaIngredientes.getText());
-        p.setValidade(txtConsumir.getText());
+        //p.setCategoria cbCategorias.getSelectionModel().getSelectedItem();
+        //p.setIngredientes(txtaIngredientes.getText());
+        p.setValidade(Integer.parseInt(txtConsumir.getText()));
         p.setValor(Float.parseFloat(txtValor.getText()));
         
     }
@@ -64,10 +68,22 @@ public class CadastroProdutoController implements Initializable {
         
         
     }
+    
+//    public void ComboCategoria(){
+//        
+//        CategoriaDAO cd = new CategoriaDAO();
+//        
+//        for(Categoria c: cd.read()){
+//            list.add(c);
+//        }
+//        
+//        combobox.setItems(list);
+//        
+//    }
 
     @Override
     public void initialize(URL location, ResourceBundle rb) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
     
 }

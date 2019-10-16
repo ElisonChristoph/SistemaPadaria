@@ -9,10 +9,19 @@ package model.bean;
  *
  * @author Elison Christoph
  */
-public class Ingrediente {
+public class Categoria {
     
-    private int id;	
+    private int id;
     private String nome;
+
+    public Categoria(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+    
+    public Categoria(){
+        
+    }
 
     public int getId() {
         return id;

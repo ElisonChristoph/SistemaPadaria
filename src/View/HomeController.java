@@ -9,8 +9,10 @@ import Logica.CategoriaMain;
 import Logica.ClienteMain;
 import Logica.FornecedorMain;
 import Logica.FuncionarioMain;
+import Logica.HomeMain;
 import Logica.IngredienteMain;
 import Logica.ProdutoMain;
+import Logica.TelaLoginMain;
 import Logica.UsuarioMain;
 import java.io.IOException;
 import java.net.URL;
@@ -46,7 +48,122 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         
-    }  
+    }
+    //Botão Sair
+    @FXML
+    private void Sair(ActionEvent event) throws Exception{
+        
+        TelaLoginMain logm = new TelaLoginMain();
+                
+        try {
+            logm.start(new Stage());
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        HomeMain.getStage().close();
+    }
+    
+    //Opções Botão Vereficar
+    @FXML
+    private void VereficarEstoque(ActionEvent event){
+        
+                 
+        
+    }
+    
+    @FXML
+    private void VereficarSituCliente(ActionEvent event){
+        
+                 
+        
+    }
+    
+    @FXML
+    private void VereficarSituFornecedor(ActionEvent event){
+        
+                 
+        
+    }
+    
+    @FXML
+    private void VereficarSituUsuario(ActionEvent event){
+        
+                 
+        
+    }
+    
+    @FXML
+    private void VereficarSituFuncionario(ActionEvent event){
+        
+                 
+        
+    }
+    
+    //Opções Botão Emitir
+    @FXML
+    private void ProdutosEstoque(ActionEvent event){
+        
+                 
+        
+    }
+    
+    @FXML
+    private void ProdutosFalta(ActionEvent event){
+        
+                 
+        
+    }
+    
+    @FXML
+    private void CategoriasProdutos(ActionEvent event){
+        
+                 
+        
+    }
+    
+    @FXML
+    private void RelacaoClientes(ActionEvent event){
+        
+                 
+        
+    }
+    
+    @FXML
+    private void RelacaoFornecedores(ActionEvent event){
+        
+                 
+        
+    }
+    
+    @FXML
+    private void RelacaoFuncionarios(ActionEvent event){
+        
+                 
+        
+    }
+    
+    @FXML
+    private void RelacaoUsuarios(ActionEvent event){
+        
+                 
+        
+    }
+    
+    //Opções Botão Movimentação
+    @FXML
+    private void EntradaMatPrima(ActionEvent event){
+        
+                 
+        
+    }
+    @FXML
+    private void Vendas(ActionEvent event){
+        
+                 
+        
+    }
+    
+    //Opções Botão Cadastrar
     @FXML
     private void CadastroProduto(ActionEvent event){
         

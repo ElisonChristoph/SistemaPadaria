@@ -27,12 +27,12 @@ public class ProdutoDAO {
         
         //Passa dados do Produto
         try {
-            stmt = con.prepareStatement("INSERT INTO produtos (Categoria, Nome, Valor, Validade, Ingredientes) VALUES(?,?,?,?,?)");
-            stmt.setString(1, p.getCategoria());
+            stmt = con.prepareStatement("INSERT INTO produtos (nome,ingredientes_id, categoria_id, valor, validade) VALUES(?,?,?,?,?)");
+            stmt.setInt(1, p.getCategoria().getId());
             stmt.setString(2, p.getNome());
             stmt.setDouble(3, p.getValor());
-            stmt.setString(4, p.getValidade());
-            stmt.setString(5, p.getIngredientes());
+            stmt.setInt(4, p.getValidade());
+            stmt.setInt(5, p.getIngredientes().getId());
         
             //Executa SQL
             stmt.executeUpdate();
