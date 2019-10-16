@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="560.0" prefWidth="720.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="View.PedidoController">
+  <children>
+    <Label layoutX="29.0" layoutY="47.0" prefWidth="60.0" text="Pedido:">
+      <font>
+        <Font size="14.0" fx:id="x1" />
+      </font>
+      <textFill>
+        <Color blue="0.500" green="0.500" red="0.500" fx:id="x2" />
+      </textFill>
+    </Label>
+    <Label font="$x1" layoutX="81.0" layoutY="48.0" prefWidth="44.000099999997474" text="0" textFill="$x2" />
+    <TextField layoutX="29.0" layoutY="114.0" prefWidth="66.0" />
+    <Label font="$x1" layoutX="29.0" layoutY="88.0" prefWidth="60.000099999997474" text="Cod." textFill="BLACK" />
+    <TextField layoutX="104.0" layoutY="115.0" prefWidth="316.0" />
+    <Label font="$x1" layoutX="104.0" layoutY="89.0" prefWidth="60.0" text="Cliente" textFill="BLACK" />
+    <TextField layoutX="568.0" layoutY="115.0" prefWidth="122.0" />
+    <Label font="$x1" layoutX="568.0" layoutY="89.0" prefWidth="60.0" text="Data" textFill="BLACK" />
+    <TableView layoutX="29.0" layoutY="188.0" prefHeight="221.0" prefWidth="661.0">
+      <columns>
+        <TableColumn prefWidth="75.0" text="Código" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="313.0" text="Descrição" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="95.0" text="Preço" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="95.0" text="Quantidade" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="82.0" text="Total" />
+      </columns>
+    </TableView>
+    <Label font="$x1" layoutX="29.0" layoutY="160.0" prefWidth="60.0" text="Produtos:" textFill="BLACK" />
+    <Button layoutX="572.0" layoutY="488.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #2ECC71;" text="Finalizar" textFill="WHITE">
+      <font>
+        <Font name="System Bold" size="18.0" fx:id="x3" />
+      </font>
+    </Button>
+    <Button font="$x3" layoutX="446.0" layoutY="488.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #5DADE2;" text="Salvar" textFill="WHITE" />
+    <Button font="$x3" layoutX="319.0" layoutY="488.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #EC7063" text="Cancelar" textFill="WHITE" />
+    <Label font="$x3" layoutX="590.0" layoutY="414.0" prefWidth="60.0" text="Total:" textFill="BLACK" />
+    <Label layoutX="645.0" layoutY="414.0" prefWidth="45.0" text="0,00" textFill="BLACK">
+      <font>
+        <Font size="18.0" />
+      </font>
+    </Label>
+    <Label layoutX="241.0" layoutY="14.0" text="Cadastro de Pedido">
+      <font>
+        <Font name="System Bold" size="26.0" />
+      </font>
+    </Label>
+  </children>
+</AnchorPane>
