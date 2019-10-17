@@ -5,10 +5,40 @@
  */
 package model.dao;
 
+import Conexão.Conexao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import model.bean.Ingrediente;
+
 /**
  *
  * @author Elison Christoph
  */
 public class IngredienteDAO {
+    
+    public void create(Ingrediente i){
+        
+        Connection con = Conexão.Conexao.getConnection();
+        PreparedStatement stmt = null;
+        
+        //Passa dados do Produto
+        try {
+            stmt = con.prepareStatement("INSERT INTO ingredientes (nomeIngrediente) VALUES(?)");
+            stmt.setString(1, i.getNome());
+           
+        
+            //Executa SQL
+            stmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Salvar!" + ex);
+        }finally{
+            Conexao.closeConnection(con, stmt);
+        }
+    }
     
 }

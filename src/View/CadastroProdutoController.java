@@ -31,7 +31,7 @@ public class CadastroProdutoController implements Initializable {
     PreparedStatement pst = null;
     ResultSet rs = null;
     
-    private ObservableList<Categoria> list;
+    //private ObservableList<Categoria> list;
     
     @FXML
     private TextField txtNome;
@@ -55,6 +55,8 @@ public class CadastroProdutoController implements Initializable {
         //p.setIngredientes(txtaIngredientes.getText());
         p.setValidade(Integer.parseInt(txtConsumir.getText()));
         p.setValor(Float.parseFloat(txtValor.getText()));
+        
+        dao.create(p);
         
     }
     

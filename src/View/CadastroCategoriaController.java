@@ -5,9 +5,30 @@
  */
 package View;
 
+import Conexão.Conexao;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import model.bean.Categoria;
+import model.bean.ModeloTabela;
+import model.dao.CategoriaDAO;
 
 /**
  * FXML Controller class
@@ -16,12 +37,64 @@ import javafx.fxml.Initializable;
  */
 public class CadastroCategoriaController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    Connection conn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+
+   final ObservableList items = FXCollections.observableArrayList();
+
+   ListView listview = new ListView(items);
+  //ObservableList<String> items = FXCollections.observableArrayList();
+    
+    @FXML
+    private TextField txtNome;
+ 
+    @FXML
+    private TableView<ModeloTabela> table;
+    
+    @FXML
+    private TableColumn<ModeloTabela, String> tableid;
+    
+    @FXML
+    private TableColumn<ModeloTabela, String> tablenome;
+    
+    ObservableList<ModeloTabela> list = FXCollections.observableArrayList();
+    
+    @FXML
+    private void CadastrarCategoria(ActionEvent event){
+        
+        Categoria c = new Categoria();
+        CategoriaDAO dao = new CategoriaDAO();
+        
+        c.setNome(txtNome.getText());
+        
+        dao.create(c);
+        
+    }
+    
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        try {
+            Connection con = Conexao.getConnection();
+            
+            ResultSet rs = con.createStatement().executeQuery("select * from categoriaprodutos");
+            
+            while(rs.next()){
+                list.add(new ModeloTabela(rs.getString("id"), rs.getString("nome")));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroCategoriaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        tableid.setCellValueFactory(new PropertyValueFactory<>("id"));
+            tablenome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            
+            table.setItems(list);
+        
     }    
     
 }

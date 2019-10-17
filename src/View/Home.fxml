@@ -33,7 +33,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <MenuButton layoutX="690.0" layoutY="115.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Cadastrar">
+      <MenuButton layoutX="690.0" layoutY="115.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="122.0" text="Cadastrar">
         <items>
           <MenuItem mnemonicParsing="false" onAction="#CadastroProduto" text="Produto" />
           <MenuItem mnemonicParsing="false" onAction="#CadastroCategoria" text="Categoria" />
@@ -87,7 +87,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="653.0" layoutY="260.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Vender">
+      <Button layoutX="608.0" layoutY="260.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Vender">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
