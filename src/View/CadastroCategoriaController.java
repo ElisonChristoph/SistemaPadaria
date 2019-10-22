@@ -6,6 +6,7 @@
 package View;
 
 import Conexão.Conexao;
+import Logica.IngredienteMain;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,9 +44,6 @@ public class CadastroCategoriaController implements Initializable {
 
    final ObservableList items = FXCollections.observableArrayList();
 
-   ListView listview = new ListView(items);
-  //ObservableList<String> items = FXCollections.observableArrayList();
-    
     @FXML
     private TextField txtNome;
  
@@ -58,7 +56,7 @@ public class CadastroCategoriaController implements Initializable {
     @FXML
     private TableColumn<ModeloTabela, String> tablenome;
     
-    ObservableList<ModeloTabela> list = FXCollections.observableArrayList();
+    ObservableList<ModeloTabela> categorias = FXCollections.observableArrayList();
     
     @FXML
     private void CadastrarCategoria(ActionEvent event){
@@ -70,12 +68,13 @@ public class CadastroCategoriaController implements Initializable {
         
         dao.create(c);
         
+        LimparCampo();
+        ResetaLista();
+        PopularTabela();
+        
     }
     
-    
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    private void PopularTabela(){
         
         try {
             Connection con = Conexao.getConnection();
@@ -83,7 +82,7 @@ public class CadastroCategoriaController implements Initializable {
             ResultSet rs = con.createStatement().executeQuery("select * from categoriaprodutos");
             
             while(rs.next()){
-                list.add(new ModeloTabela(rs.getString("id"), rs.getString("nome")));
+                categorias.add(new ModeloTabela(rs.getString("id"), rs.getString("nome")));
             }
             
         } catch (SQLException ex) {
@@ -93,7 +92,29 @@ public class CadastroCategoriaController implements Initializable {
         tableid.setCellValueFactory(new PropertyValueFactory<>("id"));
             tablenome.setCellValueFactory(new PropertyValueFactory<>("nome"));
             
-            table.setItems(list);
+            table.setItems(categorias);
+        
+    }
+    
+    private void ResetaLista(){
+        categorias.clear();
+    }
+    
+    @FXML
+    private void LimparCampo(){
+        txtNome.setText(" ");
+    }
+    
+    @FXML
+    public void Fechar() {
+        IngredienteMain.getStage().close();
+    }
+      
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+          PopularTabela();
         
     }    
     

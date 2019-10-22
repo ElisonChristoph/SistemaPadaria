@@ -9,9 +9,6 @@ import Conexão.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import model.bean.Produto;
 
 /**
@@ -32,15 +29,15 @@ public class ProdutoDAO {
             stmt.setString(2, p.getNome());
             stmt.setDouble(3, p.getValor());
             stmt.setInt(4, p.getValidade());
-            stmt.setInt(5, p.getIngredientes().getId());
+            stmt.setString(5, p.getIngredientes());
         
             //Executa SQL
             stmt.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            //JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Salvar!" + ex);
+           // JOptionPane.showMessageDialog(null, "Erro ao Salvar!" + ex);
         }finally{
             Conexao.closeConnection(con, stmt);
         }

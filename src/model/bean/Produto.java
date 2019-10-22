@@ -16,9 +16,9 @@ public class Produto {
     private String nome;
     private double valor;	
     private int validade;	
-    private Ingrediente ingredientes;
+    private String ingredientes;
 
-    public Produto(int id, Categoria categoria, String nome, double valor, int validade, Ingrediente ingredientes) {
+    public Produto(int id, Categoria categoria, String nome, double valor, int validade, String ingredientes) {
         this.id = id;
         this.categoria = categoria;
         this.nome = nome;
@@ -71,11 +71,11 @@ public class Produto {
         this.validade = validade;
     }
 
-    public Ingrediente getIngredientes() {
+    public String getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(Ingrediente ingredientes) {
+    public void setIngredientes(String ingredientes) {
         this.ingredientes = ingredientes;
     }
     
