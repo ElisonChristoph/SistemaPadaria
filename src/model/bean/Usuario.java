@@ -21,7 +21,10 @@ public class Usuario {
         this.nome = nome;
         this.login = login;
         this.senha = senha;
-
+    }
+    
+    public Usuario(){
+        
     }
 
     public int getId() {
