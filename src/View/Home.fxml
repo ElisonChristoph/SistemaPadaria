@@ -1,102 +1,417 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #BEBEBE;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HomeController">
+<AnchorPane id="AnchorPane" prefHeight="619.0" prefWidth="1260.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HomeController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="299.0" layoutX="260.0" layoutY="17.0" stroke="BLACK" strokeType="INSIDE" width="725.0" />
-      <AnchorPane focusTraversable="true" layoutX="14.0" layoutY="17.0" prefHeight="700.0" prefWidth="256.0">
+      <GridPane layoutX="7.0" layoutY="7.0" prefHeight="619.0" prefWidth="1260.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="317.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1011.0" minWidth="10.0" prefWidth="943.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="682.0" stroke="BLACK" strokeType="INSIDE" width="237.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000032" height="56.0" layoutX="24.0" layoutY="205.0" stroke="BLACK" strokeType="INSIDE" width="191.0" />
-            <Label layoutX="39.0" layoutY="173.0" prefHeight="32.0" prefWidth="161.0" text="Elison Christoph">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="124.0" stroke="BLACK" strokeType="INSIDE" width="872.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets top="25.0" />
+               </GridPane.margin>
+            </Rectangle>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="112.0" stroke="BLACK" strokeType="INSIDE" width="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="8.0" top="25.0" />
+               </GridPane.margin>
+            </Rectangle>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="124.0" layoutX="251.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="872.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets top="25.0" />
+               </GridPane.margin>
+            </Rectangle>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="124.0" layoutX="251.0" layoutY="220.0" stroke="BLACK" strokeType="INSIDE" width="489.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets top="25.0" />
+               </GridPane.margin>
+            </Rectangle>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="124.0" stroke="BLACK" strokeType="INSIDE" width="373.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets top="25.0" />
+               </GridPane.margin>
+            </Rectangle>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="120.0" stroke="BLACK" strokeType="INSIDE" width="125.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="2.0" top="25.0" />
+               </GridPane.margin>
+            </Rectangle>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" stroke="BLACK" strokeType="INSIDE" width="305.0" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="5.0" top="25.0" />
+               </GridPane.margin>
+            </Rectangle>
+            <Button mnemonicParsing="false" onAction="#CadastroProduto" prefHeight="50.0" prefWidth="150.0" text="Produto" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="350.0" top="-35.0" />
+               </GridPane.margin>
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="19.0" />
                </font>
-            </Label>
-            <Label layoutX="77.0" layoutY="214.0" text="Usuário:">
+            </Button>
+            <Button layoutX="451.0" layoutY="30.0" mnemonicParsing="false" onAction="#CadastroCategoria" prefHeight="50.0" prefWidth="150.0" text="Categoria" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="190.0" top="-35.0" />
+               </GridPane.margin>
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="19.0" />
                </font>
+            </Button>
+            <Button layoutX="251.0" layoutY="90.0" mnemonicParsing="false" onAction="#CadastroIngrediente" prefHeight="50.0" prefWidth="150.0" text="Ingrediente" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="190.0" top="85.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Button>
+            <Button layoutX="531.0" layoutY="90.0" mnemonicParsing="false" onAction="#CadastroCliente" prefHeight="50.0" prefWidth="150.0" text="Cliente" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="350.0" top="85.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Button>
+            <Button layoutX="671.0" layoutY="90.0" mnemonicParsing="false" onAction="#CadastroFornecedor" prefHeight="50.0" prefWidth="150.0" text="Fornecedor" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="510.0" top="-35.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Button>
+            <Button layoutX="831.0" layoutY="90.0" mnemonicParsing="false" onAction="#CadastroFuncionario" prefHeight="50.0" prefWidth="150.0" text="Funcionário" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="510.0" top="85.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button layoutX="966.0" layoutY="90.0" mnemonicParsing="false" onAction="#CadastroUsuario" prefHeight="47.0" prefWidth="130.0" text="Usuário" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="670.0" top="-35.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Button>
+            <CheckBox mnemonicParsing="false" prefHeight="36.0" prefWidth="137.0" text="Cadastrar" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="25.0" left="20.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </CheckBox>
+            <CheckBox layoutX="280.0" layoutY="45.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="137.0" text="Deletar" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="20.0" top="75.0" />
+               </GridPane.margin>
+            </CheckBox>
+            <Label text="Cadastrar/Deletar" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
             </Label>
-            <Label layoutX="77.0" layoutY="233.0" prefHeight="18.0" prefWidth="85.0" text="Padrão" />
-            <Button layoutX="22.0" layoutY="541.0" mnemonicParsing="false" onAction="#Sair" prefHeight="32.0" prefWidth="161.0" style="-fx-background-color: #FF0000;" text="Sair" textAlignment="CENTER">
+            <Label layoutX="270.0" layoutY="10.0" text="Emitir Relatorio" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Produtos em Estoque" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" top="-35.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="280.0" layoutY="200.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Produtos em Falta" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" top="85.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="280.0" layoutY="200.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Categorias" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="225.0" top="-35.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="495.0" layoutY="200.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Clientes" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="225.0" top="85.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="495.0" layoutY="260.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Fornecedores" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="440.0" top="-35.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="710.0" layoutY="200.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Funcionários" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="440.0" top="85.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="710.0" layoutY="260.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Funcionários" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="655.0" top="-35.0" />
+               </GridPane.margin>
+            </Button>
+            <Label layoutX="270.0" layoutY="165.0" text="Verificar" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Estoque" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" top="-35.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="280.0" layoutY="355.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Cliente" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" top="85.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="280.0" layoutY="415.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Funcionário" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="170.0" top="-35.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="440.0" layoutY="355.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Fornecedor" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="170.0" top="85.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="440.0" layoutY="415.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Usuário" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="330.0" top="-35.0" />
+               </GridPane.margin>
+            </Button>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="124.0" layoutX="270.0" layoutY="348.0" stroke="BLACK" strokeType="INSIDE" width="372.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="500.0" top="25.0" />
+               </GridPane.margin>
+            </Rectangle>
+            <Label layoutX="270.0" layoutY="320.0" text="Movimentação" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets left="500.0" />
+               </GridPane.margin>
+            </Label>
+            <Button layoutX="600.0" layoutY="355.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="276.0" text="Entradas de Matéria Prima" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="510.0" top="-35.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="780.0" layoutY="355.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="276.0" text="Vendas de Produtos" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="510.0" top="85.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" text="Adicionar Estoque" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <GridPane.margin>
+                  <Insets left="385.0" top="85.0" />
+               </GridPane.margin>
             </Button>
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="136.0" text="Fazer Pedido" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="580.0" top="85.0" />
+               </GridPane.margin>
+            </Button>
+            <ImageView fitHeight="152.0" fitWidth="272.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Imagens/mycommerce-icon.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets right="25.0" top="55.0" />
+               </GridPane.margin>
+            </ImageView>
+            <Label text="                   CEG                   Sistemas Comerciais " textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font name="Cera PROModern Medium" size="25.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label layoutX="327.0" layoutY="165.0" text="Usuário" GridPane.columnIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <ImageView fitHeight="117.0" fitWidth="123.0" pickOnBounds="true" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="3.0" top="25.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../Imagens/user_icon_comment.png" />
+               </image>
+            </ImageView>
+            <Label text="Elison R. Christoph" GridPane.columnIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="140.0" top="35.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label text="Administrador" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="140.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </Label>
+            <Button layoutX="927.0" layoutY="105.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="136.0" text="Vender" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="725.0" top="85.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="105.0" style="-fx-background-color: #FF0000;" text="Sair" textFill="WHITE" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="140.0" top="80.0" />
+               </GridPane.margin>
+            </Button>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="279.0" layoutX="15.0" layoutY="35.0" stroke="BLACK" strokeType="INSIDE" width="305.0" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="5.0" top="27.0" />
+               </GridPane.margin>
+            </Rectangle>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../Imagens/pao.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="10.0" layoutY="195.0" text="Restaurante, Padaria e Confeitaria JB" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="-60.0" />
+               </GridPane.margin>
+            </Label>
+            <ImageView fitHeight="93.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="735.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../Imagens/dinheiro-icone.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="96.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="600.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../Imagens/shopping-basket-add.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="106.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="420.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../Imagens/icon-controle-de-estoqu.png" />
+               </image>
+            </ImageView>
          </children>
-      </AnchorPane>
-      <MenuButton layoutX="690.0" layoutY="115.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="122.0" text="Cadastrar">
-        <items>
-          <MenuItem mnemonicParsing="false" onAction="#CadastroProduto" text="Produto" />
-          <MenuItem mnemonicParsing="false" onAction="#CadastroCategoria" text="Categoria" />
-            <MenuItem mnemonicParsing="false" onAction="#CadastroIngrediente" text="Ingrediente" />
-            <MenuItem mnemonicParsing="false" onAction="#CadastroCliente" text="Cliente" />
-            <MenuItem mnemonicParsing="false" onAction="#CadastroFornecedor" text="Fornecedor" />
-            <MenuItem mnemonicParsing="false" onAction="#CadastroFuncionario" text="Funcionario" />
-            <MenuItem mnemonicParsing="false" onAction="#CadastroUsuario" text="Usuario" />
-        </items>
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </MenuButton>
-      <MenuButton layoutX="566.0" layoutY="115.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Verificar">
-         <items>
-            <MenuItem mnemonicParsing="false" text="Estoque" />
-            <MenuItem mnemonicParsing="false" text="Situação Cliente" />
-            <MenuItem mnemonicParsing="false" text="Situação Fornecedor" />
-            <MenuItem mnemonicParsing="false" text="Situação Usuario" />
-            <MenuItem mnemonicParsing="false" text="Situação Funcionario" />
-         </items>
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </MenuButton>
-      <MenuButton layoutX="443.0" layoutY="115.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Emitir">
-         <items>
-            <MenuItem mnemonicParsing="false" text="Produtos em Estoque" />
-            <MenuItem mnemonicParsing="false" text="Produtos em Falta" />
-            <MenuItem mnemonicParsing="false" text="Categoria de Produtos" />
-            <MenuItem mnemonicParsing="false" text="Clientes" />
-            <MenuItem mnemonicParsing="false" text="Fornecedores" />
-            <MenuItem mnemonicParsing="false" text="Funcionarios" />
-            <MenuItem mnemonicParsing="false" text="Usuarios" />
-         </items>
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </MenuButton>
-      <MenuButton layoutX="271.0" layoutY="115.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="161.0" text="Movimentação">
-         <items>
-            <MenuItem mnemonicParsing="false" text="Entrada de Materia Prima" />
-            <MenuItem mnemonicParsing="false" text="Venda de Produtos" />
-         </items>
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </MenuButton>
-      <Button layoutX="270.0" layoutY="260.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" text="Adicionar Estoque" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Button>
-      <Button layoutX="608.0" layoutY="260.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Vender">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Button>
-      <Button layoutX="464.0" layoutY="260.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="136.0" text="Fazer Pedido">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Button>
-      <AnchorPane layoutX="14.0" layoutY="15.0" prefHeight="113.0" prefWidth="337.0" />
+      </GridPane>
    </children>
 </AnchorPane>

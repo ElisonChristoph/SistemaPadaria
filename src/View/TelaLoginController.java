@@ -6,7 +6,6 @@
 package View;
 
 import Logica.HomeMain;
-import Logica.TelaLoginMain;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -95,58 +94,9 @@ public class TelaLoginController implements Initializable {
     }
 
     public void fecha() {
-        TelaLoginMain.getStage().close();
+        System.exit(0);
     }    
         
     
-//        String nome = tflogin.getText();
-//        String senha = pfsenha.getText();
-//
-//        bacessar.setOnMouseClicked((MouseEvent e) -> {
-//            String sql = "SELECT * FROM usuarios WHERE nome = ? and senha = ?";
-//
-//            try {
-//                pst = conn.prepareStatement(sql);
-//                pst.setString(1, nome);
-//                pst.setString(2, senha);
-//                rs = pst.executeQuery();
-//                if (!rs.next()) {
-//                    System.out.println("falha");
-//                    Alert alert = new Alert(AlertType.WARNING);
-//                    alert.setTitle("Login Invalido");
-//                    alert.setHeaderText("Nome ou Senha Incorretos");
-//                    alert.setContentText("Por favor verifique usuario e senha!");
-//
-//                    alert.showAndWait();
-//                } else {
-//
-//                    System.out.println("logado com sucesso");
-//                    Node node = (Node) e.getSource();
-//                    stage = (Stage) node.getScene().getWindow();
-//                    stage.close();
-//                    scene = new Scene(FXMLLoader.load(getClass().getResource("Controle.fxml")));
-//                    stage.setScene(scene);
-//                    stage.show();
-//                }
-//            } catch (SQLException | IOException erro) {
-//                erro.printStackTrace();
-//            }
-//        });
-//
-////            }else{
-////                Alert alert = new Alert(Alert.AlertType.ERROR);
-////                alert.setTitle("Erro");
-////                alert.setHeaderText("Login ou Senha inválidos!");
-////                alert.setContentText("Digite novamente seu Login e sua Senha! ");
-////                alert.show();
-////            }
-//        bsair.setOnMouseClicked((MouseEvent e) -> {
-//            fecha();
-//        });
-//    }
-//
-//    public void fecha() {
-//        TelaLoginMain.getStage().close();
-//    }
 
 }

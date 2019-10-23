@@ -7,6 +7,7 @@ package Logica;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -50,9 +51,9 @@ public class TelaLoginMain extends Application {
     public static void setStage(Stage stage) {
         TelaLoginMain.stage = stage;
     }
-
+   
    public void fecha() {
-        TelaLoginMain.getStage().close();
+        System.exit(0);
     }
     
 }
