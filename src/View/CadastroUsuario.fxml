@@ -44,9 +44,9 @@
     <Label font="$x2" layoutX="75.0" layoutY="162.0" text="Login" />
     <TextField fx:id="tfLogin" layoutX="75.0" layoutY="186.0" prefHeight="25.0" />
     <Label font="$x2" layoutX="75.0" layoutY="217.0" text="Senha" />
-    <TextField id="pf" fx:id="pfSenha" layoutX="75.0" layoutY="241.0" prefHeight="25.0" />
-    <ListView layoutX="427.0" layoutY="98.0" prefHeight="200.0" prefWidth="213.0" />
+    <ListView id="jL" fx:id="lvUsuarios" layoutX="427.0" layoutY="98.0" onMouseClicked="#selecionaUsuario" prefHeight="200.0" prefWidth="213.0" />
     <TextField id="pf" layoutX="427.0" layoutY="306.0" prefHeight="25.0" prefWidth="156.99990000000253" />
     <Button id="btPesquisar" font="$x1" layoutX="596.0" layoutY="306.0" minHeight="25.0" minWidth="44.0" mnemonicParsing="false" onMouseClicked="#salvar" prefHeight="25.0" prefWidth="44.0" style="" text="" textFill="WHITE" />
+    <PasswordField fx:id="pfSenha" layoutX="75.0" layoutY="242.0" prefHeight="25.0" prefWidth="145.0" />
   </children>
 </AnchorPane>
