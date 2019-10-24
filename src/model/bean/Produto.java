@@ -14,7 +14,9 @@ public class Produto {
     private int id;	
     private Categoria categoria;	
     private String nome;
-    private double valor;	
+    private double valor;
+    private double valorPedido;//Não vai para o Banco
+    private double qtdPedido;//Não vai para o Banco
     private int validade;	
     private String ingredientes;
 
@@ -78,6 +80,23 @@ public class Produto {
     public void setIngredientes(String ingredientes) {
         this.ingredientes = ingredientes;
     }
+
+    public double getValorPedido() {
+        return valorPedido;
+    }
+
+    public void setValorPedido(double valorPedido) {
+        this.valorPedido = valorPedido;
+    }
+
+    public double getQtdPedido() {
+        return qtdPedido;
+    }
+
+    public void setQtdPedido(double qtdPedido) {
+        this.qtdPedido = qtdPedido;
+    }
+    
     
     
     

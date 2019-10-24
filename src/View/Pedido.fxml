@@ -18,40 +18,51 @@
         <Color blue="0.500" green="0.500" red="0.500" fx:id="x2" />
       </textFill>
     </Label>
-    <Label font="$x1" layoutX="81.0" layoutY="48.0" prefWidth="44.000099999997474" text="0" textFill="$x2" />
-    <TextField layoutX="29.0" layoutY="114.0" prefWidth="66.0" />
+    <Label fx:id="labelCodPedido" font="$x1" layoutX="81.0" layoutY="48.0" prefWidth="44.000099999997474" text="0" textFill="$x2" />
+    <TextField fx:id="tfCodCliente" layoutX="29.0" layoutY="112.0" prefHeight="24.0" prefWidth="66.0" />
     <Label font="$x1" layoutX="29.0" layoutY="88.0" prefWidth="60.000099999997474" text="Cod." textFill="BLACK" />
-    <TextField layoutX="104.0" layoutY="115.0" prefWidth="316.0" />
+    <TextField fx:id="tfNomeCliente" layoutX="104.0" layoutY="113.0" prefHeight="24.0" prefWidth="264.0" />
     <Label font="$x1" layoutX="104.0" layoutY="89.0" prefWidth="60.0" text="Cliente" textFill="BLACK" />
-    <TextField layoutX="568.0" layoutY="115.0" prefWidth="122.0" />
-    <Label font="$x1" layoutX="568.0" layoutY="89.0" prefWidth="60.0" text="Data" textFill="BLACK" />
-    <TableView layoutX="29.0" layoutY="188.0" prefHeight="221.0" prefWidth="661.0">
-      <columns>
-        <TableColumn prefWidth="75.0" text="Código" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="313.0" text="Descrição" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="95.0" text="Preço" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="95.0" text="Quantidade" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="82.0" text="Total" />
-      </columns>
-    </TableView>
+    <TextField fx:id="tfData" layoutX="568.0" layoutY="113.0" prefHeight="24.0" prefWidth="122.0" />
+    <Label font="$x1" layoutX="568.0" layoutY="89.0" prefWidth="60.0" text="Data:" textFill="BLACK" />
     <Label font="$x1" layoutX="29.0" layoutY="160.0" prefWidth="60.0" text="Produtos:" textFill="BLACK" />
-    <Button layoutX="572.0" layoutY="488.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #2ECC71;" text="Finalizar" textFill="WHITE">
+    <Button fx:id="btFinalizar" layoutX="572.0" layoutY="488.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #2ECC71;" text="Finalizar" textFill="WHITE">
       <font>
         <Font name="System Bold" size="18.0" fx:id="x3" />
       </font>
     </Button>
-    <Button font="$x3" layoutX="446.0" layoutY="488.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #5DADE2;" text="Salvar" textFill="WHITE" />
-    <Button font="$x3" layoutX="319.0" layoutY="488.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #EC7063" text="Cancelar" textFill="WHITE" />
+    <Button fx:id="btSalvar" font="$x3" layoutX="446.0" layoutY="488.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #5DADE2;" text="Salvar" textFill="WHITE" />
+    <Button fx:id="btCancelar" font="$x3" layoutX="319.0" layoutY="488.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #EC7063" text="Cancelar" textFill="WHITE" />
     <Label font="$x3" layoutX="590.0" layoutY="414.0" prefWidth="60.0" text="Total:" textFill="BLACK" />
-    <Label layoutX="645.0" layoutY="414.0" prefWidth="45.0" text="0,00" textFill="BLACK">
+    <Label fx:id="labelTotal" layoutX="645.0" layoutY="414.0" prefWidth="45.0" text="0,00" textFill="BLACK">
       <font>
         <Font size="18.0" />
       </font>
     </Label>
-    <Label layoutX="241.0" layoutY="14.0" text="Cadastro de Pedido">
+    <Label layoutX="223.0" layoutY="14.0" text="Cadastro de Pedido">
       <font>
-        <Font name="System Bold" size="26.0" />
+        <Font name="System Bold" size="30.0" />
       </font>
     </Label>
+    <Button fx:id="btAddProd" layoutX="29.0" layoutY="414.0" minHeight="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="45.0" style="-fx-background-color: #2ECC71;" text="Add" textFill="WHITE">
+      <font>
+        <Font name="System Bold" size="12.0" fx:id="x4" />
+      </font>
+    </Button>
+    <Button fx:id="btRemProd" font="$x4" layoutX="82.0" layoutY="414.0" minHeight="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="66.0" style="-fx-background-color: #EC7063;" text="Remove" textFill="WHITE" />
+    <Button id="btAddProd" layoutX="377.0" layoutY="113.0" minHeight="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="60.0" style="-fx-background-color: #5DADE2;" text="Clientes" textFill="WHITE">
+      <font>
+        <Font name="System Bold" size="10.0" />
+      </font>
+    </Button>
+    <TableView fx:id="tvProdutos" layoutX="26.0" layoutY="189.0" prefHeight="212.0" prefWidth="661.0">
+      <columns>
+        <TableColumn prefWidth="75.0" text="Código" fx:id="tabId" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="313.0" text="Descrição" fx:id="tabDescricao" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="96.0" text="Preço" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="96.0" text="Quantidade" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="79.0" text="Total" />
+      </columns>
+    </TableView>
   </children>
 </AnchorPane>

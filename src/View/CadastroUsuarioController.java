@@ -5,7 +5,6 @@
  */
 package View;
 
-import Logica.TelaLoginMain;
 import Logica.UsuarioMain;
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -23,7 +21,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import model.bean.Usuario;
 import model.dao.UsuarioDAO;
