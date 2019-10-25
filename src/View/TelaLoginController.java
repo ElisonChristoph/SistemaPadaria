@@ -6,6 +6,7 @@
 package View;
 
 import Logica.HomeMain;
+import Logica.PedidoMain;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -64,11 +65,12 @@ public class TelaLoginController implements Initializable {
         
           bacessar.setOnMouseClicked((MouseEvent e) -> {
              
-            if (tflogin.getText().equals("admin") && pfsenha.getText().equals("admin")) {
+            //if (tflogin.getText().equals("admin") && pfsenha.getText().equals("admin")) {
                 
                 //seta valor do user
                 user.setValue("admin");
-                HomeMain h = new HomeMain();
+               // HomeMain h = new HomeMain();
+                PedidoMain h = new PedidoMain();
                 try {
                     h.start(new Stage());
                     
@@ -77,7 +79,7 @@ public class TelaLoginController implements Initializable {
                     Logger.getLogger(HomeMain.class.getName()).log(Level.SEVERE, null, ex);
                     System.out.println("erro aqui");
                 }
-            } 
+           // } 
             
 //            }else{
 //                Alert alert = new Alert(Alert.AlertType.ERROR);

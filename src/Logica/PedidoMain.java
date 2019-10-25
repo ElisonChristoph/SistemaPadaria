@@ -25,8 +25,8 @@ public class PedidoMain extends Application {
     private static Stage stage;
 
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/View/CadastroPedido.fxml"));
+public void start(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/View/Pedido.fxml"));
         Parent root = loader.load();
         stage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root);

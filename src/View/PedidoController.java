@@ -18,9 +18,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import model.bean.ModeloTabela;
+import model.bean.ModeloTabelaItensPedido;
 import model.bean.Pedido;
 import model.bean.Produto;
 import model.dao.PedidoDAO;
@@ -61,15 +62,21 @@ public class PedidoController implements Initializable {
     @FXML
     private Button btRemProd;
     @FXML
-    private TableView<ModeloTabela> tvProdutos;
-    ObservableList<ModeloTabela> olProdutos = FXCollections.observableArrayList();
+    private TableView<ModeloTabelaItensPedido> tvProdutos;
+    ObservableList<ModeloTabelaItensPedido> olProdutos = FXCollections.observableArrayList();
     Pedido pedido;
     PedidoDAO dao;
     List<Produto> listProdPed;
     @FXML
-    private TableColumn<ModeloTabela, String> tabId;
+    private TableColumn<ModeloTabelaItensPedido, String> tabId;
     @FXML
-    private TableColumn<ModeloTabela, String> tabDescricao;
+    private TableColumn<ModeloTabelaItensPedido, String> tabDescricao;
+    @FXML
+    private TableColumn<ModeloTabelaItensPedido, String> tabQtd;
+    @FXML
+    private TableColumn<ModeloTabelaItensPedido, String> tabPreco;
+    @FXML
+    private TableColumn<ModeloTabelaItensPedido, String> tabTotal;
 
     /**
      * Initializes the controller class.
@@ -77,15 +84,27 @@ public class PedidoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         dao = new PedidoDAO();
-        listProdPed = dao.read().get(0).getPrudutos();
+
         popularProdutos();
     }
 
     public void popularProdutos() {
+        listProdPed = dao.read().get(0).getPrudutos();
+        Double total = 0.00;
         for (Produto p : listProdPed) {
-            olProdutos.add(new ModeloTabela(String.valueOf(p.getId()), p.getNome()));
+            Double subtotal = p.getQtdPedido() * p.getValorPedido();
+            total += subtotal;
+            olProdutos.add(new ModeloTabelaItensPedido(String.valueOf(p.getId()), p.getNome(), String.valueOf(p.getQtdPedido()), String.valueOf("R$ "+p.getValorPedido()), String.valueOf("R$ "+subtotal)));
+
         }
+        tabId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tabDescricao.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tabQtd.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+        tabPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
+        tabTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         tvProdutos.setItems(olProdutos);
+        labelTotal.setText("R$ "+String.valueOf(total));
+
     }
 
 }

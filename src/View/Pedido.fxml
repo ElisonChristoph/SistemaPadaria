@@ -33,10 +33,14 @@
     </Button>
     <Button fx:id="btSalvar" font="$x3" layoutX="446.0" layoutY="488.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #5DADE2;" text="Salvar" textFill="WHITE" />
     <Button fx:id="btCancelar" font="$x3" layoutX="319.0" layoutY="488.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #EC7063" text="Cancelar" textFill="WHITE" />
-    <Label font="$x3" layoutX="590.0" layoutY="414.0" prefWidth="60.0" text="Total:" textFill="BLACK" />
-    <Label fx:id="labelTotal" layoutX="645.0" layoutY="414.0" prefWidth="45.0" text="0,00" textFill="BLACK">
+    <Label layoutX="568.0" layoutY="414.0" prefWidth="60.0" text="Total:" textFill="BLACK">
       <font>
-        <Font size="18.0" />
+        <Font name="System Bold" size="16.0" />
+      </font>
+    </Label>
+    <Label fx:id="labelTotal" layoutX="640.0" layoutY="414.0" prefWidth="61.000099999997474" text="R$0,00" textAlignment="RIGHT" textFill="BLACK">
+      <font>
+        <Font size="16.0" />
       </font>
     </Label>
     <Label layoutX="223.0" layoutY="14.0" text="Cadastro de Pedido">
@@ -59,9 +63,9 @@
       <columns>
         <TableColumn prefWidth="75.0" text="Código" fx:id="tabId" />
         <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="313.0" text="Descrição" fx:id="tabDescricao" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="96.0" text="Preço" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="96.0" text="Quantidade" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="79.0" text="Total" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="96.0" text="Quantidade" fx:id="tabQtd" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="96.0" text="Preço" fx:id="tabPreco" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="79.0" text="Total" fx:id="tabTotal" />
       </columns>
     </TableView>
   </children>

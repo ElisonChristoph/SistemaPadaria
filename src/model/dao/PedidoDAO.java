@@ -51,7 +51,7 @@ public class PedidoDAO {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         try {//id, codCliente, data, prudutos, finalizado
-            stmt = con.prepareStatement("UPDATE pedidos SET codCliente = ? ,data = ? ,prudutos = ? ,finalizado = ? WHERE id = ?");
+            stmt = con.prepareStatement("UPDATE pedidos SET codCliente = ? ,data = ? ,produtos = ? ,finalizado = ? WHERE id = ?");
 
             stmt.setInt(1, p.getCodCliente());
             stmt.setDate(2, p.getData());
@@ -80,32 +80,27 @@ public class PedidoDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Produto> listaProdutos = new ArrayList<>();
-
         try {
-            stmt = con.prepareStatement("SELECT * FROM produto");
+            stmt = con.prepareStatement("SELECT * FROM produtos");
             rs = stmt.executeQuery();
-
             while (rs.next()) {
                 Produto produto = new Produto();
                 produto.setId(rs.getInt("id"));
-                produto.setNome("nome");
+                produto.setNome(rs.getString("nome"));
                 listaProdutos.add(produto);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            Conexao.closeConnection(con, stmt, rs);
+            //Conexao.closeConnection(con, stmt, rs);
         }
 
         stmt = null;
         rs = null;
-
         List<Pedido> pedidos = new ArrayList<>();
-
         try {
             stmt = con.prepareStatement("SELECT * FROM pedidos");
             rs = stmt.executeQuery();
-
             List<Produto> itens;
             Produto prod;
             String itenss;
@@ -122,11 +117,10 @@ public class PedidoDAO {
                             prod = new Produto();
                             i = it[x].split(";");
                             for (int xx = 0; xx < i.length; xx++) {
+                                prod.setId(Integer.parseInt(i[0]));
                                 for (Produto p : listaProdutos) {
-                                    prod.setId(Integer.parseInt(i[0]));
                                     if (p.getId() == prod.getId()) {
                                         prod.setNome(p.getNome());
-                                        break;
                                     }
                                 }
                                 prod.setQtdPedido(Double.parseDouble(i[1]));
