@@ -7,32 +7,38 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="518.0" prefWidth="359.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="518.0" prefWidth="351.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="77.0" layoutY="21.0" text="Adicionar Produto">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <ListView fx:id="lvProdutos" layoutX="51.0" layoutY="62.0" prefHeight="189.0" prefWidth="258.0" />
+      <ListView fx:id="lvProdutos" layoutX="51.0" layoutY="62.0" onMouseClicked="#alteraProduto" prefHeight="189.0" prefWidth="245.0" />
       <ComboBox fx:id="cbPesquisaPor" layoutX="52.0" layoutY="278.0" onHiding="#alteraPesquisa" prefHeight="31.0" prefWidth="188.0" />
       <Label layoutX="56.0" layoutY="262.0" text="Pesquisar Por:" />
-      <TextField fx:id="tfQtd" alignment="CENTER" layoutX="79.0" layoutY="392.0" prefHeight="31.0" prefWidth="56.0">
+      <TextField fx:id="tfQtd" alignment="CENTER" layoutX="56.0" layoutY="392.0" prefHeight="31.0" prefWidth="56.0">
          <font>
             <Font size="18.0" />
          </font></TextField>
-      <Label layoutX="76.0" layoutY="372.0" text="Quantidade" />
-      <Label layoutX="236.0" layoutY="372.0" text="Valor" />
-      <TextField fx:id="tfValor" alignment="CENTER" layoutX="222.0" layoutY="392.0" prefHeight="31.0" prefWidth="56.0">
+      <Label layoutX="45.0" layoutY="366.0" text="Quantidade">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Label layoutX="243.0" layoutY="366.0" text="Valor R$">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <TextField fx:id="tfValor" alignment="CENTER" layoutX="243.0" layoutY="392.0" prefHeight="31.0" prefWidth="56.0">
          <font>
             <Font size="18.0" />
          </font></TextField>
-      <Button fx:id="btCancelar" layoutX="30.0" layoutY="451.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="126.0" style="-fx-background-color: #EC7063;" text="Cancelar" textFill="WHITE">
+      <Button fx:id="btCancelar" layoutX="30.0" layoutY="451.0" mnemonicParsing="false" onMousePressed="#cancelar" prefHeight="42.0" prefWidth="126.0" style="-fx-background-color: #EC7063;" text="Cancelar" textFill="WHITE">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
       </Button>
-      <Button fx:id="btAdicionar" layoutX="203.0" layoutY="451.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="126.0" style="-fx-background-color: #58D68D;" text="Adicionar" textFill="WHITE">
+      <Button fx:id="btAdicionar" layoutX="200.0" layoutY="451.0" mnemonicParsing="false" onMousePressed="#enviaItem" prefHeight="42.0" prefWidth="126.0" style="-fx-background-color: #58D68D;" text="Adicionar" textFill="WHITE">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>

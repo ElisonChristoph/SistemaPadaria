@@ -44,7 +44,7 @@ public class PedidoMain extends Application {
             }
         });
         */
-        PedidoController controller1 = new PedidoController();
+        PedidoController controller1 = new PedidoController(null);
 
         // Show the new stage
         controller1.showStage();

@@ -93,11 +93,16 @@ public class PedidoController implements Initializable {
     @FXML
     private DatePicker dpData;
 
+    private boolean novo;
+
     private List<Cliente> listCliente;
 
     private final Stage thisStage;
 
-    public PedidoController() {
+    private final ListarPedidosController controller1;
+
+    public PedidoController(ListarPedidosController controller1) {
+        this.controller1 = controller1;
         this.thisStage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Pedido.fxml"));
@@ -109,24 +114,40 @@ public class PedidoController implements Initializable {
         }
     }
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         pedidoDao = new PedidoDAO();
         clienteDao = new ClienteDAO();
         listCliente = clienteDao.read();
-
-        carregarPedido();
+        onlyNumber(tfCodCliente);
+        if(controller1!=null){
+            carregarPedido();
+        }
+        
     }
 
     public void showStage() {
         thisStage.showAndWait();
     }
 
+    public void removeItem() {
+        if (tvProdutos.getSelectionModel().getSelectedIndex() >= 0) {
+            pedido.getProdutos().remove(tvProdutos.getSelectionModel().getSelectedIndex());
+            popularProdutos();
+        }
+    }
+
+    public void cancelar() {
+        thisStage.close();
+    }
+
     public void recebeCliente(String codCliente) {
         tfCodCliente.setText(codCliente);
+    }
+
+    public void recebeItem(Produto prod) {
+        pedido.getProdutos().add(prod);
+        popularProdutos();
     }
 
     public void selecionaCliente() {
@@ -158,18 +179,18 @@ public class PedidoController implements Initializable {
         Instant instant = Instant.ofEpochMilli(pedido.getData().getTime());
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         LocalDate localDate = localDateTime.toLocalDate();
-
         dpData.setValue(localDate);
         popularProdutos();
     }
 
     public void popularProdutos() {
-        listProdPed = pedido.getPrudutos();
+        listProdPed = pedido.getProdutos();
+        olProdutos.clear();
         Double total = 0.00;
         for (Produto p : listProdPed) {
             Double subtotal = p.getQtdPedido() * p.getValorPedido();
             total += subtotal;
-            olProdutos.add(new ModeloTabelaItensPedido(String.valueOf(p.getId()), p.getNome(), String.valueOf(p.getQtdPedido()), String.valueOf("R$ " + p.getValorPedido()), String.valueOf("R$ " + subtotal)));
+            olProdutos.add(new ModeloTabelaItensPedido(String.valueOf(p.getId()), p.getNome(), String.valueOf(p.getQtdPedido()).replace('.', ','), String.valueOf("R$ " + p.getValorPedido()).replace('.', ','), String.valueOf("R$ " + subtotal).replace('.', ',')));
         }
         tabId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tabDescricao.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -181,7 +202,6 @@ public class PedidoController implements Initializable {
     }
 
     public void atualizaCliente() {
-        onlyNumber(tfCodCliente);
         for (Cliente c : listCliente) {
             if (c.getId() == Integer.parseInt(tfCodCliente.getText())) {
                 tfNomeCliente.setText(c.getNome());
@@ -189,16 +209,16 @@ public class PedidoController implements Initializable {
         }
     }
 
-    public static void onlyNumber(final TextField tfCodCliente) {
-        tfCodCliente.addEventFilter(KeyEvent.KEY_TYPED, (KeyEvent t) -> {
+    public static void onlyNumber(final TextField textField) {
+        textField.addEventFilter(KeyEvent.KEY_TYPED, (KeyEvent t) -> {
             if (t.getCharacter().matches("[a-zA-Z\\s,.]+$")) {
-                tfCodCliente.setStyle("-fx-focus-color: #FF0012;");
+                textField.setStyle("-fx-focus-color: #FF0012;");
                 t.consume();
             } else {
-                tfCodCliente.setStyle(null);
+                textField.setStyle(null);
             }
         });
-        tfCodCliente.setStyle(null);
+        textField.setStyle(null);
     }
 
 }

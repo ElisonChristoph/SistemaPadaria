@@ -29,7 +29,7 @@ public class PedidoDAO {
             stmt.setInt(2, p.getCodCliente());
             stmt.setDate(3, p.getData());
             String produtosPedido = new String();
-            for (Produto prod : p.getPrudutos()) {
+            for (Produto prod : p.getProdutos()) {
                 produtosPedido += String.valueOf(prod.getId()) + ";" + String.valueOf(prod.getQtdPedido()) + ";" + String.valueOf(prod.getValorPedido()) + ":";
             }
             stmt.setString(4, produtosPedido);
@@ -56,7 +56,7 @@ public class PedidoDAO {
             stmt.setInt(1, p.getCodCliente());
             stmt.setDate(2, p.getData());
             String produtosPedido = new String();
-            for (Produto prod : p.getPrudutos()) {
+            for (Produto prod : p.getProdutos()) {
                 produtosPedido += String.valueOf(prod.getId()) + ";" + String.valueOf(prod.getQtdPedido()) + ";" + String.valueOf(prod.getValorPedido()) + ":";
             }
             stmt.setString(3, produtosPedido);

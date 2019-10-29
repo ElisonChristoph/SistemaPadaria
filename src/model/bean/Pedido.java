@@ -58,7 +58,7 @@ public class Pedido {
         this.data = data;
     }
 
-    public List<Produto> getPrudutos() {
+    public List<Produto> getProdutos() {
         return prudutos;
     }
 
