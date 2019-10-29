@@ -69,8 +69,8 @@ public class TelaLoginController implements Initializable {
                 
                 //seta valor do user
                 user.setValue("admin");
-               // HomeMain h = new HomeMain();
-                PedidoMain h = new PedidoMain();
+                HomeMain h = new HomeMain();
+                //PedidoMain h = new PedidoMain();
                 try {
                     h.start(new Stage());
                     

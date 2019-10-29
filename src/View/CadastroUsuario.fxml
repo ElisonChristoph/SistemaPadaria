@@ -15,7 +15,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" minWidth="643.0" prefHeight="457.0" prefWidth="643.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="View.CadastroUsuarioController">
+<AnchorPane id="AnchorPane" minWidth="643.0" prefHeight="457.0" prefWidth="643.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CadastroUsuarioController">
   <children>
     <ImageView fitHeight="457.0" fitWidth="643.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true">
       <image>
@@ -34,12 +34,12 @@
         <Font size="16.0" fx:id="x2" />
       </font>
     </Label>
-    <Button id="btCadastrar" fx:id="btNovo" layoutX="193.0" layoutY="372.0" mnemonicParsing="false" onMouseClicked="#novoUsuario" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #3498DB;" text="Novo" textFill="WHITE">
+    <Button id="btCadastrar" fx:id="btNovo" layoutX="193.0" layoutY="372.0" mnemonicParsing="false" onMousePressed="#novoUsuario" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #3498DB;" text="Novo" textFill="WHITE">
       <font>
         <Font name="System Bold" size="18.0" fx:id="x1" />
       </font>
     </Button>
-    <Button fx:id="btSalvar" font="$x1" layoutX="465.0" layoutY="372.0" mnemonicParsing="false" onMouseReleased="#salvar" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #58D68D" text="Salvar" textFill="WHITE" />
+    <Button fx:id="btSalvar" font="$x1" layoutX="465.0" layoutY="372.0" mnemonicParsing="false" onMousePressed="#salvar" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #58D68D" text="Salvar" textFill="WHITE" />
     <Button fx:id="btCancelar" font="$x1" layoutX="330.0" layoutY="372.0" mnemonicParsing="false" onMousePressed="#cancelar" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #C0392B " text="Cancelar" textFill="WHITE" />
     <Label font="$x2" layoutX="75.0" layoutY="162.0" text="Login" />
     <TextField fx:id="tfLogin" layoutX="75.0" layoutY="186.0" prefHeight="25.0" />

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="425.0" prefWidth="319.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <ListView fx:id="lvClientes" layoutX="51.0" layoutY="61.0" prefHeight="200.0" prefWidth="222.0" />
+      <Label layoutX="77.0" layoutY="21.0" text="Pesquisar Cliente">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfPesquisa" layoutX="60.0" layoutY="322.0" prefHeight="25.0" prefWidth="154.0" />
+      <Label layoutX="61.0" layoutY="270.0" text="Pesquisar por:" />
+      <ComboBox fx:id="cbPesquisa" layoutX="61.0" layoutY="287.0" prefHeight="25.0" prefWidth="154.0" />
+      <Button fx:id="btPesquisa" layoutX="220.0" layoutY="322.0" mnemonicParsing="false" onMousePressed="#listar" prefHeight="25.0" prefWidth="39.0" />
+      <Button fx:id="btCancelar" layoutX="27.0" layoutY="365.0" mnemonicParsing="false" onMousePressed="#cancelar" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #EC7063;" text="Cancelar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btSelecionar" layoutX="179.0" layoutY="366.0" mnemonicParsing="false" onMousePressed="#selecionaCliente" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #58D68D;" text="Selecionar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -5,6 +5,7 @@
  */
 package Logica;
 
+import View.PedidoController;
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -25,13 +26,16 @@ public class PedidoMain extends Application {
     private static Stage stage;
 
     @Override
-public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/View/Pedido.fxml"));
+    public void start(Stage stage) throws IOException {
+        /*FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/View/Pedido.fxml"));
+        PedidoController controller1 = new PedidoController();
+
         Parent root = loader.load();
         stage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.show();
+        controller1.showStage();
+        //stage.show();
         setStage(stage);
         //Fecha janela ao pressionar ESC
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (KeyEvent t) -> {
@@ -39,6 +43,11 @@ public void start(Stage stage) throws IOException {
                 fecha();
             }
         });
+        */
+        PedidoController controller1 = new PedidoController();
+
+        // Show the new stage
+        controller1.showStage();
     }
 
     /**

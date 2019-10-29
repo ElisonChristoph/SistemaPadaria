@@ -69,7 +69,7 @@ public class UsuarioDAO {
                 usuarios.add(usuario);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             Conexao.closeConnection(con, stmt, rs);
         }
@@ -91,7 +91,7 @@ public class UsuarioDAO {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             Conexao.closeConnection(con, stmt, rs);
         }

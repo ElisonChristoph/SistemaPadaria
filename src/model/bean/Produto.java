@@ -5,6 +5,8 @@
  */
 package model.bean;
 
+import java.util.List;
+
 /**
  *
  * @author Elison Christoph
@@ -18,9 +20,9 @@ public class Produto {
     private double valorPedido;//Não vai para o Banco
     private double qtdPedido;//Não vai para o Banco
     private int validade;	
-    private String ingredientes;
+    private List<Ingrediente> ingredientes;
 
-    public Produto(int id, Categoria categoria, String nome, double valor, int validade, String ingredientes) {
+    public Produto(int id, Categoria categoria, String nome, double valor, int validade, List<Ingrediente> ingredientes) {
         this.id = id;
         this.categoria = categoria;
         this.nome = nome;
@@ -73,11 +75,11 @@ public class Produto {
         this.validade = validade;
     }
 
-    public String getIngredientes() {
+    public List<Ingrediente> getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(String ingredientes) {
+    public void setIngredientes(List<Ingrediente> ingredientes) {
         this.ingredientes = ingredientes;
     }
 

@@ -10,5 +10,83 @@ package model.bean;
  * @author Elison Christoph
  */
 public class Cliente {
-    
+
+    private int id;
+    private String nome;
+    private String cpf;
+    private String identidade;
+    private String endereco;
+    private String bairro;
+    private String telefone;
+
+    public Cliente(int id, String nome, String cpf, String identidade, String endereco, String bairro, String telefone) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.identidade = identidade;
+        this.endereco = endereco;
+        this.bairro = bairro;
+        this.telefone = telefone;
+    }
+
+    public Cliente() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getIdentidade() {
+        return identidade;
+    }
+
+    public void setIdentidade(String identidade) {
+        this.identidade = identidade;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
 }
