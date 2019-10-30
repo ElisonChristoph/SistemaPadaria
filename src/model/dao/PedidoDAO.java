@@ -6,9 +6,11 @@ import javax.swing.JOptionPane;
 import model.bean.Usuario;
 import Conexão.Conexao;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.bean.Pedido;
@@ -24,10 +26,13 @@ public class PedidoDAO {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("INSERT INTO pedidos (id, codCliente, data, prudutos, finalizado)VALUES(?, ?, ?, ?, ?)");
+            stmt = con.prepareStatement("INSERT INTO pedidos (id, codCliente, data, produtos, finalizado)VALUES(?, ?, ?, ?, ?)");
             stmt.setInt(1, p.getId());
             stmt.setInt(2, p.getCodCliente());
-            stmt.setDate(3, p.getData());
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+            System.out.println(p.getData());
+            String dateFormat = dateformat.format(p.getData());
+            stmt.setString(3, dateFormat);
             String produtosPedido = new String();
             for (Produto prod : p.getProdutos()) {
                 produtosPedido += String.valueOf(prod.getId()) + ";" + String.valueOf(prod.getQtdPedido()) + ";" + String.valueOf(prod.getValorPedido()) + ":";
@@ -50,11 +55,11 @@ public class PedidoDAO {
     public void update(Pedido p) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
-        try {//id, codCliente, data, prudutos, finalizado
+        try {
             stmt = con.prepareStatement("UPDATE pedidos SET codCliente = ? ,data = ? ,produtos = ? ,finalizado = ? WHERE id = ?");
 
             stmt.setInt(1, p.getCodCliente());
-            stmt.setDate(2, p.getData());
+            stmt.setDate(2, (Date) p.getData());
             String produtosPedido = new String();
             for (Produto prod : p.getProdutos()) {
                 produtosPedido += String.valueOf(prod.getId()) + ";" + String.valueOf(prod.getQtdPedido()) + ";" + String.valueOf(prod.getValorPedido()) + ":";

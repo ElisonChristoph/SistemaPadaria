@@ -11,6 +11,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -120,14 +122,37 @@ public class PedidoController implements Initializable {
         clienteDao = new ClienteDAO();
         listCliente = clienteDao.read();
         onlyNumber(tfCodCliente);
-        if(controller1!=null){
+        atualizandoCliente();
+        Instant instant = Instant.now();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        LocalDate localDate = localDateTime.toLocalDate();
+        dpData.setValue(localDate);
+
+        if (controller1 != null) {
             carregarPedido();
+        } else {
+            novo = true;
+            pedido = new Pedido();
+            listProdPed = new ArrayList<Produto>();
+            pedido.setPrudutos(listProdPed);
         }
-        
+
     }
 
     public void showStage() {
         thisStage.showAndWait();
+    }
+
+    public void salvar() {
+        if (novo) {
+            pedido.setCodCliente(Integer.parseInt(tfCodCliente.getText()));
+            pedido.setData(new Date(dpData.getValue().getYear(), dpData.getValue().getMonthValue(), dpData.getValue().getDayOfMonth()));
+            pedido.setFinalizado(false);
+            pedido.setPrudutos(listProdPed);
+            pedidoDao.create(pedido);
+
+        }
+
     }
 
     public void removeItem() {
@@ -172,7 +197,6 @@ public class PedidoController implements Initializable {
     }
 
     public void carregarPedido() {
-        atualizandoCliente();
         pedido = pedidoDao.read().get(0);
         tfCodCliente.setText(String.valueOf(pedido.getCodCliente()));
         labelCodPedido.setText(String.valueOf(pedido.getId()));
