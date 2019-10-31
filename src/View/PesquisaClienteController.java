@@ -55,9 +55,11 @@ public class PesquisaClienteController implements Initializable {
     private Stage thisStage;
 
     private final PedidoController controller1;
+    private final ListarPedidosController controller2;
 
-    public PesquisaClienteController(PedidoController controller1) {
+    public PesquisaClienteController(PedidoController controller1, ListarPedidosController controller2) {
         this.controller1 = controller1;
+        this.controller2 = controller2;
         thisStage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PesquisaCliente.fxml"));
@@ -96,7 +98,13 @@ public class PesquisaClienteController implements Initializable {
     public void selecionaCliente() {
         int index = lvClientes.getSelectionModel().getSelectedIndex();
         if (index >= 0) {
-            controller1.recebeCliente(String.valueOf(clientes.get(index).getId()));
+            if (controller1 != null) {
+                controller1.recebeCliente(String.valueOf(clientes.get(index).getId()));
+            } else {
+                if (controller2 != null) {
+                    controller2.recebeCliente(String.valueOf(clientes.get(index).getId()));
+                }
+            }
             thisStage.close();
         }
     }

@@ -30,7 +30,6 @@ public class PedidoDAO {
             stmt.setInt(1, p.getId());
             stmt.setInt(2, p.getCodCliente());
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-            System.out.println(p.getData());
             String dateFormat = dateformat.format(p.getData());
             stmt.setString(3, dateFormat);
             String produtosPedido = new String();
@@ -59,7 +58,9 @@ public class PedidoDAO {
             stmt = con.prepareStatement("UPDATE pedidos SET codCliente = ? ,data = ? ,produtos = ? ,finalizado = ? WHERE id = ?");
 
             stmt.setInt(1, p.getCodCliente());
-            stmt.setDate(2, (Date) p.getData());
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+            String dateFormat = dateformat.format(p.getData());
+            stmt.setString(2, dateFormat);
             String produtosPedido = new String();
             for (Produto prod : p.getProdutos()) {
                 produtosPedido += String.valueOf(prod.getId()) + ";" + String.valueOf(prod.getQtdPedido()) + ";" + String.valueOf(prod.getValorPedido()) + ":";

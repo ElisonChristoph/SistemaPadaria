@@ -135,6 +135,7 @@ public class PedidoController implements Initializable {
             pedido = new Pedido();
             listProdPed = new ArrayList<Produto>();
             pedido.setPrudutos(listProdPed);
+           
         }
 
     }
@@ -144,15 +145,28 @@ public class PedidoController implements Initializable {
     }
 
     public void salvar() {
-        if (novo) {
+        if (Integer.parseInt(labelCodPedido.getText()) == 0) {
             pedido.setCodCliente(Integer.parseInt(tfCodCliente.getText()));
-            pedido.setData(new Date(dpData.getValue().getYear(), dpData.getValue().getMonthValue(), dpData.getValue().getDayOfMonth()));
-            pedido.setFinalizado(false);
+            String data = new String(String.valueOf(dpData.getValue().getYear()) + "/" + String.valueOf(dpData.getValue().getMonthValue()) + "/" + String.valueOf(dpData.getValue().getDayOfMonth()));
+            pedido.setData(new Date(data));
+            
             pedido.setPrudutos(listProdPed);
             pedidoDao.create(pedido);
-
+        } else {
+            pedido.setCodCliente(Integer.parseInt(tfCodCliente.getText()));
+            String data = new String(String.valueOf(dpData.getValue().getYear()) + "/" + String.valueOf(dpData.getValue().getMonthValue()) + "/" + String.valueOf(dpData.getValue().getDayOfMonth()));
+            pedido.setData(new Date(data));
+           
+            pedido.setPrudutos(listProdPed);
+            pedidoDao.update(pedido);
         }
 
+    }
+    
+    
+    public void finalizar(){
+        pedido.setFinalizado(true);
+        salvar();
     }
 
     public void removeItem() {
@@ -176,9 +190,8 @@ public class PedidoController implements Initializable {
     }
 
     public void selecionaCliente() {
-        PesquisaClienteController controller2 = new PesquisaClienteController(this);
+        PesquisaClienteController controller2 = new PesquisaClienteController(this, null);
         controller2.showStage();
-
     }
 
     public void adicionaProduto() {
