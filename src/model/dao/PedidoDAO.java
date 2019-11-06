@@ -127,6 +127,85 @@ public class PedidoDAO {
                                 for (Produto p : listaProdutos) {
                                     if (p.getId() == prod.getId()) {
                                         prod.setNome(p.getNome());
+                                        break;
+                                    }
+                                }
+                                prod.setQtdPedido(Double.parseDouble(i[1]));
+                                prod.setValorPedido(Double.parseDouble(i[2]));
+                            }
+                            itens.add(prod);
+                        }
+                    }
+                }
+                if (rs.getInt("finalizado") == 1) {
+                    finalizado = true;
+                } else {
+                    finalizado = false;
+                }
+                Pedido pedido = new Pedido(rs.getInt("id"), rs.getInt("codCliente"), rs.getDate("data"), itens, finalizado);
+                pedidos.add(pedido);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        return pedidos;
+    }
+
+    public List<Pedido> pesquisa(int id, int codCliente, int codUsuario, String dtInicio, String dtFim, String status) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Produto> listaProdutos = new ArrayList<>();
+        try {
+            stmt = con.prepareStatement("SELECT * FROM produtos");
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                listaProdutos.add(produto);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //Conexao.closeConnection(con, stmt, rs);
+        }
+
+        stmt = null;
+        rs = null;
+        List<Pedido> pedidos = new ArrayList<>();
+        try {
+            stmt = con.prepareStatement("SELECT * FROM pedidos where id like '%?%' AND codCliente like '%?%' AND data >= '?' AND data <= '?'  AND finalizado like'%?%' AND usuario like'%?%'");
+            stmt.setString(1, String.valueOf(id));
+            stmt.setInt(2, codCliente);
+            stmt.setString(3, dtInicio);
+            stmt.setString(4, dtFim);
+            stmt.setString(5, status);
+            stmt.setInt(6, codUsuario);
+            rs = stmt.executeQuery();
+            List<Produto> itens;
+            Produto prod;
+            String itenss;
+            String[] it;
+            String[] i;
+            boolean finalizado;
+            while (rs.next()) {
+                itens = new ArrayList<>();
+                if (rs.getString("produtos") != null) {
+                    itenss = rs.getString("produtos");
+                    it = itenss.split(":");
+                    for (int x = 0; x < it.length; x++) {
+                        if (!it[x].trim().isEmpty()) {
+                            prod = new Produto();
+                            i = it[x].split(";");
+                            for (int xx = 0; xx < i.length; xx++) {
+                                prod.setId(Integer.parseInt(i[0]));
+                                for (Produto p : listaProdutos) {
+                                    if (p.getId() == prod.getId()) {
+                                        prod.setNome(p.getNome());
+                                        break;
                                     }
                                 }
                                 prod.setQtdPedido(Double.parseDouble(i[1]));

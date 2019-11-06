@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -114,6 +116,11 @@ public class ListarPedidosController implements Initializable {
         onlyNumber(tfCodCliente);
         onlyNumber(tfCodUsuario);
         onlyNumber(tfNum);
+        clienteDao = new ClienteDAO();
+        pedidoDao = new PedidoDAO();
+        listCliente = clienteDao.read();
+        listPedidos = pedidoDao.pesquisa(9, 0, 0, null, null, null);
+        atualizandoCliente();
         listar();
     }
 
@@ -123,12 +130,27 @@ public class ListarPedidosController implements Initializable {
 
     public void listar() {
         olPedidos.clear();
-        Double total = 0.00;
+
         for (Pedido p : listPedidos) {
-        //    Double total = 0.00;
-            //    Double subtotal = p.getQtdPedido() * p.getValorPedido();
-            //   total += subtotal;
-            //     olProdutos.add(new ModeloTabelaItensPedido(String.valueOf(p.getId()), p.getNome(), String.valueOf(p.getQtdPedido()).replace('.', ','), String.valueOf("R$ " + p.getValorPedido()).replace('.', ','), String.valueOf("R$ " + subtotal).replace('.', ',')));
+            Double total = 0.00;
+            for (Produto prod : p.getProdutos()) {
+                total += prod.getQtdPedido() * prod.getValorPedido();
+            }
+            String cliente = new String();
+            for (Cliente c : listCliente) {
+                if (p.getCodCliente() == c.getId()) {
+                    cliente = c.getNome();
+                    break;
+                }
+            }
+            String status;
+            if (p.isFinalizado()) {
+                status = "Finalizado";
+            } else {
+                status = "Pendente";
+            }
+            olPedidos.add(new ModeloTabelaPedidos(String.valueOf(p.getId()), cliente, String.valueOf(p.getData()),
+                    status, String.valueOf(p.getData()), String.valueOf("R$ " + total).replace('.', ',')));
         }
         tabId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tabCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
@@ -146,6 +168,28 @@ public class ListarPedidosController implements Initializable {
     public void buscaCliente() {
         PesquisaClienteController controller2 = new PesquisaClienteController(null, this);
         controller2.showStage();
+    }
+
+    public void atualizandoCliente() {
+        tfCodCliente.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                atualizaCliente();
+            }
+        });
+    }
+
+    public void atualizaCliente() {
+        if (tfCodCliente.getText().isEmpty()) {
+            tfNomeCliente.setText("");
+        } else {
+            for (Cliente c : listCliente) {
+                if (c.getId() == Integer.parseInt(tfCodCliente.getText())) {
+                    tfNomeCliente.setText(c.getNome());
+                }
+            }
+        }
     }
 
     public void cancelar() {

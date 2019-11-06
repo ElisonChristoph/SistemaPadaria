@@ -135,7 +135,7 @@ public class PedidoController implements Initializable {
             pedido = new Pedido();
             listProdPed = new ArrayList<Produto>();
             pedido.setPrudutos(listProdPed);
-           
+           carregarPedido();
         }
 
     }
@@ -239,9 +239,13 @@ public class PedidoController implements Initializable {
     }
 
     public void atualizaCliente() {
-        for (Cliente c : listCliente) {
-            if (c.getId() == Integer.parseInt(tfCodCliente.getText())) {
-                tfNomeCliente.setText(c.getNome());
+        if (tfCodCliente.getText().isEmpty()) {
+            tfNomeCliente.setText("");
+        } else {
+            for (Cliente c : listCliente) {
+                if (c.getId() == Integer.parseInt(tfCodCliente.getText())) {
+                    tfNomeCliente.setText(c.getNome());
+                }
             }
         }
     }
