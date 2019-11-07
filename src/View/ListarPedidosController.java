@@ -7,6 +7,11 @@ package View;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -19,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -72,12 +78,9 @@ public class ListarPedidosController implements Initializable {
     @FXML
     private TextField tfNum;
     @FXML
-    private ChoiceBox<?> cbSituação;
-    @FXML
     private DatePicker dpIn;
     @FXML
     private DatePicker dpFin;
-
     private List<Cliente> listCliente;
     ObservableList<ModeloTabelaPedidos> olPedidos = FXCollections.observableArrayList();
     private final Stage thisStage;
@@ -97,6 +100,8 @@ public class ListarPedidosController implements Initializable {
     private TableColumn<ModeloTabelaItensPedido, String> tabDataFinalizar;
     @FXML
     private TableColumn<ModeloTabelaItensPedido, String> tabValorTotal;
+    @FXML
+    private ComboBox<String> cbSit;
 
     public ListarPedidosController() {
 
@@ -119,7 +124,16 @@ public class ListarPedidosController implements Initializable {
         clienteDao = new ClienteDAO();
         pedidoDao = new PedidoDAO();
         listCliente = clienteDao.read();
-        listPedidos = pedidoDao.pesquisa(9, 0, 0, null, null, null);
+        Instant instant = Instant.now();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        LocalDate localDate = localDateTime.toLocalDate();
+        dpIn.setValue(localDate.minusDays(30));
+        dpFin.setValue(localDate);
+        cbSit.getItems().add("Pendente");
+        cbSit.getItems().add("Finalizado");
+        cbSit.getItems().add("Todos");
+        cbSit.getSelectionModel().select(0);
+
         atualizandoCliente();
         listar();
     }
@@ -129,9 +143,23 @@ public class ListarPedidosController implements Initializable {
     }
 
     public void listar() {
+        String dataIn = new String(String.valueOf(dpIn.getValue().getYear()) + "/" + String.valueOf(dpIn.getValue().getMonthValue()) + "/" + String.valueOf(dpIn.getValue().getDayOfMonth()));
+        Date dt1 = new Date(dataIn);
+        String dataFn = new String(String.valueOf(dpFin.getValue().getYear()) + "/" + String.valueOf(dpFin.getValue().getMonthValue()) + "/" + String.valueOf(dpFin.getValue().getDayOfMonth()));
+        Date dt2 = new Date(dataFn);
+        String status = new String();
+        
+        if (cbSit.getSelectionModel().getSelectedIndex() == 2) {
+            status = "";
+        } else {
+            status = String.valueOf(cbSit.getSelectionModel().getSelectedIndex());
+        }
+        listPedidos = pedidoDao.pesquisa(tfNum.getText(), tfCodCliente.getText(), tfCodUsuario.getText(), dt1, dt2, status);
+
         olPedidos.clear();
 
         for (Pedido p : listPedidos) {
+
             Double total = 0.00;
             for (Produto prod : p.getProdutos()) {
                 total += prod.getQtdPedido() * prod.getValorPedido();
@@ -143,7 +171,7 @@ public class ListarPedidosController implements Initializable {
                     break;
                 }
             }
-            String status;
+            
             if (p.isFinalizado()) {
                 status = "Finalizado";
             } else {
@@ -165,6 +193,7 @@ public class ListarPedidosController implements Initializable {
         tfCodCliente.setText(codCliente);
     }
 
+    @FXML
     public void buscaCliente() {
         PesquisaClienteController controller2 = new PesquisaClienteController(null, this);
         controller2.showStage();
@@ -192,6 +221,7 @@ public class ListarPedidosController implements Initializable {
         }
     }
 
+    @FXML
     public void cancelar() {
         thisStage.close();
     }

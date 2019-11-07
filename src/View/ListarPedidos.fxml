@@ -50,23 +50,15 @@
     <TextField fx:id="tfCodUsuario" layoutX="109.0" layoutY="139.0" prefWidth="46.0" />
     <TextField fx:id="tfNomeUsuario" layoutX="159.0" layoutY="139.0" prefWidth="200.0" />
     <Button fx:id="btUsuarios" font="$x3" layoutX="368.0" layoutY="139.0" minHeight="22.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="84.0" style="-fx-background-color: #5DADE2;" text="Usuários" textFill="WHITE" />
-    <Button fx:id="btPesquisar" font="$x1" layoutX="604.0" layoutY="241.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #2ECC71;" text="Pesquisar" textFill="WHITE" />
+    <Button fx:id="btPesquisar" font="$x1" layoutX="604.0" layoutY="241.0" mnemonicParsing="false" onMousePressed="#listar" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #2ECC71;" text="Pesquisar" textFill="WHITE" />
     <Label font="$x2" layoutX="49.0" layoutY="169.0" text="Período:" />
     <Label font="$x2" layoutX="268.0" layoutY="171.0" text="Até" />
     <Label font="$x2" layoutX="110.0" layoutY="171.0" text="De" />
     <Label font="$x2" layoutX="50.0" layoutY="79.0" text="Número:" />
     <TextField fx:id="tfNum" layoutX="109.0" layoutY="77.0" prefWidth="73.0" />
     <Label font="$x2" layoutX="48.0" layoutY="201.0" text="Situação:" />
-    <ChoiceBox fx:id="cbSituação" layoutX="110.0" layoutY="201.0" prefWidth="141.0">
-      <items>
-        <FXCollections fx:factory="observableArrayList">
-          <String fx:value="Item 1" />
-          <String fx:value="Item 2" />
-          <String fx:value="Item 3" />
-        </FXCollections>
-      </items>
-    </ChoiceBox>
       <DatePicker fx:id="dpIn" layoutX="138.0" layoutY="169.0" prefHeight="25.0" prefWidth="118.0" />
       <DatePicker fx:id="dpFin" layoutX="296.0" layoutY="169.0" prefHeight="25.0" prefWidth="118.0" />
+      <ComboBox fx:id="cbSit" layoutX="107.0" layoutY="199.0" prefWidth="150.0" />
   </children>
 </AnchorPane>

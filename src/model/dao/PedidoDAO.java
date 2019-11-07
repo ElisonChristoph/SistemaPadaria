@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import model.bean.Usuario;
 import Conexão.Conexao;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -153,7 +153,7 @@ public class PedidoDAO {
         return pedidos;
     }
 
-    public List<Pedido> pesquisa(int id, int codCliente, int codUsuario, String dtInicio, String dtFim, String status) {
+    public List<Pedido> pesquisa(String id, String codCliente, String codUsuario, Date dtInicio, Date dtFim, String status) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -177,14 +177,20 @@ public class PedidoDAO {
         rs = null;
         List<Pedido> pedidos = new ArrayList<>();
         try {
-            stmt = con.prepareStatement("SELECT * FROM pedidos where id like '%?%' AND codCliente like '%?%' AND data >= '?' AND data <= '?'  AND finalizado like'%?%' AND usuario like'%?%'");
-            stmt.setString(1, String.valueOf(id));
-            stmt.setInt(2, codCliente);
-            stmt.setString(3, dtInicio);
-            stmt.setString(4, dtFim);
-            stmt.setString(5, status);
-            stmt.setInt(6, codUsuario);
+            stmt = con.prepareStatement("SELECT * FROM pedidos where id like ? AND codCliente like ? AND data >= ? AND data <= ?  AND finalizado like ? AND usuario like ?");
+            stmt.setString(1, "%" + id + "%");
+            stmt.setString(2, "%" + codCliente + "%");
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+            String dateFormatIn = dateformat.format(dtInicio);
+            stmt.setString(3, dateFormatIn);
+            String dateFormatFn = dateformat.format(dtFim);
+            stmt.setString(4, dateFormatFn);
+            stmt.setString(5, "%" + status + "%");
+            stmt.setString(6, "%" + codUsuario + "%");
+
+            System.out.println(stmt.toString());
             rs = stmt.executeQuery();
+
             List<Produto> itens;
             Produto prod;
             String itenss;
