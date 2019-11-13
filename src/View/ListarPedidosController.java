@@ -7,8 +7,15 @@ package View;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -70,12 +78,9 @@ public class ListarPedidosController implements Initializable {
     @FXML
     private TextField tfNum;
     @FXML
-    private ChoiceBox<?> cbSituação;
-    @FXML
     private DatePicker dpIn;
     @FXML
     private DatePicker dpFin;
-
     private List<Cliente> listCliente;
     ObservableList<ModeloTabelaPedidos> olPedidos = FXCollections.observableArrayList();
     private final Stage thisStage;
@@ -95,6 +100,8 @@ public class ListarPedidosController implements Initializable {
     private TableColumn<ModeloTabelaItensPedido, String> tabDataFinalizar;
     @FXML
     private TableColumn<ModeloTabelaItensPedido, String> tabValorTotal;
+    @FXML
+    private ComboBox<String> cbSit;
 
     public ListarPedidosController() {
 
@@ -114,6 +121,20 @@ public class ListarPedidosController implements Initializable {
         onlyNumber(tfCodCliente);
         onlyNumber(tfCodUsuario);
         onlyNumber(tfNum);
+        clienteDao = new ClienteDAO();
+        pedidoDao = new PedidoDAO();
+        listCliente = clienteDao.read();
+        Instant instant = Instant.now();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        LocalDate localDate = localDateTime.toLocalDate();
+        dpIn.setValue(localDate.minusDays(30));
+        dpFin.setValue(localDate);
+        cbSit.getItems().add("Pendente");
+        cbSit.getItems().add("Finalizado");
+        cbSit.getItems().add("Todos");
+        cbSit.getSelectionModel().select(0);
+
+        atualizandoCliente();
         listar();
     }
 
@@ -122,13 +143,42 @@ public class ListarPedidosController implements Initializable {
     }
 
     public void listar() {
+        String dataIn = new String(String.valueOf(dpIn.getValue().getYear()) + "/" + String.valueOf(dpIn.getValue().getMonthValue()) + "/" + String.valueOf(dpIn.getValue().getDayOfMonth()));
+        Date dt1 = new Date(dataIn);
+        String dataFn = new String(String.valueOf(dpFin.getValue().getYear()) + "/" + String.valueOf(dpFin.getValue().getMonthValue()) + "/" + String.valueOf(dpFin.getValue().getDayOfMonth()));
+        Date dt2 = new Date(dataFn);
+        String status = new String();
+        
+        if (cbSit.getSelectionModel().getSelectedIndex() == 2) {
+            status = "";
+        } else {
+            status = String.valueOf(cbSit.getSelectionModel().getSelectedIndex());
+        }
+        listPedidos = pedidoDao.pesquisa(tfNum.getText(), tfCodCliente.getText(), tfCodUsuario.getText(), dt1, dt2, status);
+
         olPedidos.clear();
-        Double total = 0.00;
+
         for (Pedido p : listPedidos) {
-        //    Double total = 0.00;
-            //    Double subtotal = p.getQtdPedido() * p.getValorPedido();
-            //   total += subtotal;
-            //     olProdutos.add(new ModeloTabelaItensPedido(String.valueOf(p.getId()), p.getNome(), String.valueOf(p.getQtdPedido()).replace('.', ','), String.valueOf("R$ " + p.getValorPedido()).replace('.', ','), String.valueOf("R$ " + subtotal).replace('.', ',')));
+
+            Double total = 0.00;
+            for (Produto prod : p.getProdutos()) {
+                total += prod.getQtdPedido() * prod.getValorPedido();
+            }
+            String cliente = new String();
+            for (Cliente c : listCliente) {
+                if (p.getCodCliente() == c.getId()) {
+                    cliente = c.getNome();
+                    break;
+                }
+            }
+            
+            if (p.isFinalizado()) {
+                status = "Finalizado";
+            } else {
+                status = "Pendente";
+            }
+            olPedidos.add(new ModeloTabelaPedidos(String.valueOf(p.getId()), cliente, String.valueOf(p.getData()),
+                    status, String.valueOf(p.getData()), String.valueOf("R$ " + total).replace('.', ',')));
         }
         tabId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tabCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
@@ -143,11 +193,35 @@ public class ListarPedidosController implements Initializable {
         tfCodCliente.setText(codCliente);
     }
 
+    @FXML
     public void buscaCliente() {
         PesquisaClienteController controller2 = new PesquisaClienteController(null, this);
         controller2.showStage();
     }
 
+    public void atualizandoCliente() {
+        tfCodCliente.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                atualizaCliente();
+            }
+        });
+    }
+
+    public void atualizaCliente() {
+        if (tfCodCliente.getText().isEmpty()) {
+            tfNomeCliente.setText("");
+        } else {
+            for (Cliente c : listCliente) {
+                if (c.getId() == Integer.parseInt(tfCodCliente.getText())) {
+                    tfNomeCliente.setText(c.getNome());
+                }
+            }
+        }
+    }
+
+    @FXML
     public void cancelar() {
         thisStage.close();
     }
