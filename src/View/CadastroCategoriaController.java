@@ -59,7 +59,7 @@ public class CadastroCategoriaController implements Initializable {
     ObservableList<ModeloTabela> categorias = FXCollections.observableArrayList();
 
     @FXML
-    private void CadastrarCategoria(ActionEvent event) {
+    private void CadastrarCategoria(ActionEvent event) throws SQLException {
 
         Categoria c = new Categoria();
         CategoriaDAO dao = new CategoriaDAO();
@@ -74,7 +74,7 @@ public class CadastroCategoriaController implements Initializable {
 
     }
 
-    private void PopularTabela() {
+    private void PopularTabela() throws SQLException {
 
         try {
             Connection con = Conexao.getConnection();
@@ -93,6 +93,7 @@ public class CadastroCategoriaController implements Initializable {
         tablenome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
         table.setItems(categorias);
+        conn.close();
 
     }
 
@@ -113,7 +114,11 @@ public class CadastroCategoriaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        PopularTabela();
+        try {
+            PopularTabela();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroCategoriaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 

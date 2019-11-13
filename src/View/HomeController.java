@@ -38,7 +38,7 @@ public class HomeController implements Initializable {
     Scene scene;
     
     @FXML
-    private TextField tfusuario; 
+    public TextField tfusuario; 
     @FXML
     private Button bacessar;
     @FXML

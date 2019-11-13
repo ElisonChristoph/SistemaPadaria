@@ -105,7 +105,7 @@ public class CadastroProdutoController implements Initializable {
             ResultSet rsi = con.createStatement().executeQuery("select * from ingredientes");
             
             while(rsi.next()){
-                ingredientes.add(new ModeloTabela(rsi.getString("id"), rsi.getString("nome")));
+                ingredientes.add(new ModeloTabela(rsi.getString("codIngrediente"), rsi.getString("nomeIngrediente")));
             }
             
         } catch (SQLException ex) {
@@ -127,7 +127,7 @@ public class CadastroProdutoController implements Initializable {
             ResultSet rsis = con.createStatement().executeQuery("select * from ingredientes");
             
             while(rsis.next()){
-                ingredientes.add(new ModeloTabela(rsis.getString("id"), rsis.getString("nome")));
+                ingredientes.add(new ModeloTabela(rsis.getString("codIngrediente"), rsis.getString("nomeIngrediente")));
             }
             
         } catch (SQLException ex) {
