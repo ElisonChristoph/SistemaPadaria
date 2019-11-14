@@ -217,7 +217,7 @@ public class EntradaProdutoDAO {
                 } else {
                     finalizado = false;
                 }
-                Pedido pedido = new Pedido(rs.getInt("id"), rs.getInt("codCliente"), rs.getDate("data"), itens, finalizado);
+                Pedido pedido = new Pedido(rs.getInt("id"), rs.getInt("codCliente"), rs.getDate("data"),rs.getDate("dataFim"), itens, finalizado);
                 pedidos.add(pedido);
             }
         } catch (SQLException ex) {

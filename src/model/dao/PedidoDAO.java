@@ -26,21 +26,23 @@ public class PedidoDAO {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("INSERT INTO pedidos (id, codCliente, data, produtos, finalizado)VALUES(?, ?, ?, ?, ?)");
+            stmt = con.prepareStatement("INSERT INTO pedidos (id, codCliente, data, dataFim, produtos, finalizado)VALUES(?, ?, ?, ?, ?, ?)");
             stmt.setInt(1, p.getId());
             stmt.setInt(2, p.getCodCliente());
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
             String dateFormat = dateformat.format(p.getData());
+            String dateFormatFim = dateformat.format(p.getDataFim());
             stmt.setString(3, dateFormat);
+            stmt.setString(4, dateFormatFim);
             String produtosPedido = new String();
             for (Produto prod : p.getProdutos()) {
                 produtosPedido += String.valueOf(prod.getId()) + ";" + String.valueOf(prod.getQtdPedido()) + ";" + String.valueOf(prod.getValorPedido()) + ":";
             }
-            stmt.setString(4, produtosPedido);
+            stmt.setString(5, produtosPedido);
             if (p.isFinalizado()) {
-                stmt.setInt(5, 1);
+                stmt.setInt(6, 1);
             } else {
-                stmt.setInt(5, 0);
+                stmt.setInt(6, 0);
             }
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
@@ -55,22 +57,24 @@ public class PedidoDAO {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("UPDATE pedidos SET codCliente = ? ,data = ? ,produtos = ? ,finalizado = ? WHERE id = ?");
+            stmt = con.prepareStatement("UPDATE pedidos SET codCliente = ? , data = ?, dataFim = ? ,produtos = ? ,finalizado = ? WHERE id = ?");
             stmt.setInt(1, p.getCodCliente());
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
             String dateFormat = dateformat.format(p.getData());
+            String dateFormatFim = dateformat.format(p.getDataFim());
             stmt.setString(2, dateFormat);
+            stmt.setString(3, dateFormatFim);
             String produtosPedido = new String();
             for (Produto prod : p.getProdutos()) {
                 produtosPedido += String.valueOf(prod.getId()) + ";" + String.valueOf(prod.getQtdPedido()) + ";" + String.valueOf(prod.getValorPedido()) + ":";
             }
-            stmt.setString(3, produtosPedido);
+            stmt.setString(4, produtosPedido);
             if (p.isFinalizado()) {
-                stmt.setInt(4, 1);
+                stmt.setInt(5, 1);
             } else {
-                stmt.setInt(4, 0);
+                stmt.setInt(5, 0);
             }
-            stmt.setInt(5, p.getId());
+            stmt.setInt(6, p.getId());
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
         } catch (SQLException ex) {
@@ -141,7 +145,7 @@ public class PedidoDAO {
                 } else {
                     finalizado = false;
                 }
-                Pedido pedido = new Pedido(rs.getInt("id"), rs.getInt("codCliente"), rs.getDate("data"), itens, finalizado);
+                Pedido pedido = new Pedido(rs.getInt("id"), rs.getInt("codCliente"), rs.getDate("data"), rs.getDate("dataFim"), itens, finalizado);
                 pedidos.add(pedido);
             }
         } catch (SQLException ex) {
@@ -222,7 +226,7 @@ public class PedidoDAO {
                 } else {
                     finalizado = false;
                 }
-                Pedido pedido = new Pedido(rs.getInt("id"), rs.getInt("codCliente"), rs.getDate("data"), itens, finalizado);
+                Pedido pedido = new Pedido(rs.getInt("id"), rs.getInt("codCliente"), rs.getDate("data"), rs.getDate("dataFim"),itens, finalizado);
                 pedidos.add(pedido);
             }
         } catch (SQLException ex) {

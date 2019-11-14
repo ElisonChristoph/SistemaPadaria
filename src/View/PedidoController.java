@@ -106,6 +106,8 @@ public class PedidoController implements Initializable {
     private final ListarPedidosController controller1;
     private EstoqueProdutosDAO epDAO;
     private List<Produto> estoque;
+    @FXML
+    private DatePicker dpDataFinalizar;
 
     public PedidoController(ListarPedidosController controller1) {
         this.controller1 = controller1;
@@ -145,61 +147,81 @@ public class PedidoController implements Initializable {
             pedido.setPrudutos(listProdPed);
             carregarPedido();
         }
-
     }
 
     public void showStage() {
         thisStage.showAndWait();
     }
 
+    @FXML
     public void salvar() {
         if (Integer.parseInt(labelCodPedido.getText()) == 0) {
             pedido.setCodCliente(Integer.parseInt(tfCodCliente.getText()));
             String data = new String(String.valueOf(dpData.getValue().getYear()) + "/" + String.valueOf(dpData.getValue().getMonthValue()) + "/" + String.valueOf(dpData.getValue().getDayOfMonth()));
+            String dataFim = new String(String.valueOf(dpDataFinalizar.getValue().getYear()) + "/" + String.valueOf(dpDataFinalizar.getValue().getMonthValue()) + "/" + String.valueOf(dpDataFinalizar.getValue().getDayOfMonth()));
             pedido.setData(new Date(data));
-
-            pedido.setPrudutos(listProdPed);
+            pedido.setDataFim(new Date(dataFim));
             pedidoDao.create(pedido);
+            
         } else {
             pedido.setCodCliente(Integer.parseInt(tfCodCliente.getText()));
             String data = new String(String.valueOf(dpData.getValue().getYear()) + "/" + String.valueOf(dpData.getValue().getMonthValue()) + "/" + String.valueOf(dpData.getValue().getDayOfMonth()));
+            String dataFim = new String(String.valueOf(dpDataFinalizar.getValue().getYear()) + "/" + String.valueOf(dpDataFinalizar.getValue().getMonthValue()) + "/" + String.valueOf(dpDataFinalizar.getValue().getDayOfMonth()));
             pedido.setData(new Date(data));
-
-            pedido.setPrudutos(listProdPed);
+            pedido.setDataFim(new Date(dataFim));
             pedidoDao.update(pedido);
         }
-
     }
 
+    @FXML
     public void finalizar() {
-        //pedido.setFinalizado(true);
-        //salvar();
-        validaEstoque();
+        if (validaEstoque()) {
+            pedido.setFinalizado(true);
+            salvar();
+            retiraDoEstoque();
+        }
     }
 
-    public void validaEstoque() {
+    public boolean estaNaLista(int id) {
+        for (Produto p : pedido.getProdutos()) {
+            if (p.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean validaEstoque() {
         estoque = epDAO.read();
         for (Produto p : pedido.getProdutos()) {
             boolean tem = false;
             for (Produto prod : estoque) {
                 if (p.getId() == prod.getId()) {
-                    if (prod.getEstoque() - p.getQtdPedido() < 0.00 ) {
-                        JOptionPane.showMessageDialog(null, "Produto: " + p.getNome() + " sem estoque.");
-                    }
                     tem = true;
-                    break;
-                } else {
-                    tem = false;
+                    if (prod.getEstoque() - p.getQtdPedido() < 0.00) {
+                        System.out.println(prod.getEstoque() + "  " + p.getNome());
+                        JOptionPane.showMessageDialog(null, "Produto: " + p.getNome() + "sem estoque.");
+                        tvProdutos.getSelectionModel().select(pedido.getProdutos().indexOf(p));
+                        return false;
+                    } else {
+                        p.setEstoque(prod.getEstoque() - p.getQtdPedido());
+                    }
                 }
             }
-            if(!tem){
-                JOptionPane.showMessageDialog(null, "Produto: " + p.getNome() + " sem estoque.");
+            if (!tem) {
+                JOptionPane.showMessageDialog(null, "Produto: " + p.getNome() + "sem estoque.");
+                tvProdutos.getSelectionModel().select(pedido.getProdutos().indexOf(p));
+                return false;
             }
-
         }
-
+        return true;
     }
 
+    public void retiraDoEstoque() {
+        epDAO.update(pedido.getProdutos());
+    }
+
+    @FXML
     public void removeItem() {
         if (tvProdutos.getSelectionModel().getSelectedIndex() >= 0) {
             pedido.getProdutos().remove(tvProdutos.getSelectionModel().getSelectedIndex());
@@ -207,6 +229,7 @@ public class PedidoController implements Initializable {
         }
     }
 
+    @FXML
     public void cancelar() {
         thisStage.close();
     }
@@ -220,11 +243,13 @@ public class PedidoController implements Initializable {
         popularProdutos();
     }
 
+    @FXML
     public void selecionaCliente() {
         PesquisaClienteController controller2 = new PesquisaClienteController(this, null);
         controller2.showStage();
     }
 
+    @FXML
     public void adicionaProduto() {
         AddItemPedidoController controller2 = new AddItemPedidoController(this);
         controller2.showStage();
@@ -241,21 +266,30 @@ public class PedidoController implements Initializable {
     }
 
     public void carregarPedido() {
-        pedido = pedidoDao.read().get(0);
-        tfCodCliente.setText(String.valueOf(pedido.getCodCliente()));
-        labelCodPedido.setText(String.valueOf(pedido.getId()));
-        Instant instant = Instant.ofEpochMilli(pedido.getData().getTime());
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-        LocalDate localDate = localDateTime.toLocalDate();
-        dpData.setValue(localDate);
-        popularProdutos();
+        if (novo) {
+            LocalDate localDate = LocalDate.now();
+            dpData.setValue(localDate);
+            dpDataFinalizar.setValue(localDate);
+        } else {
+            tfCodCliente.setText(String.valueOf(pedido.getCodCliente()));
+            labelCodPedido.setText(String.valueOf(pedido.getId()));
+            Instant instant = Instant.ofEpochMilli(pedido.getData().getTime());
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+            LocalDate localDate = localDateTime.toLocalDate();
+            dpData.setValue(localDate);
+            Instant instant2 = Instant.ofEpochMilli(pedido.getDataFim().getTime());
+            LocalDateTime localDateTime2 = LocalDateTime.ofInstant(instant2, ZoneId.systemDefault());
+            LocalDate localDate2 = localDateTime2.toLocalDate();
+            dpDataFinalizar.setValue(localDate2);
+            popularProdutos();
+        }
+
     }
 
     public void popularProdutos() {
-        listProdPed = pedido.getProdutos();
         olProdutos.clear();
         Double total = 0.00;
-        for (Produto p : listProdPed) {
+        for (Produto p : pedido.getProdutos()) {
             Double subtotal = p.getQtdPedido() * p.getValorPedido();
             total += subtotal;
             olProdutos.add(new ModeloTabelaItensPedido(String.valueOf(p.getId()), p.getNome(), String.valueOf(p.getQtdPedido()).replace('.', ','), String.valueOf("R$ " + p.getValorPedido()).replace('.', ','), String.valueOf("R$ " + subtotal).replace('.', ',')));
@@ -269,6 +303,7 @@ public class PedidoController implements Initializable {
         labelTotal.setText("R$ " + String.valueOf(total));
     }
 
+    @FXML
     public void atualizaCliente() {
         if (tfCodCliente.getText().isEmpty()) {
             tfNomeCliente.setText("");

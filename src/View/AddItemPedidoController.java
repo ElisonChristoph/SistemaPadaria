@@ -18,14 +18,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javax.swing.JOptionPane;
 import model.bean.Categoria;
 import model.bean.Produto;
 import model.dao.CategoriaDAO;
+import model.dao.EstoqueProdutosDAO;
 import model.dao.ProdutoDAO;
 
 /**
@@ -64,6 +67,10 @@ public class AddItemPedidoController implements Initializable {
     private Button btPesquisa;
     private ObservableList lista;
     private ProdutoDAO dao;
+    @FXML
+    private Label labelEstoque;
+    private List<Produto> estoque;
+    private EstoqueProdutosDAO epDAO;
 
     public AddItemPedidoController(PedidoController controller1) {
         this.controller1 = controller1;
@@ -85,6 +92,9 @@ public class AddItemPedidoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        estoque = new ArrayList<>();
+        epDAO = new EstoqueProdutosDAO();
+        estoque = epDAO.read();
         lista = FXCollections.observableArrayList();
         listaProdutos = new ArrayList<>();
         produto = new Produto();
@@ -97,6 +107,7 @@ public class AddItemPedidoController implements Initializable {
         tfQtd.setText("1");
     }
 
+    @FXML
     public void alteraPesquisa() {
         int index = cbPesquisaPor.getSelectionModel().getSelectedIndex();
         switch (index) {
@@ -131,6 +142,7 @@ public class AddItemPedidoController implements Initializable {
         cbCategorias.getSelectionModel().select(0);
     }
 
+    @FXML
     public void listar() {
         listaProdutos.clear();
         lista.clear();
@@ -147,30 +159,46 @@ public class AddItemPedidoController implements Initializable {
                 listaProdutos = dao.readForCat(listaCategorias.get(cbCategorias.getSelectionModel().getSelectedIndex()).getId());
                 break;
         }
-
         for (Produto p : listaProdutos) {
             lista.add(p.getNome());
         }
         lvProdutos.setItems(lista);
     }
 
+    @FXML
     public void alteraProduto() {
         if (lvProdutos.getSelectionModel().getSelectedIndex() >= 0) {
             tfValor.setText(String.valueOf(listaProdutos.get(lvProdutos.getSelectionModel().getSelectedIndex()).getValor()).replace('.', ','));
+            for (Produto p : estoque) {
+                if (listaProdutos.get(lvProdutos.getSelectionModel().getSelectedIndex()).getId() == p.getId()) {
+                    labelEstoque.setText(String.valueOf(p.getEstoque()));
+                }
+            }
         }
     }
 
+    @FXML
     public void enviaItem() {
         int index = lvProdutos.getSelectionModel().getSelectedIndex();
         if (index >= 0) {
-            produto = listaProdutos.get(index);
-            produto.setQtdPedido(Double.parseDouble(tfQtd.getText().replace(',', '.')));
-            produto.setValorPedido(Double.parseDouble(tfValor.getText().replace(',', '.')));
-            controller1.recebeItem(produto);
-            thisStage.close();
+            if (controller1.estaNaLista(listaProdutos.get(index).getId())) {
+                JOptionPane.showMessageDialog(null, "O produto: " + listaProdutos.get(index).getNome() + "já está no Pedido.");
+            } else {
+                if (Double.parseDouble(labelEstoque.getText().replace(',', '.')) - Double.parseDouble(tfQtd.getText().replace(',', '.')) < 0) {
+                    JOptionPane.showMessageDialog(null, "Produto: " + listaProdutos.get(index).getNome() + "sem estoque.");
+                } else {
+                    produto = listaProdutos.get(index);
+                    produto.setQtdPedido(Double.parseDouble(tfQtd.getText().replace(',', '.')));
+                    produto.setValorPedido(Double.parseDouble(tfValor.getText().replace(',', '.')));
+                    controller1.recebeItem(produto);
+                    thisStage.close();
+                }
+            }
+
         }
     }
 
+    @FXML
     public void cancelar() {
         thisStage.close();
     }
