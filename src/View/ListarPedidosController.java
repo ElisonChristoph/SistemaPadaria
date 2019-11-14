@@ -7,6 +7,7 @@ package View;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -148,18 +149,14 @@ public class ListarPedidosController implements Initializable {
         String dataFn = new String(String.valueOf(dpFin.getValue().getYear()) + "/" + String.valueOf(dpFin.getValue().getMonthValue()) + "/" + String.valueOf(dpFin.getValue().getDayOfMonth()));
         Date dt2 = new Date(dataFn);
         String status = new String();
-        
         if (cbSit.getSelectionModel().getSelectedIndex() == 2) {
             status = "";
         } else {
             status = String.valueOf(cbSit.getSelectionModel().getSelectedIndex());
         }
         listPedidos = pedidoDao.pesquisa(tfNum.getText(), tfCodCliente.getText(), tfCodUsuario.getText(), dt1, dt2, status);
-
         olPedidos.clear();
-
         for (Pedido p : listPedidos) {
-
             Double total = 0.00;
             for (Produto prod : p.getProdutos()) {
                 total += prod.getQtdPedido() * prod.getValorPedido();
@@ -171,12 +168,13 @@ public class ListarPedidosController implements Initializable {
                     break;
                 }
             }
-            
             if (p.isFinalizado()) {
                 status = "Finalizado";
             } else {
                 status = "Pendente";
             }
+            SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+        String dateFormat1 = dateformat.format(dt1);
             olPedidos.add(new ModeloTabelaPedidos(String.valueOf(p.getId()), cliente, String.valueOf(p.getData()),
                     status, String.valueOf(p.getData()), String.valueOf("R$ " + total).replace('.', ',')));
         }
@@ -197,6 +195,15 @@ public class ListarPedidosController implements Initializable {
     public void buscaCliente() {
         PesquisaClienteController controller2 = new PesquisaClienteController(null, this);
         controller2.showStage();
+    }
+
+    public void abrePedido() {
+        PedidoController controller2 = new PedidoController(this);
+        controller2.showStage();
+    }
+
+    public Pedido getPedido() {
+        return listPedidos.get(tvPedidos.getSelectionModel().getSelectedIndex());
     }
 
     public void atualizandoCliente() {
@@ -224,14 +231,6 @@ public class ListarPedidosController implements Initializable {
     @FXML
     public void cancelar() {
         thisStage.close();
-    }
-
-    public void editar() {
-
-    }
-
-    public void pesquisar() {
-
     }
 
     public static void onlyNumber(final TextField textField) {

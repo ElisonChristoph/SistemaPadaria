@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.bean.EntradaProduto;
 import model.bean.Pedido;
 import model.bean.Produto;
 
@@ -20,7 +21,7 @@ import model.bean.Produto;
  *
  * @author Elison Christoph
  */
-public class PedidoDAO {
+public class EntradaProdutoDAO {
 
     public void create(Pedido p) {
         Connection con = Conexao.getConnection();
@@ -80,7 +81,7 @@ public class PedidoDAO {
         }
     }
 
-    public List<Pedido> read() {
+    public List<EntradaProduto> read() {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -102,16 +103,15 @@ public class PedidoDAO {
 
         stmt = null;
         rs = null;
-        List<Pedido> pedidos = new ArrayList<>();
+        List<EntradaProduto> ListaEntProd = new ArrayList<>();
         try {
-            stmt = con.prepareStatement("SELECT * FROM pedidos");
+            stmt = con.prepareStatement("SELECT * FROM entradaProdutos");
             rs = stmt.executeQuery();
             List<Produto> itens;
             Produto prod;
             String itenss;
             String[] it;
             String[] i;
-            boolean finalizado;
             while (rs.next()) {
                 itens = new ArrayList<>();
                 if (rs.getString("produtos") != null) {
@@ -129,27 +129,22 @@ public class PedidoDAO {
                                         break;
                                     }
                                 }
-                                prod.setQtdPedido(Double.parseDouble(i[1]));
-                                prod.setValorPedido(Double.parseDouble(i[2]));
+                                prod.setQtdEntrada(Double.parseDouble(i[1]));
                             }
                             itens.add(prod);
                         }
                     }
                 }
-                if (rs.getInt("finalizado") == 1) {
-                    finalizado = true;
-                } else {
-                    finalizado = false;
-                }
-                Pedido pedido = new Pedido(rs.getInt("id"), rs.getInt("codCliente"), rs.getDate("data"), itens, finalizado);
-                pedidos.add(pedido);
+
+                EntradaProduto entProd = new EntradaProduto(rs.getInt("id"), rs.getDate("data"), itens);
+                ListaEntProd.add(entProd);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             Conexao.closeConnection(con, stmt, rs);
         }
-        return pedidos;
+        return ListaEntProd;
     }
 
     public List<Pedido> pesquisa(String id, String codCliente, String codUsuario, Date dtInicio, Date dtFim, String status) {
