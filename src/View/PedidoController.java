@@ -35,11 +35,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javax.swing.JOptionPane;
 import model.bean.Cliente;
 import model.bean.ModeloTabelaItensPedido;
 import model.bean.Pedido;
 import model.bean.Produto;
 import model.dao.ClienteDAO;
+import model.dao.EstoqueProdutosDAO;
 import model.dao.PedidoDAO;
 
 /**
@@ -102,6 +104,8 @@ public class PedidoController implements Initializable {
     private final Stage thisStage;
 
     private final ListarPedidosController controller1;
+    private EstoqueProdutosDAO epDAO;
+    private List<Produto> estoque;
 
     public PedidoController(ListarPedidosController controller1) {
         this.controller1 = controller1;
@@ -120,6 +124,8 @@ public class PedidoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         pedidoDao = new PedidoDAO();
         clienteDao = new ClienteDAO();
+        epDAO = new EstoqueProdutosDAO();
+        estoque = new ArrayList<>();
         listCliente = clienteDao.read();
         onlyNumber(tfCodCliente);
         atualizandoCliente();
@@ -129,13 +135,15 @@ public class PedidoController implements Initializable {
         dpData.setValue(localDate);
 
         if (controller1 != null) {
+            pedido = new Pedido();
+            pedido = controller1.getPedido();
             carregarPedido();
         } else {
             novo = true;
             pedido = new Pedido();
             listProdPed = new ArrayList<Produto>();
             pedido.setPrudutos(listProdPed);
-           carregarPedido();
+            carregarPedido();
         }
 
     }
@@ -149,24 +157,47 @@ public class PedidoController implements Initializable {
             pedido.setCodCliente(Integer.parseInt(tfCodCliente.getText()));
             String data = new String(String.valueOf(dpData.getValue().getYear()) + "/" + String.valueOf(dpData.getValue().getMonthValue()) + "/" + String.valueOf(dpData.getValue().getDayOfMonth()));
             pedido.setData(new Date(data));
-            
+
             pedido.setPrudutos(listProdPed);
             pedidoDao.create(pedido);
         } else {
             pedido.setCodCliente(Integer.parseInt(tfCodCliente.getText()));
             String data = new String(String.valueOf(dpData.getValue().getYear()) + "/" + String.valueOf(dpData.getValue().getMonthValue()) + "/" + String.valueOf(dpData.getValue().getDayOfMonth()));
             pedido.setData(new Date(data));
-           
+
             pedido.setPrudutos(listProdPed);
             pedidoDao.update(pedido);
         }
 
     }
-    
-    
-    public void finalizar(){
-        pedido.setFinalizado(true);
-        salvar();
+
+    public void finalizar() {
+        //pedido.setFinalizado(true);
+        //salvar();
+        validaEstoque();
+    }
+
+    public void validaEstoque() {
+        estoque = epDAO.read();
+        for (Produto p : pedido.getProdutos()) {
+            boolean tem = false;
+            for (Produto prod : estoque) {
+                if (p.getId() == prod.getId()) {
+                    if (prod.getEstoque() - p.getQtdPedido() < 0.00 ) {
+                        JOptionPane.showMessageDialog(null, "Produto: " + p.getNome() + " sem estoque.");
+                    }
+                    tem = true;
+                    break;
+                } else {
+                    tem = false;
+                }
+            }
+            if(!tem){
+                JOptionPane.showMessageDialog(null, "Produto: " + p.getNome() + " sem estoque.");
+            }
+
+        }
+
     }
 
     public void removeItem() {
