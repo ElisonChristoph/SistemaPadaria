@@ -48,7 +48,7 @@ import model.dao.PedidoDAO;
  *
  * @author Gian Riske
  */
-public class ListarPedidosController implements Initializable {
+public class ListarEntradaEstoqueController implements Initializable {
 
     @FXML
     private Font x2;
@@ -104,7 +104,7 @@ public class ListarPedidosController implements Initializable {
     @FXML
     private ComboBox<String> cbSit;
 
-    public ListarPedidosController() {
+    public ListarEntradaEstoqueController() {
         this.thisStage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ListarPedidos.fxml"));
@@ -189,14 +189,10 @@ public class ListarPedidosController implements Initializable {
         tfCodCliente.setText(codCliente);
     }
 
-    @FXML
-    public void buscaCliente() {
-        PesquisaClienteController controller2 = new PesquisaClienteController(null, this);
-        controller2.showStage();
-    }
 
-    public void abrePedido() {
-        PedidoController controller2 = new PedidoController(this);
+
+    public void abreEntrada() {
+        AddEstoqueController controller2 = new AddEstoqueController(this);
         controller2.showStage();
     }
 

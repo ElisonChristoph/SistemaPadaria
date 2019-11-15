@@ -50,7 +50,7 @@ import model.dao.PedidoDAO;
  *
  * @author gianr
  */
-public class PedidoController implements Initializable {
+public class AddEstoqueController implements Initializable {
 
     ObservableList<ModeloTabelaItensPedido> olProdutos = FXCollections.observableArrayList();
     Pedido pedido;
@@ -104,13 +104,13 @@ public class PedidoController implements Initializable {
 
     private final Stage thisStage;
 
-    private final ListarPedidosController controller1;
+    private final ListarEntradaEstoqueController controller1;
     private EstoqueProdutosDAO epDAO;
     private List<Produto> estoque;
     @FXML
     private DatePicker dpDataFinalizar;
 
-    public PedidoController(ListarPedidosController controller1) {
+    public AddEstoqueController(ListarEntradaEstoqueController controller1) {
         this.controller1 = controller1;
         this.thisStage = new Stage();
         try {
@@ -278,15 +278,11 @@ public class PedidoController implements Initializable {
         popularProdutos();
     }
 
-    @FXML
-    public void selecionaCliente() {
-        PesquisaClienteController controller2 = new PesquisaClienteController(this, null);
-        controller2.showStage();
-    }
+
 
     @FXML
     public void adicionaProduto() {
-        AddItemPedidoController controller2 = new AddItemPedidoController(this);
+        AddItemPedidoController controller2 = new AddItemPedidoController(null);
         controller2.showStage();
     }
 
