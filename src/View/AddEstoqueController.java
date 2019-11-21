@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,21 +27,18 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javax.swing.JOptionPane;
-import model.bean.Cliente;
-import model.bean.ModeloTabelaItensPedido;
-import model.bean.Pedido;
+import model.bean.EntradaProduto;
+import model.bean.ModeloTabelaItensEntradaProduto;
 import model.bean.Produto;
-import model.dao.ClienteDAO;
+import model.dao.EntradaProdutoDAO;
 import model.dao.EstoqueProdutosDAO;
-import model.dao.PedidoDAO;
 
 /**
  * FXML Controller class
@@ -52,30 +47,22 @@ import model.dao.PedidoDAO;
  */
 public class AddEstoqueController implements Initializable {
 
-    ObservableList<ModeloTabelaItensPedido> olProdutos = FXCollections.observableArrayList();
-    Pedido pedido;
-    PedidoDAO pedidoDao;
-    ClienteDAO clienteDao;
-    List<Produto> listProdPed;
+    ObservableList<ModeloTabelaItensEntradaProduto> olProdutos = FXCollections.observableArrayList();
+    EntradaProduto entrProd;
+    EntradaProdutoDAO EntrProdDAO;
+
+    List<Produto> listProdEntrada;
     @FXML
     private Color x2;
     @FXML
     private Font x1;
-    @FXML
-    private Label labelCodPedido;
-    @FXML
-    private TextField tfCodCliente;
-    @FXML
-    private TextField tfNomeCliente;
-    @FXML
-    private Button btFinalizar;
+
     @FXML
     private Font x3;
     @FXML
     private Button btSalvar;
     @FXML
     private Button btCancelar;
-    @FXML
     private Label labelTotal;
     @FXML
     private Button btAddProd;
@@ -84,37 +71,37 @@ public class AddEstoqueController implements Initializable {
     @FXML
     private Button btRemProd;
     @FXML
-    private TableView<ModeloTabelaItensPedido> tvProdutos;
+    private TableView<ModeloTabelaItensEntradaProduto> tvProdutos;
     @FXML
-    private TableColumn<ModeloTabelaItensPedido, String> tabId;
+    private TableColumn<ModeloTabelaItensEntradaProduto, String> tabId;
     @FXML
-    private TableColumn<ModeloTabelaItensPedido, String> tabDescricao;
+    private TableColumn<ModeloTabelaItensEntradaProduto, String> tabDescricao;
+     @FXML
+    private TableColumn<ModeloTabelaItensEntradaProduto, String> tabEstoque;
     @FXML
-    private TableColumn<ModeloTabelaItensPedido, String> tabQtd;
+    private TableColumn<ModeloTabelaItensEntradaProduto, String> tabQuantidade;
     @FXML
-    private TableColumn<ModeloTabelaItensPedido, String> tabPreco;
-    @FXML
-    private TableColumn<ModeloTabelaItensPedido, String> tabTotal;
+    private TableColumn<ModeloTabelaItensEntradaProduto, String> tabEstoqueFinal;
     @FXML
     private DatePicker dpData;
 
     private boolean novo;
-
-    private List<Cliente> listCliente;
 
     private final Stage thisStage;
 
     private final ListarEntradaEstoqueController controller1;
     private EstoqueProdutosDAO epDAO;
     private List<Produto> estoque;
-    @FXML
     private DatePicker dpDataFinalizar;
+    @FXML
+    private Label labelCodEntrada;
+   
 
     public AddEstoqueController(ListarEntradaEstoqueController controller1) {
         this.controller1 = controller1;
         this.thisStage = new Stage();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Pedido.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddEstoque.fxml"));
             thisStage.initStyle(StageStyle.UNDECORATED);
             loader.setController(this);
             thisStage.setScene(new Scene(loader.load()));
@@ -125,28 +112,22 @@ public class AddEstoqueController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        pedidoDao = new PedidoDAO();
-        clienteDao = new ClienteDAO();
         epDAO = new EstoqueProdutosDAO();
         estoque = new ArrayList<>();
-        listCliente = clienteDao.read();
-        onlyNumber(tfCodCliente);
-        atualizandoCliente();
         Instant instant = Instant.now();
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         LocalDate localDate = localDateTime.toLocalDate();
         dpData.setValue(localDate);
-
         if (controller1 != null) {
-            pedido = new Pedido();
-            pedido = controller1.getPedido();
-            carregarPedido();
+            entrProd = new EntradaProduto();
+            entrProd = controller1.getEntrProd();
+            carregarEntradaProduto();
         } else {
             novo = true;
-            pedido = new Pedido();
-            listProdPed = new ArrayList<Produto>();
-            pedido.setPrudutos(listProdPed);
-            carregarPedido();
+            entrProd = new EntradaProduto();
+            listProdEntrada = new ArrayList<Produto>();
+            entrProd.setPrudutos(listProdEntrada);
+            carregarEntradaProduto();
         }
     }
 
@@ -154,58 +135,20 @@ public class AddEstoqueController implements Initializable {
         thisStage.showAndWait();
     }
 
-    @FXML
     public void salvar() {
-        salva(false);
-    }
-
-    public void salva(boolean finalizar) {
-        if (validaCampos()) {
-            if (pedido.isFinalizado()) {
-                JOptionPane.showMessageDialog(null, "Pedido finalizado não é possivel editar.");
+            if (validaCampos()) {
+            if (Integer.parseInt(labelCodEntrada.getText()) == 0) {
+                String data = new String(String.valueOf(dpData.getValue().getYear()) + "/" + String.valueOf(dpData.getValue().getMonthValue()) + "/" + String.valueOf(dpData.getValue().getDayOfMonth()));
+                entrProd.setData(new Date(data));
+                EntrProdDAO.create(entrProd);
             } else {
-                if (Integer.parseInt(labelCodPedido.getText()) == 0) {
-                    if (finalizar) {
-                        pedido.setFinalizado(true);
-                    }
-                    pedido.setCodCliente(Integer.parseInt(tfCodCliente.getText()));
-                    String data = new String(String.valueOf(dpData.getValue().getYear()) + "/" + String.valueOf(dpData.getValue().getMonthValue()) + "/" + String.valueOf(dpData.getValue().getDayOfMonth()));
-                    String dataFim = new String(String.valueOf(dpDataFinalizar.getValue().getYear()) + "/" + String.valueOf(dpDataFinalizar.getValue().getMonthValue()) + "/" + String.valueOf(dpDataFinalizar.getValue().getDayOfMonth()));
-                    pedido.setData(new Date(data));
-                    pedido.setDataFim(new Date(dataFim));
-                    pedidoDao.create(pedido);
-                } else {
-                    if (finalizar) {
-                        pedido.setFinalizado(true);
-                    }
-                    pedido.setCodCliente(Integer.parseInt(tfCodCliente.getText()));
-                    String data = new String(String.valueOf(dpData.getValue().getYear()) + "/" + String.valueOf(dpData.getValue().getMonthValue()) + "/" + String.valueOf(dpData.getValue().getDayOfMonth()));
-                    String dataFim = new String(String.valueOf(dpDataFinalizar.getValue().getYear()) + "/" + String.valueOf(dpDataFinalizar.getValue().getMonthValue()) + "/" + String.valueOf(dpDataFinalizar.getValue().getDayOfMonth()));
-                    pedido.setData(new Date(data));
-                    pedido.setDataFim(new Date(dataFim));
-                    pedidoDao.update(pedido);
-                }
+                JOptionPane.showMessageDialog(null, "Erro: Não é possivel alterar uma entrada de Produto.");
             }
-        }
-    }
-
-    @FXML
-    public void finalizar() {
-        if (validaCampos()) {
-            if (pedido.isFinalizado()) {
-                JOptionPane.showMessageDialog(null, "Pedido finalizado não é possivel editar.");
-            } else {
-                if (validaEstoque()) {
-                    salva(true);
-                    retiraDoEstoque();
-                }
-            }
-
         }
     }
 
     public boolean estaNaLista(int id) {
-        for (Produto p : pedido.getProdutos()) {
+        for (Produto p : entrProd.getProdutos()) {
             if (p.getId() == id) {
                 return true;
             }
@@ -214,52 +157,38 @@ public class AddEstoqueController implements Initializable {
     }
 
     public boolean validaCampos() {
-        if (tfCodCliente.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Erro: Selecione um cliente");
+        if (entrProd.getProdutos().size() < 1) {
+            JOptionPane.showMessageDialog(null, "Erro: Insira pelo menos um produto");
             return false;
-        } else {
-            if (pedido.getProdutos().size() < 1) {
-                JOptionPane.showMessageDialog(null, "Erro: Insira pelo menos um produto");
-                return false;
-            }
         }
         return true;
     }
 
     public boolean validaEstoque() {
         estoque = epDAO.read();
-        for (Produto p : pedido.getProdutos()) {
+        for (Produto p : entrProd.getProdutos()) {
             boolean tem = false;
             for (Produto prod : estoque) {
                 if (p.getId() == prod.getId()) {
                     tem = true;
-                    if (prod.getEstoque() - p.getQtdPedido() < 0.00) {
-                        System.out.println(prod.getEstoque() + "  " + p.getNome());
-                        JOptionPane.showMessageDialog(null, "Produto: " + p.getNome() + "sem estoque.");
-                        tvProdutos.getSelectionModel().select(pedido.getProdutos().indexOf(p));
-                        return false;
-                    } else {
-                        p.setEstoque(prod.getEstoque() - p.getQtdPedido());
-                    }
                 }
             }
             if (!tem) {
-                JOptionPane.showMessageDialog(null, "Produto: " + p.getNome() + "sem estoque.");
-                tvProdutos.getSelectionModel().select(pedido.getProdutos().indexOf(p));
+                epDAO.create(p);
                 return false;
             }
         }
         return true;
     }
 
-    public void retiraDoEstoque() {
-        epDAO.update(pedido.getProdutos());
+    public void adicionaNoEstoque() {
+        epDAO.update(entrProd.getProdutos());
     }
 
     @FXML
     public void removeItem() {
         if (tvProdutos.getSelectionModel().getSelectedIndex() >= 0) {
-            pedido.getProdutos().remove(tvProdutos.getSelectionModel().getSelectedIndex());
+            entrProd.getProdutos().remove(tvProdutos.getSelectionModel().getSelectedIndex());
             popularProdutos();
         }
     }
@@ -269,94 +198,59 @@ public class AddEstoqueController implements Initializable {
         thisStage.close();
     }
 
-    public void recebeCliente(String codCliente) {
-        tfCodCliente.setText(codCliente);
-    }
-
     public void recebeItem(Produto prod) {
-        pedido.getProdutos().add(prod);
+        entrProd.getProdutos().add(prod);
         popularProdutos();
     }
 
-
-
     @FXML
     public void adicionaProduto() {
-        AddItemPedidoController controller2 = new AddItemPedidoController(null);
+        AddItemEntradaController controller2 = new AddItemEntradaController(this);
         controller2.showStage();
     }
 
-    public void atualizandoCliente() {
-        tfCodCliente.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable,
-                    String oldValue, String newValue) {
-                atualizaCliente();
-            }
-        });
-    }
-
-    public void carregarPedido() {
+    public void carregarEntradaProduto() {
         if (novo) {
             LocalDate localDate = LocalDate.now();
             dpData.setValue(localDate);
-            dpDataFinalizar.setValue(localDate);
+
         } else {
-            tfCodCliente.setText(String.valueOf(pedido.getCodCliente()));
-            labelCodPedido.setText(String.valueOf(pedido.getId()));
-            Instant instant = Instant.ofEpochMilli(pedido.getData().getTime());
+            labelCodEntrada.setText(String.valueOf(entrProd.getId()));
+            Instant instant = Instant.ofEpochMilli(entrProd.getData().getTime());
             LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
             LocalDate localDate = localDateTime.toLocalDate();
             dpData.setValue(localDate);
-            Instant instant2 = Instant.ofEpochMilli(pedido.getDataFim().getTime());
-            LocalDateTime localDateTime2 = LocalDateTime.ofInstant(instant2, ZoneId.systemDefault());
-            LocalDate localDate2 = localDateTime2.toLocalDate();
-            dpDataFinalizar.setValue(localDate2);
             popularProdutos();
         }
     }
 
     public void popularProdutos() {
         olProdutos.clear();
+        estoque = epDAO.read();
         Double total = 0.00;
-        for (Produto p : pedido.getProdutos()) {
-            Double subtotal = p.getQtdPedido() * p.getValorPedido();
-            total += subtotal;
-            olProdutos.add(new ModeloTabelaItensPedido(String.valueOf(p.getId()), p.getNome(), String.valueOf(new DecimalFormat("#,##.00").format(p.getQtdPedido())),
-                    String.valueOf("R$ " + new DecimalFormat("#,##.00").format(p.getValorPedido())), String.valueOf("R$ " + new DecimalFormat("#,##.00").format(subtotal))));
+        for (Produto p : entrProd.getProdutos()) {
+            Double est = 0.00;
+            Double estFinal = 0.00;
+            for (Produto pe : estoque) {
+                if (p.getId() == pe.getId()) {
+                    est = pe.getEstoque();
+                    estFinal = est + p.getQtdEntrada();
+                    break;
+                }
+            }
+            olProdutos.add(new ModeloTabelaItensEntradaProduto(String.valueOf(p.getId()), p.getNome(), String.valueOf(new DecimalFormat("#,##.00").format(est)),
+                    String.valueOf(new DecimalFormat("#,##.00").format(p.getQtdEntrada())), String.valueOf(new DecimalFormat("#,##.00").format(estFinal))));
         }
         tabId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tabDescricao.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        tabQtd.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-        tabPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
-        tabTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+        tabDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+        tabEstoque.setCellValueFactory(new PropertyValueFactory<>("estoque"));
+        tabQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+        tabEstoqueFinal.setCellValueFactory(new PropertyValueFactory<>("estoqueFinal"));
         tvProdutos.setItems(olProdutos);
-        labelTotal.setText("R$ " + String.valueOf(new DecimalFormat("#,##.00").format(total)));
     }
 
     @FXML
-    public void atualizaCliente() {
-        if (tfCodCliente.getText().isEmpty()) {
-            tfNomeCliente.setText("");
-        } else {
-            for (Cliente c : listCliente) {
-                if (c.getId() == Integer.parseInt(tfCodCliente.getText())) {
-                    tfNomeCliente.setText(c.getNome());
-                }
-            }
-        }
-    }
-
-    public static void onlyNumber(final TextField textField) {
-        textField.addEventFilter(KeyEvent.KEY_TYPED, (KeyEvent t) -> {
-            if (t.getCharacter().matches("[a-zA-Z\\s,.]+$")) {
-                textField.setStyle("-fx-focus-color: #FF0012;");
-                t.consume();
-            } else {
-                textField.setStyle(null);
-            }
-        });
-        textField.setStyle(null);
+    private void finalizar(MouseEvent event) {
     }
 
 }

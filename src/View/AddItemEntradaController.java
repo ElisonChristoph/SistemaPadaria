@@ -76,7 +76,7 @@ public class AddItemEntradaController implements Initializable {
         this.controller1 = controller1;
         thisStage = new Stage();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddItemPedido.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddItemEntrada.fxml"));
             thisStage.initStyle(StageStyle.UNDECORATED);
             loader.setController(this);
             thisStage.setScene(new Scene(loader.load()));
@@ -102,7 +102,7 @@ public class AddItemEntradaController implements Initializable {
         cbPesquisaPor.getItems().addAll("Nome", "Categorias");
         listar();
         cbPesquisaPor.getSelectionModel().select(0);
-        onlyNumber(tfValor);
+        
         onlyNumber(tfQtd);
         tfQtd.setText("1");
     }

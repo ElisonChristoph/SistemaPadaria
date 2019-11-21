@@ -36,11 +36,13 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.bean.Cliente;
+import model.bean.EntradaProduto;
 import model.bean.ModeloTabelaItensPedido;
 import model.bean.ModeloTabelaPedidos;
 import model.bean.Pedido;
 import model.bean.Produto;
 import model.dao.ClienteDAO;
+import model.dao.EntradaProdutoDAO;
 import model.dao.PedidoDAO;
 
 /**
@@ -85,10 +87,12 @@ public class ListarEntradaEstoqueController implements Initializable {
     private List<Cliente> listCliente;
     ObservableList<ModeloTabelaPedidos> olPedidos = FXCollections.observableArrayList();
     private final Stage thisStage;
-    Pedido pedido;
-    PedidoDAO pedidoDao;
+    EntradaProduto entrProd;
+    
+    EntradaProdutoDAO entrProdDao;
+    
     ClienteDAO clienteDao;
-    List<Pedido> listPedidos;
+    List<EntradaProduto> listPEntrProd;
     @FXML
     private TableColumn<ModeloTabelaItensPedido, String> tabId;
     @FXML
@@ -122,7 +126,7 @@ public class ListarEntradaEstoqueController implements Initializable {
         onlyNumber(tfCodUsuario);
         onlyNumber(tfNum);
         clienteDao = new ClienteDAO();
-        pedidoDao = new PedidoDAO();
+        entrProdDao = new EntradaProdutoDAO();
         listCliente = clienteDao.read();
         Instant instant = Instant.now();
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
@@ -152,29 +156,20 @@ public class ListarEntradaEstoqueController implements Initializable {
         } else {
             status = String.valueOf(cbSit.getSelectionModel().getSelectedIndex());
         }
-        listPedidos = pedidoDao.pesquisa(tfNum.getText(), tfCodCliente.getText(), tfCodUsuario.getText(), dt1, dt2, status);
+        listPEntrProd = entrProdDao.pesquisa(tfNum.getText(), dt1, dt2);
         olPedidos.clear();
-        for (Pedido p : listPedidos) {
+        for (EntradaProduto ep : listPEntrProd) {
             Double total = 0.00;
-            for (Produto prod : p.getProdutos()) {
+            for (Produto prod : ep.getProdutos()) {
                 total += prod.getQtdPedido() * prod.getValorPedido();
             }
             String cliente = new String();
-            for (Cliente c : listCliente) {
-                if (p.getCodCliente() == c.getId()) {
-                    cliente = c.getNome();
-                    break;
-                }
-            }
-            if (p.isFinalizado()) {
-                status = "Finalizado";
-            } else {
-                status = "Pendente";
-            }
+      
+       
             SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
         String dateFormat1 = dateformat.format(dt1);
-            olPedidos.add(new ModeloTabelaPedidos(String.valueOf(p.getId()), cliente, String.valueOf(p.getData()),
-                    status, String.valueOf(p.getData()), String.valueOf("R$ " + total).replace('.', ',')));
+            olPedidos.add(new ModeloTabelaPedidos(String.valueOf(ep.getId()), cliente, String.valueOf(ep.getData()),
+                    status, String.valueOf(ep.getData()), String.valueOf("R$ " + total).replace('.', ',')));
         }
         tabId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tabCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
@@ -196,8 +191,8 @@ public class ListarEntradaEstoqueController implements Initializable {
         controller2.showStage();
     }
 
-    public Pedido getPedido() {
-        return listPedidos.get(tvPedidos.getSelectionModel().getSelectedIndex());
+    public EntradaProduto getEntrProd() {
+        return listPEntrProd.get(tvPedidos.getSelectionModel().getSelectedIndex());
     }
 
     public void atualizandoCliente() {
