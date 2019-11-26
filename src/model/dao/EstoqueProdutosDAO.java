@@ -25,7 +25,7 @@ public class EstoqueProdutosDAO {
         try {
             stmt = con.prepareStatement("INSERT INTO estoqueProdutos (codProduto, quantProduto)VALUES(?, ?)");
             stmt.setInt(1, p.getId());
-            stmt.setDouble(2, p.getEstoque());
+            stmt.setDouble(2, 0);
             stmt.executeUpdate();
         } catch (SQLException ex) {
         } finally {

@@ -9,7 +9,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="560.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.AddEstoqueController">
+<AnchorPane id="AnchorPane" prefHeight="560.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <Label layoutX="29.0" layoutY="53.0" prefHeight="20.0" prefWidth="118.0" text="Numero Entrada:">
       <font>
@@ -22,7 +22,7 @@
     <Label fx:id="labelCodEntrada" font="$x1" layoutX="141.0" layoutY="54.0" prefWidth="44.000099999997474" text="0" textFill="$x2" />
     <Label font="$x1" layoutX="529.0" layoutY="83.0" prefWidth="60.0" text="Data:" textFill="BLACK" />
     <Label font="$x1" layoutX="29.0" layoutY="140.0" prefWidth="60.0" text="Produtos:" textFill="BLACK" />
-    <Button fx:id="btSalvar" layoutX="572.0" layoutY="488.0" mnemonicParsing="false" onMousePressed="#finalizar" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #2ECC71;" text="Salvar" textFill="WHITE">
+    <Button fx:id="btSalvar" layoutX="572.0" layoutY="488.0" mnemonicParsing="false" onMousePressed="#salvar" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #2ECC71;" text="Salvar" textFill="WHITE">
       <font>
         <Font name="System Bold" size="18.0" fx:id="x3" />
       </font>

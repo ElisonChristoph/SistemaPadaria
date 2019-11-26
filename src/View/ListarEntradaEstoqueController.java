@@ -12,6 +12,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,8 +25,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,15 +34,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import model.bean.Cliente;
 import model.bean.EntradaProduto;
-import model.bean.ModeloTabelaItensPedido;
-import model.bean.ModeloTabelaPedidos;
-import model.bean.Pedido;
+import model.bean.ModeloTabelaEntradaProdutos;
 import model.bean.Produto;
-import model.dao.ClienteDAO;
 import model.dao.EntradaProdutoDAO;
-import model.dao.PedidoDAO;
+import model.dao.ProdutoDAO;
 
 /**
  * FXML Controller class
@@ -59,23 +54,11 @@ public class ListarEntradaEstoqueController implements Initializable {
     @FXML
     private Font x3;
     @FXML
-    private TableView<ModeloTabelaPedidos> tvPedidos;
+    private TableView<ModeloTabelaEntradaProdutos> tvPedidos;
     @FXML
     private Button btEditar;
     @FXML
     private Button btCancelar;
-    @FXML
-    private TextField tfCodCliente;
-    @FXML
-    private TextField tfNomeCliente;
-    @FXML
-    private Button btClientes;
-    @FXML
-    private TextField tfCodUsuario;
-    @FXML
-    private TextField tfNomeUsuario;
-    @FXML
-    private Button btUsuarios;
     @FXML
     private Button btPesquisar;
     @FXML
@@ -84,34 +67,30 @@ public class ListarEntradaEstoqueController implements Initializable {
     private DatePicker dpIn;
     @FXML
     private DatePicker dpFin;
-    private List<Cliente> listCliente;
-    ObservableList<ModeloTabelaPedidos> olPedidos = FXCollections.observableArrayList();
+    ObservableList<ModeloTabelaEntradaProdutos> olPedidos = FXCollections.observableArrayList();
     private final Stage thisStage;
     EntradaProduto entrProd;
-    
     EntradaProdutoDAO entrProdDao;
-    
-    ClienteDAO clienteDao;
-    List<EntradaProduto> listPEntrProd;
+    List<EntradaProduto> listEntrProd;
+    List<Produto> listProdutos;
+    ProdutoDAO prodDAO;
     @FXML
-    private TableColumn<ModeloTabelaItensPedido, String> tabId;
+    private TableColumn<ModeloTabelaEntradaProdutos, String> tabId;
     @FXML
-    private TableColumn<ModeloTabelaItensPedido, String> tabCliente;
+    private TableColumn<ModeloTabelaEntradaProdutos, String> tabProdutos;
     @FXML
-    private TableColumn<ModeloTabelaItensPedido, String> tabDataPedido;
+    private TableColumn<ModeloTabelaEntradaProdutos, String> tabDataEntrada;
     @FXML
-    private TableColumn<ModeloTabelaItensPedido, String> tabSituacao;
+    private TextField tfCodProduto;
     @FXML
-    private TableColumn<ModeloTabelaItensPedido, String> tabDataFinalizar;
+    private TextField tfNomeProduto;
     @FXML
-    private TableColumn<ModeloTabelaItensPedido, String> tabValorTotal;
-    @FXML
-    private ComboBox<String> cbSit;
+    private Button btProdutos;
 
     public ListarEntradaEstoqueController() {
         this.thisStage = new Stage();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ListarPedidos.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ListarEntradaEstoque.fxml"));
             thisStage.initStyle(StageStyle.UNDECORATED);
             loader.setController(this);
             thisStage.setScene(new Scene(loader.load()));
@@ -122,96 +101,94 @@ public class ListarEntradaEstoqueController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        onlyNumber(tfCodCliente);
-        onlyNumber(tfCodUsuario);
+        onlyNumber(tfCodProduto);
         onlyNumber(tfNum);
-        clienteDao = new ClienteDAO();
+        atualizandoProduto();
         entrProdDao = new EntradaProdutoDAO();
-        listCliente = clienteDao.read();
+        prodDAO = new ProdutoDAO();
+        listProdutos = new ArrayList<>();
+        listProdutos = prodDAO.read();
         Instant instant = Instant.now();
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         LocalDate localDate = localDateTime.toLocalDate();
         dpIn.setValue(localDate.minusDays(30));
         dpFin.setValue(localDate);
-        cbSit.getItems().add("Pendente");
-        cbSit.getItems().add("Finalizado");
-        cbSit.getItems().add("Todos");
-        cbSit.getSelectionModel().select(0);
-        atualizandoCliente();
         listar();
+
     }
 
     public void showStage() {
         thisStage.showAndWait();
     }
 
+    @FXML
     public void listar() {
         String dataIn = new String(String.valueOf(dpIn.getValue().getYear()) + "/" + String.valueOf(dpIn.getValue().getMonthValue()) + "/" + String.valueOf(dpIn.getValue().getDayOfMonth()));
         Date dt1 = new Date(dataIn);
         String dataFn = new String(String.valueOf(dpFin.getValue().getYear()) + "/" + String.valueOf(dpFin.getValue().getMonthValue()) + "/" + String.valueOf(dpFin.getValue().getDayOfMonth()));
         Date dt2 = new Date(dataFn);
         String status = new String();
-        if (cbSit.getSelectionModel().getSelectedIndex() == 2) {
-            status = "";
-        } else {
-            status = String.valueOf(cbSit.getSelectionModel().getSelectedIndex());
+        int p = 0;
+        if (!tfCodProduto.getText().isEmpty()) {
+            p = Integer.parseInt(tfCodProduto.getText());
         }
-        listPEntrProd = entrProdDao.pesquisa(tfNum.getText(), dt1, dt2);
+        listEntrProd = entrProdDao.pesquisa(tfNum.getText(), dt1, dt2, p);
         olPedidos.clear();
-        for (EntradaProduto ep : listPEntrProd) {
-            Double total = 0.00;
+        String produtos = new String();
+        for (EntradaProduto ep : listEntrProd) {
+            int x = -1;
             for (Produto prod : ep.getProdutos()) {
-                total += prod.getQtdPedido() * prod.getValorPedido();
+                x++;
+                produtos += prod.getNome();
+                if (ep.getProdutos().size() != x) {
+                    produtos += ", ";
+                }
             }
-            String cliente = new String();
-      
-       
             SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
-        String dateFormat1 = dateformat.format(dt1);
-            olPedidos.add(new ModeloTabelaPedidos(String.valueOf(ep.getId()), cliente, String.valueOf(ep.getData()),
-                    status, String.valueOf(ep.getData()), String.valueOf("R$ " + total).replace('.', ',')));
+            String dateFormat1 = dateformat.format(dt1);
+            olPedidos.add(new ModeloTabelaEntradaProdutos(String.valueOf(ep.getId()), produtos, String.valueOf(ep.getData())));
         }
         tabId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tabCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
-        tabDataPedido.setCellValueFactory(new PropertyValueFactory<>("dataPedido"));
-        tabSituacao.setCellValueFactory(new PropertyValueFactory<>("situacao"));
-        tabDataFinalizar.setCellValueFactory(new PropertyValueFactory<>("dataFinalizar"));
-        tabValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
+        tabProdutos.setCellValueFactory(new PropertyValueFactory<>("produtos"));
+        tabDataEntrada.setCellValueFactory(new PropertyValueFactory<>("dataEntrada"));
         tvPedidos.setItems(olPedidos);
     }
 
-    public void recebeCliente(String codCliente) {
-        tfCodCliente.setText(codCliente);
+    public void recebeProduto(String codProduto) {
+        tfCodProduto.setText(codProduto);
     }
-
-
 
     public void abreEntrada() {
         AddEstoqueController controller2 = new AddEstoqueController(this);
         controller2.showStage();
     }
 
-    public EntradaProduto getEntrProd() {
-        return listPEntrProd.get(tvPedidos.getSelectionModel().getSelectedIndex());
+    public void buscaProduto() {
+        PesquisaProdutoController controller3 = new PesquisaProdutoController(this);
+        controller3.showStage();
     }
 
-    public void atualizandoCliente() {
-        tfCodCliente.textProperty().addListener(new ChangeListener<String>() {
+    public EntradaProduto getEntrProd() {
+        return listEntrProd.get(tvPedidos.getSelectionModel().getSelectedIndex());
+    }
+
+    public void atualizandoProduto() {
+        tfCodProduto.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue) {
-                atualizaCliente();
+                atualizaProduto();
             }
         });
     }
 
-    public void atualizaCliente() {
-        if (tfCodCliente.getText().isEmpty()) {
-            tfNomeCliente.setText("");
+    public void atualizaProduto() {
+        if (tfCodProduto.getText().isEmpty()) {
+            tfNomeProduto.setText("");
         } else {
-            for (Cliente c : listCliente) {
-                if (c.getId() == Integer.parseInt(tfCodCliente.getText())) {
-                    tfNomeCliente.setText(c.getNome());
+            for (Produto p : listProdutos) {
+                if (p.getId() == Integer.parseInt(tfCodProduto.getText())) {
+                    tfNomeProduto.setText(p.getNome());
                 }
             }
         }

@@ -23,26 +23,28 @@ import model.bean.Produto;
  */
 public class EntradaProdutoDAO {
 
-    public void create(EntradaProduto ep) {
+    public boolean create(EntradaProduto ep) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("INSERT INTO entradaProdutos (itens, data, produtos)VALUES(?, ?, ?)");
+            stmt = con.prepareStatement("INSERT INTO entradaProduto (itens, data)VALUES(?, ?)");
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
             String dateFormat = dateformat.format(ep.getData());
             stmt.setString(2, dateFormat);
-            String produtosPedido = new String();
+            String produtosEntrada = new String();
             for (Produto prod : ep.getProdutos()) {
-                produtosPedido += String.valueOf(prod.getId()) + ";" + String.valueOf(prod.getQtdEntrada()) + ":";
+                produtosEntrada += String.valueOf(prod.getId()) + ";" + String.valueOf(prod.getQtdEntrada()) + ":";
             }
-            stmt.setString(3, produtosPedido);
+            stmt.setString(1, produtosEntrada);
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            return true;
         } catch (SQLException ex) {
             System.out.println(ex);
         } finally {
             Conexao.closeConnection(con, stmt);
         }
+        return false;
     }
 
     public List<EntradaProduto> read() {
@@ -69,7 +71,7 @@ public class EntradaProdutoDAO {
         rs = null;
         List<EntradaProduto> ListaEntProd = new ArrayList<>();
         try {
-            stmt = con.prepareStatement("SELECT * FROM entradaProdutos");
+            stmt = con.prepareStatement("SELECT * FROM entradaProduto");
             rs = stmt.executeQuery();
             List<Produto> itens;
             Produto prod;
@@ -111,7 +113,7 @@ public class EntradaProdutoDAO {
         return ListaEntProd;
     }
 
-    public List<EntradaProduto> pesquisa(String id, Date dtInicio, Date dtFim) {
+    public List<EntradaProduto> pesquisa(String id, Date dtInicio, Date dtFim, int idProd) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -135,14 +137,13 @@ public class EntradaProdutoDAO {
         rs = null;
         List<EntradaProduto> ListaEntProd = new ArrayList<>();
         try {
-
-            stmt = con.prepareStatement("SELECT * FROM entradaProdutos where id like ? AND data >= ? AND data <= ?");
+            stmt = con.prepareStatement("SELECT * FROM entradaProduto where id like ? AND data >= ? AND data <= ?");
             stmt.setString(1, "%" + id + "%");
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
             String dateFormatIn = dateformat.format(dtInicio);
-            stmt.setString(3, dateFormatIn);
+            stmt.setString(2, dateFormatIn);
             String dateFormatFn = dateformat.format(dtFim);
-            stmt.setString(4, dateFormatFn);
+            stmt.setString(3, dateFormatFn);
 
             rs = stmt.executeQuery();
             List<Produto> itens;
@@ -151,6 +152,7 @@ public class EntradaProdutoDAO {
             String[] it;
             String[] i;
             while (rs.next()) {
+                boolean tem = false;
                 itens = new ArrayList<>();
                 if (rs.getString("itens") != null) {
                     itenss = rs.getString("itens");
@@ -161,6 +163,11 @@ public class EntradaProdutoDAO {
                             i = it[x].split(";");
                             for (int xx = 0; xx < i.length; xx++) {
                                 prod.setId(Integer.parseInt(i[0]));
+                                if (idProd > 0) {
+                                    if (prod.getId() == idProd) {
+                                        tem = true;
+                                    }
+                                }
                                 for (Produto p : listaProdutos) {
                                     if (p.getId() == prod.getId()) {
                                         prod.setNome(p.getNome());
@@ -175,7 +182,14 @@ public class EntradaProdutoDAO {
                 }
 
                 EntradaProduto entProd = new EntradaProduto(rs.getInt("id"), rs.getDate("data"), itens);
-                ListaEntProd.add(entProd);
+                if (idProd == 0) {
+                    ListaEntProd.add(entProd);
+                } else {
+                    if (tem) {
+                        ListaEntProd.add(entProd);
+                    }
+                }
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);

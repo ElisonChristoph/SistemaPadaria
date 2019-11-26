@@ -28,7 +28,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -50,20 +49,17 @@ public class AddEstoqueController implements Initializable {
     ObservableList<ModeloTabelaItensEntradaProduto> olProdutos = FXCollections.observableArrayList();
     EntradaProduto entrProd;
     EntradaProdutoDAO EntrProdDAO;
-
     List<Produto> listProdEntrada;
     @FXML
     private Color x2;
     @FXML
     private Font x1;
-
     @FXML
     private Font x3;
     @FXML
     private Button btSalvar;
     @FXML
     private Button btCancelar;
-    private Label labelTotal;
     @FXML
     private Button btAddProd;
     @FXML
@@ -76,7 +72,7 @@ public class AddEstoqueController implements Initializable {
     private TableColumn<ModeloTabelaItensEntradaProduto, String> tabId;
     @FXML
     private TableColumn<ModeloTabelaItensEntradaProduto, String> tabDescricao;
-     @FXML
+    @FXML
     private TableColumn<ModeloTabelaItensEntradaProduto, String> tabEstoque;
     @FXML
     private TableColumn<ModeloTabelaItensEntradaProduto, String> tabQuantidade;
@@ -84,18 +80,14 @@ public class AddEstoqueController implements Initializable {
     private TableColumn<ModeloTabelaItensEntradaProduto, String> tabEstoqueFinal;
     @FXML
     private DatePicker dpData;
-
     private boolean novo;
-
     private final Stage thisStage;
-
     private final ListarEntradaEstoqueController controller1;
     private EstoqueProdutosDAO epDAO;
     private List<Produto> estoque;
     private DatePicker dpDataFinalizar;
     @FXML
     private Label labelCodEntrada;
-   
 
     public AddEstoqueController(ListarEntradaEstoqueController controller1) {
         this.controller1 = controller1;
@@ -113,6 +105,7 @@ public class AddEstoqueController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         epDAO = new EstoqueProdutosDAO();
+        EntrProdDAO = new EntradaProdutoDAO();
         estoque = new ArrayList<>();
         Instant instant = Instant.now();
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
@@ -135,18 +128,6 @@ public class AddEstoqueController implements Initializable {
         thisStage.showAndWait();
     }
 
-    public void salvar() {
-            if (validaCampos()) {
-            if (Integer.parseInt(labelCodEntrada.getText()) == 0) {
-                String data = new String(String.valueOf(dpData.getValue().getYear()) + "/" + String.valueOf(dpData.getValue().getMonthValue()) + "/" + String.valueOf(dpData.getValue().getDayOfMonth()));
-                entrProd.setData(new Date(data));
-                EntrProdDAO.create(entrProd);
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro: Não é possivel alterar uma entrada de Produto.");
-            }
-        }
-    }
-
     public boolean estaNaLista(int id) {
         for (Produto p : entrProd.getProdutos()) {
             if (p.getId() == id) {
@@ -164,24 +145,43 @@ public class AddEstoqueController implements Initializable {
         return true;
     }
 
-    public boolean validaEstoque() {
+    public void validaEstoque() {
         estoque = epDAO.read();
         for (Produto p : entrProd.getProdutos()) {
             boolean tem = false;
             for (Produto prod : estoque) {
                 if (p.getId() == prod.getId()) {
+                    p.setEstoque(prod.getEstoque());
                     tem = true;
                 }
             }
             if (!tem) {
                 epDAO.create(p);
-                return false;
             }
         }
-        return true;
+    }
+
+    public void salvar() {
+        if (validaCampos()) {
+            if (Integer.parseInt(labelCodEntrada.getText()) == 0) {
+                String data = new String(String.valueOf(dpData.getValue().getYear()) + "/" + String.valueOf(dpData.getValue().getMonthValue()) + "/" + String.valueOf(dpData.getValue().getDayOfMonth()));
+                entrProd.setData(new Date(data));
+                if (EntrProdDAO.create(entrProd)) {
+                    adicionaNoEstoque();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro: Não é possivel alterar uma entrada de Produto.");
+            }
+        }
     }
 
     public void adicionaNoEstoque() {
+        for (Produto p : entrProd.getProdutos()) {
+            System.out.println(p.getEstoque() +""+ p.getQtdEntrada());
+            p.setEstoque(p.getEstoque() + p.getQtdEntrada());
+            
+        }
+        validaEstoque();
         epDAO.update(entrProd.getProdutos());
     }
 
@@ -213,7 +213,6 @@ public class AddEstoqueController implements Initializable {
         if (novo) {
             LocalDate localDate = LocalDate.now();
             dpData.setValue(localDate);
-
         } else {
             labelCodEntrada.setText(String.valueOf(entrProd.getId()));
             Instant instant = Instant.ofEpochMilli(entrProd.getData().getTime());
@@ -239,7 +238,8 @@ public class AddEstoqueController implements Initializable {
                 }
             }
             olProdutos.add(new ModeloTabelaItensEntradaProduto(String.valueOf(p.getId()), p.getNome(), String.valueOf(new DecimalFormat("#,##.00").format(est)),
-                    String.valueOf(new DecimalFormat("#,##.00").format(p.getQtdEntrada())), String.valueOf(new DecimalFormat("#,##.00").format(estFinal))));
+                    String.valueOf(new DecimalFormat("#,##.00").format(p.getQtdEntrada())), String.valueOf(estFinal).replace('.', ',')));
+            System.out.println(estFinal);
         }
         tabId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tabDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
@@ -247,10 +247,6 @@ public class AddEstoqueController implements Initializable {
         tabQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         tabEstoqueFinal.setCellValueFactory(new PropertyValueFactory<>("estoqueFinal"));
         tvProdutos.setItems(olProdutos);
-    }
-
-    @FXML
-    private void finalizar(MouseEvent event) {
     }
 
 }
