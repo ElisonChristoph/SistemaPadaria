@@ -13,13 +13,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javax.swing.JOptionPane;
 import model.bean.Categoria;
 import model.bean.Produto;
 import model.dao.CategoriaDAO;
@@ -31,9 +30,10 @@ import model.dao.ProdutoDAO;
  *
  * @author gianr
  */
-public class AddItemPedidoController implements Initializable {
+public class PesquisaProdutoController implements Initializable {
+
     private Stage thisStage;
-    private final PedidoController controller1;
+    private final ListarEntradaEstoqueController controller1;
     private List<Produto> listaProdutos;
     private List<Categoria> listaCategorias;
     private Produto produto;
@@ -44,10 +44,6 @@ public class AddItemPedidoController implements Initializable {
     @FXML
     private ComboBox<String> cbCategorias;
     @FXML
-    private TextField tfQtd;
-    @FXML
-    private TextField tfValor;
-    @FXML
     private Button btCancelar;
     @FXML
     private Button btAdicionar;
@@ -57,20 +53,18 @@ public class AddItemPedidoController implements Initializable {
     private Button btPesquisa;
     private ObservableList lista;
     private ProdutoDAO dao;
-    @FXML
-    private Label labelEstoque;
     private List<Produto> estoque;
     private EstoqueProdutosDAO epDAO;
 
-    public AddItemPedidoController(PedidoController controller1) {
+    public PesquisaProdutoController(ListarEntradaEstoqueController controller1) {
         this.controller1 = controller1;
         thisStage = new Stage();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddItemPedido.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PesquisaProduto.fxml"));
             thisStage.initStyle(StageStyle.UNDECORATED);
             loader.setController(this);
             thisStage.setScene(new Scene(loader.load()));
-            thisStage.setTitle("Adicionar Produto");
+            thisStage.setTitle("Pesquisa Produto");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,9 +76,6 @@ public class AddItemPedidoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        estoque = new ArrayList<>();
-        epDAO = new EstoqueProdutosDAO();
-        estoque = epDAO.read();
         lista = FXCollections.observableArrayList();
         listaProdutos = new ArrayList<>();
         produto = new Produto();
@@ -92,9 +83,6 @@ public class AddItemPedidoController implements Initializable {
         cbPesquisaPor.getItems().addAll("Nome", "Categorias");
         listar();
         cbPesquisaPor.getSelectionModel().select(0);
-        onlyNumber(tfValor);
-        onlyNumber(tfQtd);
-        tfQtd.setText("1");
     }
 
     @FXML
@@ -136,7 +124,6 @@ public class AddItemPedidoController implements Initializable {
     public void listar() {
         listaProdutos.clear();
         lista.clear();
-        tfValor.setText("");
         int index = cbPesquisaPor.getSelectionModel().getSelectedIndex();
         switch (index) {
             case -1:
@@ -156,35 +143,12 @@ public class AddItemPedidoController implements Initializable {
     }
 
     @FXML
-    public void alteraProduto() {
-        if (lvProdutos.getSelectionModel().getSelectedIndex() >= 0) {
-            tfValor.setText(String.valueOf(listaProdutos.get(lvProdutos.getSelectionModel().getSelectedIndex()).getValor()).replace('.', ','));
-            for (Produto p : estoque) {
-                if (listaProdutos.get(lvProdutos.getSelectionModel().getSelectedIndex()).getId() == p.getId()) {
-                    labelEstoque.setText(String.valueOf(p.getEstoque()));
-                }
-            }
-        }
-    }
-
-    @FXML
     public void enviaItem() {
         int index = lvProdutos.getSelectionModel().getSelectedIndex();
         if (index >= 0) {
-            if (controller1.estaNaLista(listaProdutos.get(index).getId())) {
-                JOptionPane.showMessageDialog(null, "O produto: " + listaProdutos.get(index).getNome() + "já está no Pedido.");
-            } else {
-                if (Double.parseDouble(labelEstoque.getText().replace(',', '.')) - Double.parseDouble(tfQtd.getText().replace(',', '.')) < 0) {
-                    JOptionPane.showMessageDialog(null, "Produto: " + listaProdutos.get(index).getNome() + "sem estoque.");
-                } else {
-                    produto = listaProdutos.get(index);
-                    produto.setQtdPedido(Double.parseDouble(tfQtd.getText().replace(',', '.')));
-                    produto.setValorPedido(Double.parseDouble(tfValor.getText().replace(',', '.')));
-                    controller1.recebeItem(produto);
-                    thisStage.close();
-                }
-            }
-
+            produto = listaProdutos.get(index);
+            controller1.recebeProduto(String.valueOf(produto.getId()));
+            thisStage.close();
         }
     }
 
@@ -203,5 +167,9 @@ public class AddItemPedidoController implements Initializable {
             }
         });
         textField.setStyle(null);
+    }
+
+    @FXML
+    private void alteraProduto(MouseEvent event) {
     }
 }

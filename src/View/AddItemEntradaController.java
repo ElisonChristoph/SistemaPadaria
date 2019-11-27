@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,9 +33,10 @@ import model.dao.ProdutoDAO;
  *
  * @author gianr
  */
-public class AddItemPedidoController implements Initializable {
+public class AddItemEntradaController implements Initializable {
+
     private Stage thisStage;
-    private final PedidoController controller1;
+    private final AddEstoqueController controller1;
     private List<Produto> listaProdutos;
     private List<Categoria> listaCategorias;
     private Produto produto;
@@ -45,8 +48,6 @@ public class AddItemPedidoController implements Initializable {
     private ComboBox<String> cbCategorias;
     @FXML
     private TextField tfQtd;
-    @FXML
-    private TextField tfValor;
     @FXML
     private Button btCancelar;
     @FXML
@@ -61,12 +62,14 @@ public class AddItemPedidoController implements Initializable {
     private Label labelEstoque;
     private List<Produto> estoque;
     private EstoqueProdutosDAO epDAO;
+    @FXML
+    private Label labelEstoqueFinal;
 
-    public AddItemPedidoController(PedidoController controller1) {
+    public AddItemEntradaController(AddEstoqueController controller1) {
         this.controller1 = controller1;
         thisStage = new Stage();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddItemPedido.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddItemEntrada.fxml"));
             thisStage.initStyle(StageStyle.UNDECORATED);
             loader.setController(this);
             thisStage.setScene(new Scene(loader.load()));
@@ -92,7 +95,7 @@ public class AddItemPedidoController implements Initializable {
         cbPesquisaPor.getItems().addAll("Nome", "Categorias");
         listar();
         cbPesquisaPor.getSelectionModel().select(0);
-        onlyNumber(tfValor);
+        atualizandoProduto();
         onlyNumber(tfQtd);
         tfQtd.setText("1");
     }
@@ -136,7 +139,6 @@ public class AddItemPedidoController implements Initializable {
     public void listar() {
         listaProdutos.clear();
         lista.clear();
-        tfValor.setText("");
         int index = cbPesquisaPor.getSelectionModel().getSelectedIndex();
         switch (index) {
             case -1:
@@ -158,33 +160,43 @@ public class AddItemPedidoController implements Initializable {
     @FXML
     public void alteraProduto() {
         if (lvProdutos.getSelectionModel().getSelectedIndex() >= 0) {
-            tfValor.setText(String.valueOf(listaProdutos.get(lvProdutos.getSelectionModel().getSelectedIndex()).getValor()).replace('.', ','));
             for (Produto p : estoque) {
                 if (listaProdutos.get(lvProdutos.getSelectionModel().getSelectedIndex()).getId() == p.getId()) {
-                    labelEstoque.setText(String.valueOf(p.getEstoque()));
+                    listaProdutos.get(lvProdutos.getSelectionModel().getSelectedIndex()).setEstoque(p.getEstoque());
+                    labelEstoque.setText(String.valueOf(p.getEstoque()).replace('.', ','));
+                    labelEstoqueFinal.setText(String.valueOf(p.getEstoque() + Double.parseDouble(tfQtd.getText().replace(',', '.'))).replace('.', ','));
                 }
             }
         }
     }
 
+    public void atualizandoProduto() {
+        tfQtd.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                if (lvProdutos.getSelectionModel().getSelectedIndex() >= 0) {
+                    if (!tfQtd.getText().isEmpty()) {
+                        labelEstoqueFinal.setText(String.valueOf(listaProdutos.get(lvProdutos.getSelectionModel().getSelectedIndex()).getEstoque() + Double.parseDouble(tfQtd.getText().replace(',', '.'))).replace('.', ','));
+
+                    }
+                }
+            }
+        });
+    }
+
     @FXML
     public void enviaItem() {
         int index = lvProdutos.getSelectionModel().getSelectedIndex();
-        if (index >= 0) {
+        if (index >= 0 && !tfQtd.getText().isEmpty()) {
             if (controller1.estaNaLista(listaProdutos.get(index).getId())) {
-                JOptionPane.showMessageDialog(null, "O produto: " + listaProdutos.get(index).getNome() + "já está no Pedido.");
+                JOptionPane.showMessageDialog(null, "O produto: " + listaProdutos.get(index).getNome() + "já está inserido.");
             } else {
-                if (Double.parseDouble(labelEstoque.getText().replace(',', '.')) - Double.parseDouble(tfQtd.getText().replace(',', '.')) < 0) {
-                    JOptionPane.showMessageDialog(null, "Produto: " + listaProdutos.get(index).getNome() + "sem estoque.");
-                } else {
-                    produto = listaProdutos.get(index);
-                    produto.setQtdPedido(Double.parseDouble(tfQtd.getText().replace(',', '.')));
-                    produto.setValorPedido(Double.parseDouble(tfValor.getText().replace(',', '.')));
-                    controller1.recebeItem(produto);
-                    thisStage.close();
-                }
+                produto = listaProdutos.get(index);
+                produto.setQtdEntrada(Double.parseDouble(tfQtd.getText().replace(',', '.')));
+                controller1.recebeItem(produto);
+                thisStage.close();
             }
-
         }
     }
 

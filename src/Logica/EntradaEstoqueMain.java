@@ -22,7 +22,7 @@ import javafx.stage.StageStyle;
  *
  * @author Elison Christoph
  */
-public class PedidoMain extends Application {
+public class EntradaEstoqueMain extends Application {
 
     private static Stage stage;
 
@@ -59,7 +59,7 @@ public class PedidoMain extends Application {
     }
 
     public void fecha() {
-        PedidoMain.getStage().close();
+        EntradaEstoqueMain.getStage().close();
     }
 
     public static Stage getStage() {
@@ -67,7 +67,7 @@ public class PedidoMain extends Application {
     }
 
     public static void setStage(Stage stage) {
-        PedidoMain.stage = stage;
+        EntradaEstoqueMain.stage = stage;
     }
 
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.bean;
 
 import java.util.Date;
@@ -10,13 +5,14 @@ import java.util.List;
 
 /**
  *
- * @author Elison Christoph
+ * @author gianr
  */
 public class Pedido {
 
     private int id;
     private int codCliente;
     private Date data;
+    private Date dataFim;
     private List<Produto> prudutos;
     private boolean finalizado;
 
@@ -24,15 +20,22 @@ public class Pedido {
 
     }
 
-    public Pedido(int id, int codCliente, Date data, List<Produto> prudutos, boolean finalizado) {
+    public Pedido(int id, int codCliente, Date data, Date dataFim, List<Produto> prudutos, boolean finalizado) {
         this.id = id;
         this.codCliente = codCliente;
         this.data = data;
+        this.dataFim = dataFim;
         this.prudutos = prudutos;
         this.finalizado = finalizado;
     }
 
-   
+    public Date getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
+    }
 
     public int getId() {
         return id;
@@ -73,6 +76,5 @@ public class Pedido {
     public void setFinalizado(boolean finalizado) {
         this.finalizado = finalizado;
     }
-
 
 }

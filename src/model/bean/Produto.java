@@ -12,14 +12,17 @@ import java.util.List;
  * @author Elison Christoph
  */
 public class Produto {
-    
-    private int id;	
-    private Categoria categoria;	
+
+    private int id;
+    private Categoria categoria;
     private String nome;
     private double valor;
     private double valorPedido;//Não vai para o Banco
     private double qtdPedido;//Não vai para o Banco
-    private int validade;	
+    private double qtdEntrada;//Não vai para o Banco
+    private double estoque;
+    private int validade;
+
     private List<Ingrediente> ingredientes;
 
     public Produto(int id, Categoria categoria, String nome, double valor, int validade, List<Ingrediente> ingredientes) {
@@ -30,9 +33,14 @@ public class Produto {
         this.validade = validade;
         this.ingredientes = ingredientes;
     }
-    
-    public Produto(){
-        
+
+    public Produto(int id, Double estoque) {
+        this.id = id;
+        this.estoque = estoque;
+    }
+
+    public Produto() {
+
     }
 
     public int getId() {
@@ -98,8 +106,21 @@ public class Produto {
     public void setQtdPedido(double qtdPedido) {
         this.qtdPedido = qtdPedido;
     }
-    
-    
-    
-    
+
+    public double getQtdEntrada() {
+        return qtdEntrada;
+    }
+
+    public void setQtdEntrada(double qtdEntrada) {
+        this.qtdEntrada = qtdEntrada;
+    }
+
+    public Double getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(Double estoque) {
+        this.estoque = estoque;
+    }
+
 }

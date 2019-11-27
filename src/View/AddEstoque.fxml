@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="560.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <Label layoutX="29.0" layoutY="53.0" prefHeight="20.0" prefWidth="118.0" text="Numero Entrada:">
+      <font>
+        <Font size="14.0" fx:id="x1" />
+      </font>
+      <textFill>
+        <Color blue="0.500" green="0.500" red="0.500" fx:id="x2" />
+      </textFill>
+    </Label>
+    <Label fx:id="labelCodEntrada" font="$x1" layoutX="141.0" layoutY="54.0" prefWidth="44.000099999997474" text="0" textFill="$x2" />
+    <Label font="$x1" layoutX="529.0" layoutY="83.0" prefWidth="60.0" text="Data:" textFill="BLACK" />
+    <Label font="$x1" layoutX="29.0" layoutY="140.0" prefWidth="60.0" text="Produtos:" textFill="BLACK" />
+    <Button fx:id="btSalvar" layoutX="572.0" layoutY="488.0" mnemonicParsing="false" onMousePressed="#salvar" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #2ECC71;" text="Salvar" textFill="WHITE">
+      <font>
+        <Font name="System Bold" size="18.0" fx:id="x3" />
+      </font>
+    </Button>
+    <Button fx:id="btCancelar" font="$x3" layoutX="441.0" layoutY="488.0" mnemonicParsing="false" onMousePressed="#cancelar" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #EC7063" text="Cancelar" textFill="WHITE" />
+    <Label layoutX="238.0" layoutY="14.0" text="Adiciona Estoque">
+      <font>
+        <Font name="System Bold" size="30.0" />
+      </font>
+    </Label>
+    <Button fx:id="btAddProd" layoutX="29.0" layoutY="414.0" minHeight="24.0" mnemonicParsing="false" onMousePressed="#adicionaProduto" prefHeight="24.0" prefWidth="45.0" style="-fx-background-color: #2ECC71;" text="Add" textFill="WHITE">
+      <font>
+        <Font name="System Bold" size="12.0" fx:id="x4" />
+      </font>
+    </Button>
+    <Button fx:id="btRemProd" font="$x4" layoutX="82.0" layoutY="414.0" minHeight="24.0" mnemonicParsing="false" onMousePressed="#removeItem" prefHeight="24.0" prefWidth="66.0" style="-fx-background-color: #EC7063;" text="Remove" textFill="WHITE" />
+    <TableView fx:id="tvProdutos" layoutX="26.0" layoutY="171.0" prefHeight="233.0" prefWidth="661.0">
+      <columns>
+        <TableColumn fx:id="tabId" prefWidth="75.0" text="Código" />
+        <TableColumn fx:id="tabDescricao" maxWidth="5000.0" minWidth="10.0" prefWidth="287.0" text="Descrição" />
+        <TableColumn fx:id="tabEstoque" maxWidth="5000.0" minWidth="10.0" prefWidth="95.0" text="Etoque" />
+        <TableColumn fx:id="tabQuantidade" maxWidth="5000.0" minWidth="10.0" prefWidth="102.0" text="Quantidade" />
+        <TableColumn fx:id="tabEstoqueFinal" maxWidth="5000.0" minWidth="10.0" prefWidth="100.0" text="Etoque Final" />
+      </columns>
+    </TableView>
+      <DatePicker fx:id="dpData" layoutX="529.0" layoutY="106.0" prefHeight="25.0" prefWidth="118.0" />
+  </children>
+</AnchorPane>
