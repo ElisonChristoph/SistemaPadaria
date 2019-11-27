@@ -62,6 +62,7 @@ public class CadastroIngredienteController implements Initializable {
         i.setNome(txtNome.getText());
         
         dao.create(i);
+        
         LimparCampo();
         ResetaLista();
         TabelaIngredientes();
@@ -76,7 +77,7 @@ public class CadastroIngredienteController implements Initializable {
             ResultSet rs = con.createStatement().executeQuery("select * from ingredientes");
             
             while(rs.next()){
-                ingredientes.add(new ModeloTabela(rs.getString("id"), rs.getString("nome")));
+                ingredientes.add(new ModeloTabela(rs.getString("codIngrediente"), rs.getString("nomeIngrediente")));
             }
             
         } catch (SQLException ex) {

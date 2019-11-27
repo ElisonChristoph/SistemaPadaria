@@ -13,6 +13,10 @@ public class ModeloTabela {
     
     private String id;
     private String nome;
+    
+    public ModeloTabela(String nome) {
+        this.nome = nome;
+    } 
 
     public ModeloTabela(String id, String nome) {
         this.id = id;

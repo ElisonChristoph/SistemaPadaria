@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,8 +21,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.bean.Categoria;
 import model.bean.ModeloTabela;
@@ -73,10 +78,29 @@ public class CadastroProdutoController implements Initializable {
     @FXML
     private TableColumn<ModeloTabela, String> tableselecionadosnome;
     
+    //Botões
+    @FXML
+    private Button badicionar;
+    @FXML
+    private Button blimparingredientes;
+    @FXML
+    private Button bcadastrar;
+    @FXML
+    private Button blimpar;
+    @FXML
+    private Button bcancelar;
+    @FXML
+    private Button bexcluirproduto;
+    
+    //
+    @FXML
+    private TextField selecionado;
+    
     //Listas
     ObservableList<ModeloTabela> ingredientes = FXCollections.observableArrayList();
     ObservableList<ModeloTabela> ingredientesselecionados = FXCollections.observableArrayList();
     ObservableList<Categoria> categorias = FXCollections.observableArrayList();
+    ArrayList selecionados = new ArrayList();
     
     @FXML
     private void CadastrarProduto(ActionEvent event){
@@ -105,39 +129,27 @@ public class CadastroProdutoController implements Initializable {
             ResultSet rsi = con.createStatement().executeQuery("select * from ingredientes");
             
             while(rsi.next()){
-                ingredientes.add(new ModeloTabela(rsi.getString("codIngrediente"), rsi.getString("nomeIngrediente")));
+                ingredientes.add(new ModeloTabela(rsi.getString("codIngrediente"),rsi.getString("nomeIngrediente")));
             }
             
         } catch (SQLException ex) {
             Logger.getLogger(CadastroProdutoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        tableingredientesid.setCellValueFactory(new PropertyValueFactory<>("id"));
-            tableingredientesnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+         
+            tableingredientesid.setCellValueFactory(new PropertyValueFactory<>("id"));
+            
+            tableingredientesnome.setCellValueFactory(new PropertyValueFactory<>("nome")); 
+            
+            tableingredientes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             
             tableingredientes.setItems(ingredientes);
         
     }
     
     private void TabelaIngredientesSelecionados(){
-        
-        try {
-            Connection con = Conexao.getConnection();
             
-            ResultSet rsis = con.createStatement().executeQuery("select * from ingredientes");
-            
-            while(rsis.next()){
-                ingredientes.add(new ModeloTabela(rsis.getString("codIngrediente"), rsis.getString("nomeIngrediente")));
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroProdutoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        tableingredientesid.setCellValueFactory(new PropertyValueFactory<>("id"));
-            tableingredientesnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-            
-            tableingredientes.setItems(ingredientes);
+           tableselecionadosnome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+       tableselecionadosid.setCellValueFactory(new PropertyValueFactory<>("id"));
         
     }
     
@@ -175,9 +187,21 @@ public class CadastroProdutoController implements Initializable {
     }
     
     @FXML
-    private void LimparNome(){
+    private void LimparSelecao(){
        
-        txtNomeIngrediente.setText(" ");
+        
+        
+    }
+    
+    @FXML
+    private void SelecionaIngrediente(){
+        
+      
+        //ingredientesselecionados = tableingredientes.getSelectionModel().getSelectedItems();
+        //selecionados.add(tableingredientes.getSelectionModel().getSelectedItems());
+        //tableselecionados.setItems(selecionados.);
+             ingredientesselecionados.add(new ModeloTabela(tableingredientes.getSelectionModel().getSelectedItem().getNome()));
+            tableselecionados.setItems(ingredientesselecionados);
         
     }
     
@@ -191,6 +215,7 @@ public class CadastroProdutoController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle rb) {
        TabelaIngredientes();
+       TabelaIngredientesSelecionados();
        ComboCategorias();
     }
     

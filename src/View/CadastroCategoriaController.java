@@ -6,13 +6,13 @@
 package View;
 
 import Conexão.Conexao;
+import Logica.CategoriaMain;
 import Logica.IngredienteMain;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,10 +21,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.bean.Categoria;
@@ -68,9 +66,11 @@ public class CadastroCategoriaController implements Initializable {
 
         dao.create(c);
 
-        LimparCampo();
         ResetaLista();
         PopularTabela();
+        LimparCampo();
+        
+        
 
     }
 
@@ -93,7 +93,7 @@ public class CadastroCategoriaController implements Initializable {
         tablenome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
         table.setItems(categorias);
-        conn.close();
+        //conn.close();
 
     }
 
@@ -108,7 +108,7 @@ public class CadastroCategoriaController implements Initializable {
 
     @FXML
     public void Fechar() {
-        IngredienteMain.getStage().close();
+        CategoriaMain.getStage().close();
     }
 
     @Override

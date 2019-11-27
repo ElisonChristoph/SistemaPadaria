@@ -30,7 +30,7 @@ public class CategoriaDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO categoriaProdutos (nome)VALUES(?)");
+            stmt = con.prepareStatement("INSERT INTO categoriaprodutos (nome)VALUES(?)");
             stmt.setString(1, c.getNome());
 
             stmt.executeUpdate();

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -32,11 +32,6 @@
                   <Insets top="25.0" />
                </GridPane.margin>
             </Rectangle>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="112.0" stroke="BLACK" strokeType="INSIDE" width="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets left="8.0" top="25.0" />
-               </GridPane.margin>
-            </Rectangle>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="124.0" layoutX="251.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="872.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets top="25.0" />
@@ -64,7 +59,7 @@
             </Rectangle>
             <Button mnemonicParsing="false" onAction="#CadastroProduto" prefHeight="50.0" prefWidth="150.0" text="Produto" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="350.0" top="-35.0" />
+                  <Insets left="165.0" top="-35.0" />
                </GridPane.margin>
                <font>
                   <Font name="System Bold" size="19.0" />
@@ -72,7 +67,7 @@
             </Button>
             <Button layoutX="451.0" layoutY="30.0" mnemonicParsing="false" onAction="#CadastroCategoria" prefHeight="50.0" prefWidth="150.0" text="Categoria" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="190.0" top="-35.0" />
+                  <Insets left="7.0" top="-35.0" />
                </GridPane.margin>
                <font>
                   <Font name="System Bold" size="19.0" />
@@ -80,7 +75,7 @@
             </Button>
             <Button layoutX="251.0" layoutY="90.0" mnemonicParsing="false" onAction="#CadastroIngrediente" prefHeight="50.0" prefWidth="150.0" text="Ingrediente" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="190.0" top="85.0" />
+                  <Insets left="7.0" top="85.0" />
                </GridPane.margin>
                <font>
                   <Font name="System Bold" size="19.0" />
@@ -88,7 +83,7 @@
             </Button>
             <Button layoutX="531.0" layoutY="90.0" mnemonicParsing="false" onAction="#CadastroCliente" prefHeight="50.0" prefWidth="150.0" text="Cliente" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="350.0" top="85.0" />
+                  <Insets left="165.0" top="85.0" />
                </GridPane.margin>
                <font>
                   <Font name="System Bold" size="19.0" />
@@ -96,7 +91,7 @@
             </Button>
             <Button layoutX="671.0" layoutY="90.0" mnemonicParsing="false" onAction="#CadastroFornecedor" prefHeight="50.0" prefWidth="150.0" text="Fornecedor" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="510.0" top="-35.0" />
+                  <Insets left="322.0" top="-35.0" />
                </GridPane.margin>
                <font>
                   <Font name="System Bold" size="19.0" />
@@ -104,36 +99,20 @@
             </Button>
             <Button layoutX="831.0" layoutY="90.0" mnemonicParsing="false" onAction="#CadastroFuncionario" prefHeight="50.0" prefWidth="150.0" text="Funcionário" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="510.0" top="85.0" />
+                  <Insets left="322.0" top="85.0" />
                </GridPane.margin>
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="966.0" layoutY="90.0" mnemonicParsing="false" onAction="#CadastroUsuario" prefHeight="47.0" prefWidth="130.0" text="Usuário" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button layoutX="966.0" layoutY="90.0" mnemonicParsing="false" onAction="#CadastroUsuario" prefHeight="50.0" prefWidth="150.0" text="Usuário" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="670.0" top="-35.0" />
+                  <Insets left="477.0" top="-35.0" />
                </GridPane.margin>
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
             </Button>
-            <CheckBox mnemonicParsing="false" prefHeight="36.0" prefWidth="137.0" text="Cadastrar" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets bottom="25.0" left="20.0" />
-               </GridPane.margin>
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </CheckBox>
-            <CheckBox layoutX="280.0" layoutY="45.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="137.0" text="Deletar" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="20.0" top="75.0" />
-               </GridPane.margin>
-            </CheckBox>
             <Label text="Cadastrar/Deletar" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
                   <Font name="System Bold" size="21.0" />
@@ -411,7 +390,16 @@
                   <Image url="@../Imagens/icon-controle-de-estoqu.png" />
                </image>
             </ImageView>
+            <Button layoutX="657.0" layoutY="510.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" text="Pedidos" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="330.0" top="85.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
+      <Accordion />
    </children>
 </AnchorPane>

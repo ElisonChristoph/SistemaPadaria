@@ -25,17 +25,17 @@ public class IngredienteDAO {
         
         //Passa dados do Produto
         try {
-            stmt = con.prepareStatement("INSERT INTO ingredientes (nome) VALUES(?)");
+            stmt = con.prepareStatement("INSERT INTO ingredientes (nomeIngrediente) VALUES(?)");
             stmt.setString(1, i.getNome());
            
         
             //Executa SQL
             stmt.executeUpdate();
             
-            //JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
             
         } catch (SQLException ex) {
-            //JOptionPane.showMessageDialog(null, "Erro ao Salvar!" + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao Salvar!" + ex);
         }finally{
             Conexao.closeConnection(con, stmt);
         }
