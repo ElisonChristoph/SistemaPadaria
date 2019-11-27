@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
 import java.io.IOException;
@@ -36,19 +31,15 @@ import model.dao.ProdutoDAO;
 /**
  * FXML Controller class
  *
- * @author Informatica
+ * @author gianr
  */
 public class AddItemEntradaController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
     private Stage thisStage;
     private final AddEstoqueController controller1;
     private List<Produto> listaProdutos;
     private List<Categoria> listaCategorias;
     private Produto produto;
-
     @FXML
     private ListView<String> lvProdutos;
     @FXML
@@ -174,7 +165,6 @@ public class AddItemEntradaController implements Initializable {
                     listaProdutos.get(lvProdutos.getSelectionModel().getSelectedIndex()).setEstoque(p.getEstoque());
                     labelEstoque.setText(String.valueOf(p.getEstoque()).replace('.', ','));
                     labelEstoqueFinal.setText(String.valueOf(p.getEstoque() + Double.parseDouble(tfQtd.getText().replace(',', '.'))).replace('.', ','));
-
                 }
             }
         }
@@ -186,7 +176,10 @@ public class AddItemEntradaController implements Initializable {
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue) {
                 if (lvProdutos.getSelectionModel().getSelectedIndex() >= 0) {
-                    labelEstoqueFinal.setText(String.valueOf(listaProdutos.get(lvProdutos.getSelectionModel().getSelectedIndex()).getEstoque() + Double.parseDouble(tfQtd.getText().replace(',', '.'))).replace('.', ','));
+                    if (!tfQtd.getText().isEmpty()) {
+                        labelEstoqueFinal.setText(String.valueOf(listaProdutos.get(lvProdutos.getSelectionModel().getSelectedIndex()).getEstoque() + Double.parseDouble(tfQtd.getText().replace(',', '.'))).replace('.', ','));
+
+                    }
                 }
             }
         });
@@ -195,7 +188,7 @@ public class AddItemEntradaController implements Initializable {
     @FXML
     public void enviaItem() {
         int index = lvProdutos.getSelectionModel().getSelectedIndex();
-        if (index >= 0) {
+        if (index >= 0 && !tfQtd.getText().isEmpty()) {
             if (controller1.estaNaLista(listaProdutos.get(index).getId())) {
                 JOptionPane.showMessageDialog(null, "O produto: " + listaProdutos.get(index).getNome() + "já está inserido.");
             } else {
@@ -204,7 +197,6 @@ public class AddItemEntradaController implements Initializable {
                 controller1.recebeItem(produto);
                 thisStage.close();
             }
-
         }
     }
 

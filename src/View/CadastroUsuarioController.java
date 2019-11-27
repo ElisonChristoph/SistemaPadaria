@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
 import Logica.UsuarioMain;
@@ -28,15 +23,10 @@ import model.dao.UsuarioDAO;
 /**
  * FXML Controller class
  *
- * @author Elison Christoph
+ * @author gianr
  */
 public class CadastroUsuarioController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     */
     ResourceBundle resources;
     private ObservableList lista;
     List<Usuario> usuarios;
@@ -66,7 +56,6 @@ public class CadastroUsuarioController implements Initializable {
     private TextField tfPesquisa;
     @FXML
     private Button btPesquisa;
-
     private boolean novo;
     @FXML
     private Button btExcluir;
@@ -83,9 +72,7 @@ public class CadastroUsuarioController implements Initializable {
     }
 
     @FXML
-
     public void salvar(MouseEvent event) {
-
         if (verificarCampos()) {
             if (novo) {
                 Usuario u = new Usuario(0, tfNome.getText(), tfLogin.getText(), pfSenha.getText());
@@ -146,13 +133,12 @@ public class CadastroUsuarioController implements Initializable {
         lvUsuarios.setItems(lista);
     }
 
-    
-    public void excluir(){
+    public void excluir() {
         dao.delete(usuario);
         limpacampos();
         listar();
     }
-    
+
     @FXML
     public void pesquisar() {
         usuarios.clear();
@@ -174,8 +160,8 @@ public class CadastroUsuarioController implements Initializable {
         btSalvar.setDisable(false);
         btExcluir.setDisable(true);
     }
-    
-    public void limpacampos(){
+
+    public void limpacampos() {
         lCodigo.setText("0");
         tfNome.setText("");
         tfLogin.setText("");

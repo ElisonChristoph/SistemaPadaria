@@ -18,7 +18,7 @@ import model.bean.Produto;
 
 /**
  *
- * @author Elison Christoph
+ * @author gianr
  */
 public class PedidoDAO {
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
 import java.io.IOException;
@@ -114,7 +109,6 @@ public class ListarEntradaEstoqueController implements Initializable {
         dpIn.setValue(localDate.minusDays(30));
         dpFin.setValue(localDate);
         listar();
-
     }
 
     public void showStage() {
@@ -136,7 +130,8 @@ public class ListarEntradaEstoqueController implements Initializable {
         olPedidos.clear();
         String produtos = new String();
         for (EntradaProduto ep : listEntrProd) {
-            int x = -1;
+            produtos = new String();
+            int x = 0;
             for (Produto prod : ep.getProdutos()) {
                 x++;
                 produtos += prod.getNome();
@@ -145,8 +140,8 @@ public class ListarEntradaEstoqueController implements Initializable {
                 }
             }
             SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
-            String dateFormat1 = dateformat.format(dt1);
-            olPedidos.add(new ModeloTabelaEntradaProdutos(String.valueOf(ep.getId()), produtos, String.valueOf(ep.getData())));
+            String dateFormat1 = dateformat.format(ep.getData());
+            olPedidos.add(new ModeloTabelaEntradaProdutos(String.valueOf(ep.getId()), produtos, dateFormat1));
         }
         tabId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tabProdutos.setCellValueFactory(new PropertyValueFactory<>("produtos"));

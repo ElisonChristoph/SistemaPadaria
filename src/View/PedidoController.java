@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
 import java.io.IOException;
@@ -97,13 +92,9 @@ public class PedidoController implements Initializable {
     private TableColumn<ModeloTabelaItensPedido, String> tabTotal;
     @FXML
     private DatePicker dpData;
-
     private boolean novo;
-
     private List<Cliente> listCliente;
-
     private final Stage thisStage;
-
     private final ListarPedidosController controller1;
     private EstoqueProdutosDAO epDAO;
     private List<Produto> estoque;
@@ -136,7 +127,6 @@ public class PedidoController implements Initializable {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         LocalDate localDate = localDateTime.toLocalDate();
         dpData.setValue(localDate);
-
         if (controller1 != null) {
             pedido = new Pedido();
             pedido = controller1.getPedido();
@@ -200,7 +190,6 @@ public class PedidoController implements Initializable {
                     retiraDoEstoque();
                 }
             }
-
         }
     }
 
@@ -362,5 +351,4 @@ public class PedidoController implements Initializable {
         });
         textField.setStyle(null);
     }
-
 }

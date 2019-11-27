@@ -2,8 +2,6 @@ package model.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
-import model.bean.Usuario;
 import Conexão.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +13,7 @@ import model.bean.Produto;
 
 /**
  *
- * @author Elison Christoph
+ * @author gianr
  */
 public class EstoqueProdutosDAO {
 
@@ -36,6 +34,7 @@ public class EstoqueProdutosDAO {
     public void update(List<Produto> listaProd) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
+        System.out.println("Size: "+listaProd.size());
         try {
             for (Produto p : listaProd) {
                 stmt = null;
@@ -43,8 +42,8 @@ public class EstoqueProdutosDAO {
                 stmt.setDouble(1, p.getEstoque());
                 stmt.setInt(2, p.getId());
                 stmt.executeUpdate();
+                System.out.println(stmt.toString());
             }
-
         } catch (SQLException ex) {
         } finally {
             Conexao.closeConnection(con, stmt);
@@ -56,7 +55,6 @@ public class EstoqueProdutosDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Produto> produtos = new ArrayList<>();
-
         try {
             stmt = con.prepareStatement("SELECT * FROM estoqueProdutos");
             rs = stmt.executeQuery();
@@ -107,6 +105,5 @@ public class EstoqueProdutosDAO {
         } finally {
             Conexao.closeConnection(con, stmt);
         }
-
     }
 }

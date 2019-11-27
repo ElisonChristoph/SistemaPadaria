@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Elison Christoph
+ * @author gianr
  */
 public class UsuarioDAO {
 

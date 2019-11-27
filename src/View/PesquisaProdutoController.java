@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
 import java.io.IOException;
@@ -33,19 +28,15 @@ import model.dao.ProdutoDAO;
 /**
  * FXML Controller class
  *
- * @author Informatica
+ * @author gianr
  */
 public class PesquisaProdutoController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
     private Stage thisStage;
     private final ListarEntradaEstoqueController controller1;
     private List<Produto> listaProdutos;
     private List<Categoria> listaCategorias;
     private Produto produto;
-
     @FXML
     private ListView<String> lvProdutos;
     @FXML

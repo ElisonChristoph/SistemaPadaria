@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -45,7 +39,6 @@ import model.dao.EstoqueProdutosDAO;
  * @author gianr
  */
 public class AddEstoqueController implements Initializable {
-
     ObservableList<ModeloTabelaItensEntradaProduto> olProdutos = FXCollections.observableArrayList();
     EntradaProduto entrProd;
     EntradaProdutoDAO EntrProdDAO;
@@ -151,7 +144,6 @@ public class AddEstoqueController implements Initializable {
             boolean tem = false;
             for (Produto prod : estoque) {
                 if (p.getId() == prod.getId()) {
-                    p.setEstoque(prod.getEstoque());
                     tem = true;
                 }
             }
@@ -168,6 +160,7 @@ public class AddEstoqueController implements Initializable {
                 entrProd.setData(new Date(data));
                 if (EntrProdDAO.create(entrProd)) {
                     adicionaNoEstoque();
+                    cancelar();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Erro: Não é possivel alterar uma entrada de Produto.");
@@ -177,9 +170,7 @@ public class AddEstoqueController implements Initializable {
 
     public void adicionaNoEstoque() {
         for (Produto p : entrProd.getProdutos()) {
-            System.out.println(p.getEstoque() +""+ p.getQtdEntrada());
             p.setEstoque(p.getEstoque() + p.getQtdEntrada());
-            
         }
         validaEstoque();
         epDAO.update(entrProd.getProdutos());
@@ -237,9 +228,8 @@ public class AddEstoqueController implements Initializable {
                     break;
                 }
             }
-            olProdutos.add(new ModeloTabelaItensEntradaProduto(String.valueOf(p.getId()), p.getNome(), String.valueOf(new DecimalFormat("#,##.00").format(est)),
-                    String.valueOf(new DecimalFormat("#,##.00").format(p.getQtdEntrada())), String.valueOf(estFinal).replace('.', ',')));
-            System.out.println(estFinal);
+            olProdutos.add(new ModeloTabelaItensEntradaProduto(String.valueOf(p.getId()), p.getNome(), String.valueOf(est).replace('.', ','),
+                    String.valueOf(p.getQtdEntrada()).replace('.', ','), String.valueOf(estFinal).replace('.', ',')));
         }
         tabId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tabDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));

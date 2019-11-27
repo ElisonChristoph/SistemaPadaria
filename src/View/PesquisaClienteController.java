@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
 import java.io.IOException;
@@ -28,13 +23,10 @@ import model.dao.ClienteDAO;
 /**
  * FXML Controller class
  *
- * @author Informatica
+ * @author gianr
  */
 public class PesquisaClienteController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
     private ObservableList lista;
     List<Cliente> clientes;
     Cliente cliente;
@@ -51,9 +43,7 @@ public class PesquisaClienteController implements Initializable {
     private Button btCancelar;
     @FXML
     private Button btSelecionar;
-
     private Stage thisStage;
-
     private final PedidoController controller1;
     private final ListarPedidosController controller2;
 
@@ -64,16 +54,9 @@ public class PesquisaClienteController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PesquisaCliente.fxml"));
             thisStage.initStyle(StageStyle.UNDECORATED);
-
-            // Set this class as the controller
             loader.setController(this);
-
-            // Load the scene
             thisStage.setScene(new Scene(loader.load()));
-
-            // Setup the window/stage
             thisStage.setTitle("Pesquisa Cliente");
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -114,7 +97,6 @@ public class PesquisaClienteController implements Initializable {
     }
 
     public void listar() {
-
         clientes.clear();
         lista.clear();
         int index = cbPesquisa.getSelectionModel().getSelectedIndex();
