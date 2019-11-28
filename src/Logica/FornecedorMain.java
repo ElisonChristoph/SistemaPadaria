@@ -28,7 +28,7 @@ public class FornecedorMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/CadastroFornecedor.fxml"));
-        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.DECORATED);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

@@ -74,7 +74,7 @@ public class CadastroCategoriaController implements Initializable {
 
     }
 
-    private void PopularTabela() throws SQLException {
+    private void PopularTabela() {
 
         try {
             Connection con = Conexao.getConnection();
@@ -113,13 +113,8 @@ public class CadastroCategoriaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        try {
+        
             PopularTabela();
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroCategoriaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
 }

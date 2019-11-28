@@ -31,7 +31,7 @@ public class TelaLoginMain extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/View/TelaLogin.fxml"));
-        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.DECORATED);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

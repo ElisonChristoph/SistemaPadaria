@@ -28,7 +28,7 @@ public class UsuarioMain extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/View/CadastroUsuario.fxml"));
         Parent root = loader.load();
-        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.DECORATED);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
