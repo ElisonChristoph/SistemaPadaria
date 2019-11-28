@@ -16,16 +16,16 @@ public class Cliente {
     private String cpf;
     private String identidade;
     private String endereco;
-    private String bairro;
+    private String cidade;
     private String telefone;
 
-    public Cliente(int id, String nome, String cpf, String identidade, String endereco, String bairro, String telefone) {
+    public Cliente(int id, String nome, String cpf, String identidade, String endereco, String cidade, String telefone) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.identidade = identidade;
         this.endereco = endereco;
-        this.bairro = bairro;
+        this.cidade = cidade;
         this.telefone = telefone;
     }
 
@@ -73,12 +73,12 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    public String getBairro() {
-        return bairro;
+    public String getCidade() {
+        return cidade;
     }
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public String getTelefone() {

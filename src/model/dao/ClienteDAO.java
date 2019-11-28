@@ -3,7 +3,6 @@ package model.dao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import model.bean.Usuario;
 import Conexão.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,12 +22,12 @@ public class ClienteDAO {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("INSERT INTO clientes (nome, cpf, identidade, endereco, bairro, telefone)VALUES(?, ?, ?, ?, ?, ?)");
+            stmt = con.prepareStatement("INSERT INTO clientes (nome, cpf, identidade, endereco, cidade, telefone)VALUES(?, ?, ?, ?, ?, ?)");
             stmt.setString(1, c.getNome());
             stmt.setString(2, c.getCpf());
             stmt.setString(3, c.getIdentidade());
             stmt.setString(4, c.getEndereco());
-            stmt.setString(5, c.getBairro());
+            stmt.setString(5, c.getCidade());
             stmt.setString(6, c.getTelefone());
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
@@ -43,12 +42,12 @@ public class ClienteDAO {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("UPDATE clientes SET nome = ? ,cpf = ?,identidade = ?,endereco = ?,bairro = ?,telefone = ? WHERE id = ?");
+            stmt = con.prepareStatement("UPDATE clientes SET nome = ? ,cpf = ?,identidade = ?,endereco = ?,cidade = ?,telefone = ? WHERE id = ?");
             stmt.setString(1, c.getNome());
             stmt.setString(2, c.getCpf());
             stmt.setString(3, c.getIdentidade());
             stmt.setString(4, c.getEndereco());
-            stmt.setString(5, c.getBairro());
+            stmt.setString(5, c.getCidade());
             stmt.setString(6, c.getTelefone());
 
             stmt.setInt(7, c.getId());
@@ -73,7 +72,7 @@ public class ClienteDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("identidade"), rs.getString("endereco"), rs.getString("bairro"), rs.getString("telefone"));
+                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("identidade"), rs.getString("endereco"), rs.getString("cidade"), rs.getString("telefone"));
                 clientes.add(cliente);
             }
         } catch (SQLException ex) {
@@ -94,7 +93,7 @@ public class ClienteDAO {
             stmt.setString(1, "%" + desc + "%");
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("identidade"), rs.getString("endereco"), rs.getString("bairro"), rs.getString("telefone"));
+                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("identidade"), rs.getString("endereco"), rs.getString("cidade"), rs.getString("telefone"));
                 clientes.add(cliente);
             }
 
@@ -117,7 +116,7 @@ public class ClienteDAO {
             stmt.setString(1, "%" + cpf + "%");
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("identidade"), rs.getString("endereco"), rs.getString("bairro"), rs.getString("telefone"));
+                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("identidade"), rs.getString("endereco"), rs.getString("cidade"), rs.getString("telefone"));
                 clientes.add(cliente);
             }
 
@@ -140,7 +139,7 @@ public class ClienteDAO {
             stmt.setString(1, "%" + identidade + "%");
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("identidade"), rs.getString("endereco"), rs.getString("bairro"), rs.getString("telefone"));
+                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("identidade"), rs.getString("endereco"), rs.getString("cidade"), rs.getString("telefone"));
                 clientes.add(cliente);
             }
 
@@ -163,7 +162,7 @@ public class ClienteDAO {
             stmt.setString(1, "%" + endereco + "%");
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("identidade"), rs.getString("endereco"), rs.getString("bairro"), rs.getString("telefone"));
+                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("identidade"), rs.getString("endereco"), rs.getString("cidade"), rs.getString("telefone"));
                 clientes.add(cliente);
             }
 
@@ -176,17 +175,17 @@ public class ClienteDAO {
         return clientes;
     }
     
-    public List<Cliente> readForBairro(String bairro) {
+    public List<Cliente> readForCidade(String cidade) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Cliente> clientes = new ArrayList<>();
         try {
-            stmt = con.prepareStatement("SELECT * FROM clientes WHERE bairro LIKE ?");
-            stmt.setString(1, "%" + bairro + "%");
+            stmt = con.prepareStatement("SELECT * FROM clientes WHERE cidade LIKE ?");
+            stmt.setString(1, "%" + cidade + "%");
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("identidade"), rs.getString("endereco"), rs.getString("bairro"), rs.getString("telefone"));
+                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("identidade"), rs.getString("endereco"), rs.getString("cidade"), rs.getString("telefone"));
                 clientes.add(cliente);
             }
 
