@@ -273,4 +273,23 @@ public class HomeController implements Initializable {
         this.scene = scene;
     }
 
+    public void fazerPedido() {
+        PedidoController p = new PedidoController((null));
+        p.showStage();
+    }
+    
+    public void listarPedidos(){
+        ListarPedidosController lp = new ListarPedidosController();
+        lp.showStage();
+    }
+    
+    public void listarEntradasEstoque(){
+        ListarEntradaEstoqueController lee = new ListarEntradaEstoqueController();
+        lee.showStage();
+    }
+    public void adicionarEstoque(){
+        AddEstoqueController ae = new AddEstoqueController(null);
+        ae.showStage();
+    }
+
 }

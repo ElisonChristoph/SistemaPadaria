@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
@@ -13,7 +20,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="619.0" prefWidth="1260.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HomeController">
+<AnchorPane id="AnchorPane" prefHeight="619.0" prefWidth="1260.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HomeController">
    <children>
       <GridPane layoutX="7.0" layoutY="7.0" prefHeight="619.0" prefWidth="1260.0">
         <columnConstraints>
@@ -249,7 +256,7 @@
                   <Insets left="500.0" />
                </GridPane.margin>
             </Label>
-            <Button layoutX="600.0" layoutY="355.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="276.0" text="Entradas de Matéria Prima" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Button layoutX="600.0" layoutY="355.0" mnemonicParsing="false" onMousePressed="#listarEntradasEstoque" prefHeight="50.0" prefWidth="276.0" text="Entradas de Estoque" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
@@ -257,7 +264,7 @@
                   <Insets left="510.0" top="-35.0" />
                </GridPane.margin>
             </Button>
-            <Button layoutX="780.0" layoutY="355.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="276.0" text="Vendas de Produtos" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Button layoutX="780.0" layoutY="355.0" mnemonicParsing="false" onMousePressed="#listarPedidos" prefHeight="50.0" prefWidth="276.0" text="Vendas de Produtos" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
@@ -265,7 +272,7 @@
                   <Insets left="510.0" top="85.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" text="Adicionar Estoque" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
+            <Button mnemonicParsing="false" onMousePressed="#adicionarEstoque" prefHeight="50.0" prefWidth="185.0" text="Adicionar Estoque" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -273,7 +280,7 @@
                   <Insets left="385.0" top="85.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="136.0" text="Fazer Pedido" GridPane.columnIndex="1">
+            <Button mnemonicParsing="false" onMousePressed="#fazerPedido" prefHeight="50.0" prefWidth="136.0" text="Fazer Pedido" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -329,7 +336,7 @@
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Button layoutX="927.0" layoutY="105.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="136.0" text="Vender" GridPane.columnIndex="1">
+            <Button layoutX="927.0" layoutY="105.0" mnemonicParsing="false" onMousePressed="#listarPedidos" prefHeight="50.0" prefWidth="136.0" text="Vender" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
