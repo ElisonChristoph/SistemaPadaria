@@ -1,6 +1,6 @@
 package View;
 
-import Logica.UsuarioMain;
+import Logica.ClienteMain;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,17 +10,15 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javax.swing.JOptionPane;
 import model.bean.Cliente;
-import model.bean.Usuario;
 import model.dao.ClienteDAO;
-import model.dao.UsuarioDAO;
 
 /**
  * FXML Controller class
@@ -46,9 +44,6 @@ public class CadastroClienteController implements Initializable {
     private Button btSalvar;
     @FXML
     private Button btCancelar;
-    private TextField tfLogin;
-    private ListView<?> lvUsuarios;
-    private PasswordField pfSenha;
     @FXML
     private Label lCodigo;
     @FXML
@@ -70,6 +65,8 @@ public class CadastroClienteController implements Initializable {
     private TextField tfTelefone;
     @FXML
     private ListView<?> lvClientes;
+    @FXML
+    private ComboBox<String> cbPesquisa;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -77,6 +74,8 @@ public class CadastroClienteController implements Initializable {
         clientes = new ArrayList<>();
         cliente = new Cliente();
         dao = new ClienteDAO();
+        cbPesquisa.getItems().addAll("Nome", "CPF", "Identidade", "Endereço", "Cidade");
+        cbPesquisa.getSelectionModel().select(0);
         listar();
         btSalvar.setDisable(true);
         btExcluir.setDisable(true);
@@ -110,17 +109,30 @@ public class CadastroClienteController implements Initializable {
 
     public boolean verificarCampos() {
         if (tfNome.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Digite um Nome!");
+            JOptionPane.showMessageDialog(null, "Digite o Nome!");
             return false;
         }
-        if (tfLogin.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Digite um Login!");
+        if (tfCPF.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Digite o CPF!");
             return false;
         }
-        if (pfSenha.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Digite uma Senha!");
+        if (tfIdentidade.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Digite a Identidade!");
             return false;
         }
+        if (tfEndereco.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Digite o Endereço !");
+            return false;
+        }
+        if (tfCidade.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Digite a Cidade!");
+            return false;
+        }
+        if (tfTelefone.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Digite o Telefone!");
+            return false;
+        }
+
         return true;
     }
 
@@ -128,13 +140,13 @@ public class CadastroClienteController implements Initializable {
     public void cancelar() {
         if (novo) {
             novo = false;
-            lvUsuarios.setDisable(false);
+            lvClientes.setDisable(false);
             tfPesquisa.setEditable(true);
             btPesquisa.setDisable(false);
             btSalvar.setDisable(true);
             btExcluir.setDisable(true);
         } else {
-            UsuarioMain.getStage().close();
+            ClienteMain.getStage().close();
         }
     }
 
@@ -145,7 +157,7 @@ public class CadastroClienteController implements Initializable {
         for (Cliente c : clientes) {
             lista.add(c.getNome());
         }
-        lvUsuarios.setItems(lista);
+        lvClientes.setItems(lista);
     }
 
     @FXML
@@ -159,18 +171,41 @@ public class CadastroClienteController implements Initializable {
     public void pesquisar() {
         clientes.clear();
         lista.clear();
-        clientes = dao.readForDesc(tfPesquisa.getText());
+
+        int index = cbPesquisa.getSelectionModel().getSelectedIndex();
+        switch (index) {
+            case -1:
+                clientes = dao.read();
+                break;
+            case 0:
+                clientes = dao.readForDesc(tfPesquisa.getText());
+                break;
+            case 1:
+                clientes = dao.readForCpf(tfPesquisa.getText());
+                break;
+            case 2:
+                clientes = dao.readForIdentidade(tfPesquisa.getText());
+                break;
+            case 3:
+                clientes = dao.readForEndereco(tfPesquisa.getText());
+                break;
+            case 4:
+                clientes = dao.readForCidade(tfPesquisa.getText());
+                break;
+        }
+
         for (Cliente c : clientes) {
             lista.add(c.getNome());
         }
-        lvUsuarios.setItems(lista);
+        lvClientes.setItems(lista);
+
     }
 
     @FXML
-    public void novoUsuario() {
+    public void novoCliente() {
         novo = true;
         limpacampos();
-        lvUsuarios.setDisable(true);
+        lvClientes.setDisable(true);
         tfPesquisa.setEditable(false);
         btPesquisa.setDisable(true);
         btSalvar.setDisable(false);
@@ -180,21 +215,24 @@ public class CadastroClienteController implements Initializable {
     public void limpacampos() {
         lCodigo.setText("0");
         tfNome.setText("");
-        tfLogin.setText("");
-        pfSenha.setText("");
+        tfCPF.setText("");
+        tfIdentidade.setText("");
+        tfEndereco.setText("");
+        tfCidade.setText("");
+        tfTelefone.setText("");
     }
 
     @FXML
-    public void selecionaUsuario() {
-        int index = lvUsuarios.getSelectionModel().getSelectedIndex();
+    public void selecionaCliente() {
+        int index = lvClientes.getSelectionModel().getSelectedIndex();
         if (index >= 0) {
             cliente = clientes.get(index);
             tfNome.setText(cliente.getNome());
-           tfCPF.setText(cliente.getCpf());
-           tfIdentidade.setText(cliente.getIdentidade());
-           tfEndereco.setText(cliente.getEndereco());
-           tfCidade.setText(cliente.getCidade());
-           tfTelefone.setText(cliente.getTelefone());
+            tfCPF.setText(cliente.getCpf());
+            tfIdentidade.setText(cliente.getIdentidade());
+            tfEndereco.setText(cliente.getEndereco());
+            tfCidade.setText(cliente.getCidade());
+            tfTelefone.setText(cliente.getTelefone());
             lCodigo.setText(String.valueOf(cliente.getId()));
         }
         novo = false;
