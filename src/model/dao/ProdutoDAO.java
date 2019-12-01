@@ -31,7 +31,7 @@ public class ProdutoDAO {
 
         //Passa dados do Produto
         try {
-            stmt = con.prepareStatement("INSERT INTO produtos (nome,ingredientes_id, categoria_id, valor, validade) VALUES(?,?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO produtos (nome,ingredientes, id_categoria, valor, validade) VALUES(?,?,?,?,?)");
             stmt.setInt(1, p.getCategoria().getId());
             stmt.setString(2, p.getNome());
             stmt.setDouble(3, p.getValor());
@@ -100,7 +100,7 @@ public class ProdutoDAO {
                     }
                 }
 
-                produto = new Produto(rs.getInt("id"), categoria, rs.getString("nome"), rs.getDouble("valor"), rs.getInt("validade"), ingredientes);
+                produto = new Produto(rs.getInt("id"), categoria, rs.getString("nome"), rs.getDouble("valor"), rs.getInt("validade"), rs.getString("ingredientes"));
                 produtos.add(produto);
             }
         } catch (SQLException ex) {
@@ -164,7 +164,7 @@ public class ProdutoDAO {
                     }
                 }
 
-                produto = new Produto(rs.getInt("id"), categoria, rs.getString("nome"), rs.getDouble("valor"), rs.getInt("validade"), ingredientes);
+                produto = new Produto(rs.getInt("id"), categoria, rs.getString("nome"), rs.getDouble("valor"), rs.getInt("validade"), rs.getString("ingredientes"));
                 produtos.add(produto);
             }
         } catch (SQLException ex) {
@@ -228,7 +228,7 @@ public class ProdutoDAO {
                     }
                 }
 
-                produto = new Produto(rs.getInt("id"), categoria, rs.getString("nome"), rs.getDouble("valor"), rs.getInt("validade"), ingredientes);
+                produto = new Produto(rs.getInt("id"), categoria, rs.getString("nome"), rs.getDouble("valor"), rs.getInt("validade"), rs.getString("ingredientes"));
                 produtos.add(produto);
             }
         } catch (SQLException ex) {

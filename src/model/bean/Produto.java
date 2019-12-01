@@ -5,6 +5,7 @@
  */
 package model.bean;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,10 +23,9 @@ public class Produto {
     private double qtdEntrada;//Não vai para o Banco
     private double estoque;
     private int validade;
+    private String ingredientes;
 
-    private List<Ingrediente> ingredientes;
-
-    public Produto(int id, Categoria categoria, String nome, double valor, int validade, List<Ingrediente> ingredientes) {
+    public Produto(int id, Categoria categoria, String nome, double valor, int validade, String ingredientes) {
         this.id = id;
         this.categoria = categoria;
         this.nome = nome;
@@ -71,7 +71,7 @@ public class Produto {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
@@ -83,11 +83,11 @@ public class Produto {
         this.validade = validade;
     }
 
-    public List<Ingrediente> getIngredientes() {
+    public String getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(List<Ingrediente> ingredientes) {
+    public void setIngredientes(String ingredientes) {
         this.ingredientes = ingredientes;
     }
 

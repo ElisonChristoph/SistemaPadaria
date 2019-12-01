@@ -28,6 +28,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.StringConverter;
 import model.bean.Categoria;
 import model.bean.ModeloTabela;
 import model.bean.Produto;
@@ -110,8 +111,8 @@ public class CadastroProdutoController implements Initializable {
         
         p.setNome(txtNomeProduto.getText());
         p.setValidade(Integer.parseInt(txtConsumir.getText()));
-        p.setValor(Float.parseFloat(txtValor.getText()));
-        p.setCategoria(null);
+        p.setValor(Double.parseDouble(txtValor.getText()));
+        p.setCategoria(comboCat.selectionModelProperty());
         p.setIngredientes(null);
         
         dao.create(p);
@@ -161,16 +162,30 @@ public class CadastroProdutoController implements Initializable {
             ResultSet rsc = con.createStatement().executeQuery("select * from categoriaprodutos");
             
             while(rsc.next()){
+                
                 categorias.add(new Categoria(rsc.getInt("id"), rsc.getString("nome")));
             }
             
         } catch (SQLException ex) {
             Logger.getLogger(CadastroProdutoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-            comboCat.setItems(categorias);
+           comboCat.setConverter(new StringConverter<Categoria>(){
+
+            @Override
+            public String toString(Categoria object) {
+                if(object!=null){
+                    return object.getNome();
+                }
+                return null;
+            }
+            @Override
+            public Categoria fromString(String string) {
+                return null;
+            }
         
-    }
+    });
+           comboCat.setItems(categorias);
+                   }               
     
     private void ResetaSelecionados(){
         ingredientesselecionados.clear();
