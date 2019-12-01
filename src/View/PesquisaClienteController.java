@@ -117,7 +117,7 @@ public class PesquisaClienteController implements Initializable {
                 clientes = dao.readForEndereco(tfPesquisa.getText());
                 break;
             case 4:
-                clientes = dao.readForBairro(tfPesquisa.getText());
+                clientes = dao.readForCidade(tfPesquisa.getText());
                 break;
         }
 

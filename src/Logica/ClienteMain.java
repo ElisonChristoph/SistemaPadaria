@@ -21,13 +21,13 @@ import javafx.stage.StageStyle;
  * @author Elison Christoph
  */
 public class ClienteMain extends Application {
-    
+
     private static Stage stage;
 
-    
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/View/CadastroCliente.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/View/CadastroCliente.fxml"));
+        Parent root = loader.load();
         stage.initStyle(StageStyle.DECORATED);
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -47,7 +47,7 @@ public class ClienteMain extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
     public void fecha() {
         ClienteMain.getStage().close();
     }
@@ -59,7 +59,5 @@ public class ClienteMain extends Application {
     public static void setStage(Stage stage) {
         ClienteMain.stage = stage;
     }
-    
-    
-    
+
 }

@@ -133,6 +133,7 @@ public class CadastroUsuarioController implements Initializable {
         lvUsuarios.setItems(lista);
     }
 
+    @FXML
     public void excluir() {
         dao.delete(usuario);
         limpacampos();
