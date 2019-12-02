@@ -6,7 +6,7 @@
 package View;
 
 import Conexão.Conexao;
-import Logica.ExcluirProdutoMain;
+import Logica.ExcluirMain;
 import Logica.ProdutoMain;
 import java.io.IOException;
 import java.net.URL;
@@ -110,7 +110,7 @@ public class CadastroProdutoController implements Initializable {
     @FXML
     private void ExcluirProduto(ActionEvent event) throws Exception {
 
-        ExcluirProdutoMain excluirp = new ExcluirProdutoMain();
+        ExcluirMain excluirp = new ExcluirMain();
 
         try {
             excluirp.start(new Stage());

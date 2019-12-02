@@ -6,6 +6,7 @@
 package model.dao;
 
 import Conexão.Conexao;
+import View.CadastroProdutoController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,7 +43,7 @@ public class ProdutoDAO {
             //Executa SQL
             stmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            JOptionPane.showMessageDialog(null, "Produto Salvo com Sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Salvar!" + ex);
         } finally {

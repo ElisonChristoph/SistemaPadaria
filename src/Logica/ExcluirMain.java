@@ -20,7 +20,7 @@ import javafx.stage.StageStyle;
  *
  * @author Elison Christoph
  */
-public class ExcluirProdutoMain extends Application {
+public class ExcluirMain extends Application {
     
     private static Stage stage;
 
@@ -49,7 +49,7 @@ public class ExcluirProdutoMain extends Application {
     }
     
     public void fecha() {
-        ExcluirProdutoMain.getStage().close();
+        ExcluirMain.getStage().close();
     }
 
     public static Stage getStage() {
@@ -57,7 +57,7 @@ public class ExcluirProdutoMain extends Application {
     }
 
     public static void setStage(Stage stage) {
-        ExcluirProdutoMain.stage = stage;
+        ExcluirMain.stage = stage;
     }
     
 }
