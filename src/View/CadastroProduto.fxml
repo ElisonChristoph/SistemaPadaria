@@ -96,7 +96,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Button layoutX="581.0" layoutY="410.0" mnemonicParsing="false" onAction="#Fechar" prefHeight="39.0" prefWidth="160.0" style="-fx-background-color: #363636;" text="Excluir Produto" textFill="WHITE">
+      <Button layoutX="581.0" layoutY="410.0" mnemonicParsing="false" onAction="#ExcluirProduto" prefHeight="39.0" prefWidth="160.0" style="-fx-background-color: #363636;" text="Excluir Produto" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

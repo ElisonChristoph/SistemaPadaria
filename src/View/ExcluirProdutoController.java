@@ -6,13 +6,12 @@
 package View;
 
 import Conexão.Conexao;
-import Logica.ProdutoMain;
+import Logica.ExcluirProdutoMain;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,14 +24,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.StringConverter;
-import model.bean.Categoria;
 import model.bean.ModeloTabela;
-import model.bean.Produto;
-import model.dao.ProdutoDAO;
 
 /**
  *
@@ -104,7 +97,7 @@ public class ExcluirProdutoController implements Initializable {
     
     @FXML
     public void Fechar() {
-        ProdutoMain.getStage().close();
+        ExcluirProdutoMain.getStage().close();
     }
     
 

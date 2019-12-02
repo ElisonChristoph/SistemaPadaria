@@ -15,7 +15,7 @@ import java.util.List;
 public class Produto {
 
     private int id;
-    private Categoria categoria;
+    private int categoria;
     private String nome;
     private double valor;
     private double valorPedido;//Não vai para o Banco
@@ -25,7 +25,7 @@ public class Produto {
     private int validade;
     private String ingredientes;
 
-    public Produto(int id, Categoria categoria, String nome, double valor, int validade, String ingredientes) {
+    public Produto(int id, int categoria, String nome, double valor, int validade, String ingredientes) {
         this.id = id;
         this.categoria = categoria;
         this.nome = nome;
@@ -51,11 +51,11 @@ public class Produto {
         this.id = id;
     }
 
-    public Categoria getCategoria() {
+    public int getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(int categoria) {
         this.categoria = categoria;
     }
 

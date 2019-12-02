@@ -28,7 +28,7 @@
       <TableView fx:id="tableprodutos" editable="true" layoutX="42.0" layoutY="104.0" prefHeight="361.0" prefWidth="251.0">
         <columns>
           <TableColumn fx:id="tableprodutosid" prefWidth="37.0" />
-          <TableColumn fx:id="tableprodutosnome" editable="false" prefWidth="213.0" text="Nome Ingrediente" />
+          <TableColumn fx:id="tableprodutosnome" editable="false" prefWidth="213.0" text="Nome Produto" />
         </columns>
       </TableView>
       <Button layoutX="312.0" layoutY="219.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="160.0" style="-fx-background-color: #363636;" text="Excluir Produto" textFill="WHITE">
