@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.bean.Categoria;
 import model.bean.Ingrediente;
 import model.bean.Produto;
@@ -33,16 +34,17 @@ public class ProdutoDAO {
         try {
             stmt = con.prepareStatement("INSERT INTO produtos (nome,ingredientes,valor,validade,id_categoria) VALUES(?,?,?,?,?)");
             stmt.setString(1, p.getNome());
-            stmt.setDouble(2, p.getValor());
-            stmt.setInt(3, p.getValidade());
-            stmt.setInt(4, p.getCategoria());
+            stmt.setString(2, p.getIngredientes());
+            stmt.setDouble(3, p.getValor());
+            stmt.setInt(4, p.getValidade());
+            stmt.setInt(5, p.getCategoria());
 
             //Executa SQL
             stmt.executeUpdate();
 
-            //JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (SQLException ex) {
-            // JOptionPane.showMessageDialog(null, "Erro ao Salvar!" + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao Salvar!" + ex);
         } finally {
             Conexao.closeConnection(con, stmt);
         }

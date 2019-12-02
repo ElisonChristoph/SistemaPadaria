@@ -5,9 +5,6 @@
  */
 package model.bean;
 
-import java.util.Date;
-import java.util.List;
-
 /**
  *
  * @author Elison Christoph
