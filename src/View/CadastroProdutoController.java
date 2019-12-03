@@ -106,7 +106,7 @@ public class CadastroProdutoController implements Initializable {
     ObservableList<Categoria> categorias = FXCollections.observableArrayList();
     ArrayList selecionados = new ArrayList();
     
-    //Botão Sair
+    //Botão Excluir//
     @FXML
     private void ExcluirProduto(ActionEvent event) throws Exception {
 
@@ -117,7 +117,7 @@ public class CadastroProdutoController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //HomeMain.getStage().close();
+        
     }
 
     @FXML

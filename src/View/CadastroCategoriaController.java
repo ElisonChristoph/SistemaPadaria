@@ -7,7 +7,9 @@ package View;
 
 import Conexão.Conexao;
 import Logica.CategoriaMain;
+import Logica.ExcluirMain;
 import Logica.IngredienteMain;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.bean.Categoria;
 import model.bean.ModeloTabela;
 import model.dao.CategoriaDAO;
@@ -95,6 +98,20 @@ public class CadastroCategoriaController implements Initializable {
         table.setItems(categorias);
         //conn.close();
 
+    }
+    
+    //Botão Excluir//
+    @FXML
+    private void ExcluirProduto(ActionEvent event) throws Exception {
+
+        ExcluirMain excluirp = new ExcluirMain();
+
+        try {
+            excluirp.start(new Stage());
+        } catch (IOException ex) {
+            Logger.getLogger(CadastroCategoriaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     private void ResetaLista() {

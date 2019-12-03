@@ -71,6 +71,8 @@ public class ExcluirController implements Initializable {
     private Button bexcluir;
     @FXML
     private Label labelexcluir;
+    
+    
        
     //Listas
     ObservableList<ModeloTabela> produtos = FXCollections.observableArrayList();
@@ -83,7 +85,7 @@ public class ExcluirController implements Initializable {
     
     
     //Excluir Produtos//
-    @FXML
+    
     public void excluirProduto() throws SQLException {
     Connection con = Conexão.Conexao.getConnection();
         PreparedStatement stmt = null;
@@ -106,9 +108,20 @@ public class ExcluirController implements Initializable {
     @FXML
     private void TabelaProdutos(){
         
+        tabela.setVisible(true);
+        bcancelar.setVisible(true);
+        bexcluir.setVisible(true);
+        labelexcluir.setVisible(true);
+        
         labelexcluir.setText("Excluir Produto");
         tabelanome.setText("Nome Produto");
-        //bexcluir.set
+        bexcluir.setOnAction(click -> {
+            try {
+                excluirProduto();
+            } catch (SQLException ex) {
+                Logger.getLogger(ExcluirController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+	});
         
         try {
             Connection con = Conexao.getConnection();
@@ -120,9 +133,10 @@ public class ExcluirController implements Initializable {
             }
             
         } catch (SQLException ex) {
+          
             Logger.getLogger(CadastroProdutoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
+         Conexao.closeConnection(conn);
             tabelaid.setCellValueFactory(new PropertyValueFactory<>("id"));
             
             tabelanome.setCellValueFactory(new PropertyValueFactory<>("nome")); 
@@ -130,6 +144,7 @@ public class ExcluirController implements Initializable {
             tabela.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             
             tabela.setItems(produtos);  
+            
     }
     //- - - - - - - - - - - - - - - - - - - - - //
     
@@ -157,6 +172,21 @@ public class ExcluirController implements Initializable {
     @FXML
     private void TabelaCategorias(){
         
+        tabela.setVisible(true);
+        bcancelar.setVisible(true);
+        bexcluir.setVisible(true);
+        labelexcluir.setVisible(true);
+        
+        labelexcluir.setText("Excluir Categoria");
+        tabelanome.setText("Nome Categoria");
+        bexcluir.setOnAction(click -> {
+            try {
+                excluirCategoria();
+            } catch (SQLException ex) {
+                Logger.getLogger(ExcluirController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+	});
+        
         try {
             Connection con = Conexao.getConnection();
             
@@ -169,7 +199,7 @@ public class ExcluirController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(CadastroProdutoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
+        Conexao.closeConnection(conn); 
             tabelaid.setCellValueFactory(new PropertyValueFactory<>("id"));
             
             tabelanome.setCellValueFactory(new PropertyValueFactory<>("nome")); 
@@ -180,7 +210,7 @@ public class ExcluirController implements Initializable {
     }
     //- - - - - - - - - - - - - - - - - - - - - //
     
-    //Excluir Categorias//
+    //Excluir Ingredientes//
     @FXML
     public void excluirIngrediente() throws SQLException {
     Connection con = Conexão.Conexao.getConnection();
@@ -204,6 +234,21 @@ public class ExcluirController implements Initializable {
     @FXML
     private void TabelaIngredientes(){
         
+        tabela.setVisible(true);
+        bcancelar.setVisible(true);
+        bexcluir.setVisible(true);
+        labelexcluir.setVisible(true);
+        
+        labelexcluir.setText("Excluir Ingrediente");
+        tabelanome.setText("Nome Ingrediente");
+        bexcluir.setOnAction(click -> {
+            try {
+                excluirIngrediente();
+            } catch (SQLException ex) {
+                Logger.getLogger(ExcluirController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+	});
+        
         try {
             Connection con = Conexao.getConnection();
             
@@ -216,10 +261,10 @@ public class ExcluirController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(CadastroProdutoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
-            tabelaid.setCellValueFactory(new PropertyValueFactory<>("codIngrediente"));
+        Conexao.closeConnection(conn); 
+            tabelaid.setCellValueFactory(new PropertyValueFactory<>("id"));
             
-            tabelanome.setCellValueFactory(new PropertyValueFactory<>("nomeIngrediente")); 
+            tabelanome.setCellValueFactory(new PropertyValueFactory<>("nome")); 
             
             tabela.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             
@@ -227,6 +272,253 @@ public class ExcluirController implements Initializable {
     }
     //- - - - - - - - - - - - - - - - - - - - - //
     
+    //Excluir Clientes//
+    @FXML
+    public void excluirCliente() throws SQLException {
+    Connection con = Conexão.Conexao.getConnection();
+        PreparedStatement stmt = null;
+        
+        ModeloTabela selectCliente = tabela.getSelectionModel().getSelectedItem();
+        tabela.getItems().remove(selectCliente);
+
+    try {
+        stmt = con.prepareStatement("DELETE FROM clientes where id = ?");
+        stmt.setInt(1, Integer.parseInt(selectCliente.getId()));
+        stmt.execute();
+        JOptionPane.showMessageDialog(null, "Cliente Excluido com Sucesso!");
+     
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Excluir!" + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
+    @FXML
+    private void TabelaClientes(){
+        
+        tabela.setVisible(true);
+        bcancelar.setVisible(true);
+        bexcluir.setVisible(true);
+        labelexcluir.setVisible(true);
+        
+        labelexcluir.setText("Excluir Cliente");
+        tabelanome.setText("Nome Cliente");
+        bexcluir.setOnAction(click -> {
+            try {
+                excluirCliente();
+            } catch (SQLException ex) {
+                Logger.getLogger(ExcluirController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+	});
+        
+        try {
+            Connection con = Conexao.getConnection();
+            
+            ResultSet rsi = con.createStatement().executeQuery("select * from clientes");
+            
+            while(rsi.next()){
+                clientes.add(new ModeloTabela(rsi.getString("id"),rsi.getString("nome")));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroProdutoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Conexao.closeConnection(conn); 
+            tabelaid.setCellValueFactory(new PropertyValueFactory<>("id"));
+            
+            tabelanome.setCellValueFactory(new PropertyValueFactory<>("nome")); 
+            
+            tabela.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            
+            tabela.setItems(clientes);  
+    }
+    //- - - - - - - - - - - - - - - - - - - - - //
+    
+    //Excluir Fornecedor//
+    @FXML
+    public void excluirFornecedor() throws SQLException {
+    Connection con = Conexão.Conexao.getConnection();
+        PreparedStatement stmt = null;
+        
+        ModeloTabela selectFornecedor = tabela.getSelectionModel().getSelectedItem();
+        tabela.getItems().remove(selectFornecedor);
+
+    try {
+        stmt = con.prepareStatement("DELETE FROM fornecedores where id = ?");
+        stmt.setInt(1, Integer.parseInt(selectFornecedor.getId()));
+        stmt.execute();
+        JOptionPane.showMessageDialog(null, "Fornecedor Excluido com Sucesso!");
+     
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Excluir!" + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
+    @FXML
+    private void TabelaFornecedores(){
+        
+        tabela.setVisible(true);
+        bcancelar.setVisible(true);
+        bexcluir.setVisible(true);
+        labelexcluir.setVisible(true);
+        
+        labelexcluir.setText("Excluir Fornecedor");
+        tabelanome.setText("Nome Fornecedor");
+        bexcluir.setOnAction(click -> {
+            try {
+                excluirFornecedor();
+            } catch (SQLException ex) {
+                Logger.getLogger(ExcluirController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+	});
+        
+        try {
+            Connection con = Conexao.getConnection();
+            
+            ResultSet rsi = con.createStatement().executeQuery("select * from fornecedores");
+            
+            while(rsi.next()){
+                fornecedores.add(new ModeloTabela(rsi.getString("codFornecedor"),rsi.getString("nomeFornecedor")));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroProdutoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Conexao.closeConnection(conn); 
+            tabelaid.setCellValueFactory(new PropertyValueFactory<>("id"));
+            
+            tabelanome.setCellValueFactory(new PropertyValueFactory<>("nome")); 
+            
+            tabela.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            
+            tabela.setItems(fornecedores);  
+    }
+    //- - - - - - - - - - - - - - - - - - - - - //
+    
+    //Excluir Usuario//
+    @FXML
+    public void excluirUsuario() throws SQLException {
+    Connection con = Conexão.Conexao.getConnection();
+        PreparedStatement stmt = null;
+        
+        ModeloTabela selectUsuarios = tabela.getSelectionModel().getSelectedItem();
+        tabela.getItems().remove(selectUsuarios);
+
+    try {
+        stmt = con.prepareStatement("DELETE FROM usuario where id = ?");
+        stmt.setInt(1, Integer.parseInt(selectUsuarios.getId()));
+        stmt.execute();
+        JOptionPane.showMessageDialog(null, "Usuario Excluido com Sucesso!");
+     
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Excluir!" + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
+    @FXML
+    private void TabelaUsuario(){
+        
+        tabela.setVisible(true);
+        bcancelar.setVisible(true);
+        bexcluir.setVisible(true);
+        labelexcluir.setVisible(true);
+        
+        labelexcluir.setText("Excluir Usuario");
+        tabelanome.setText("Usuario");
+        bexcluir.setOnAction(click -> {
+            try {
+                excluirUsuario();
+            } catch (SQLException ex) {
+                Logger.getLogger(ExcluirController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+	});
+        
+        try {
+            Connection con = Conexao.getConnection();
+            
+            ResultSet rsi = con.createStatement().executeQuery("select * from usuario");
+            
+            while(rsi.next()){
+                usuarios.add(new ModeloTabela(rsi.getString("id"),rsi.getString("nome")));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroProdutoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Conexao.closeConnection(conn); 
+            tabelaid.setCellValueFactory(new PropertyValueFactory<>("id"));
+            
+            tabelanome.setCellValueFactory(new PropertyValueFactory<>("nome")); 
+            
+            tabela.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            
+            tabela.setItems(usuarios);  
+    }
+    //- - - - - - - - - - - - - - - - - - - - - //
+    
+    //Excluir Funcionario//
+    @FXML
+    public void excluirFuncionario() throws SQLException {
+    Connection con = Conexão.Conexao.getConnection();
+        PreparedStatement stmt = null;
+        
+        ModeloTabela selectFuncionarios = tabela.getSelectionModel().getSelectedItem();
+        tabela.getItems().remove(selectFuncionarios);
+
+    try {
+        stmt = con.prepareStatement("DELETE FROM funcionarios where id = ?");
+        stmt.setInt(1, Integer.parseInt(selectFuncionarios.getId()));
+        stmt.execute();
+        JOptionPane.showMessageDialog(null, "Funcionario Excluido com Sucesso!");
+     
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Excluir!" + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
+    @FXML
+    private void TabelaFuncionario(){
+        
+        tabela.setVisible(true);
+        bcancelar.setVisible(true);
+        bexcluir.setVisible(true);
+        labelexcluir.setVisible(true);
+        
+        labelexcluir.setText("Excluir Funcionario");
+        tabelanome.setText("Nome Funcionario");
+        bexcluir.setOnAction(click -> {
+            try {
+                excluirFuncionario();
+            } catch (SQLException ex) {
+                Logger.getLogger(ExcluirController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+	});
+        
+        try {
+            Connection con = Conexao.getConnection();
+            
+            ResultSet rsi = con.createStatement().executeQuery("select * from funcionarios");
+            
+            while(rsi.next()){
+                funcionarios.add(new ModeloTabela(rsi.getString("codFuncionario"),rsi.getString("nomeFuncionario")));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroProdutoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Conexao.closeConnection(conn); 
+            tabelaid.setCellValueFactory(new PropertyValueFactory<>("id"));
+            
+            tabelanome.setCellValueFactory(new PropertyValueFactory<>("nome")); 
+            
+            tabela.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            
+            tabela.setItems(funcionarios);  
+    }
+    //- - - - - - - - - - - - - - - - - - - - - //
     
     
     @FXML
@@ -239,7 +531,11 @@ public class ExcluirController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle rb) {
        
-    
+        tabela.setVisible(false);
+        bcancelar.setVisible(false);
+        bexcluir.setVisible(false);
+        labelexcluir.setVisible(false);
+        
     }
     
 }

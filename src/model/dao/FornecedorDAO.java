@@ -16,22 +16,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.bean.Categoria;
+import model.bean.Fornecedor;
 
 /**
  *
  * @author Elison Christoph
  */
-public class CategoriaDAO {
+public class FornecedorDAO {
     
-    public void create(Categoria c) {
+    public void create(Fornecedor f) {
         
         Connection con = Conexao.getConnection();
         
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO categoriaprodutos (nome)VALUES(?)");
-            stmt.setString(1, c.getNome());
+            stmt = con.prepareStatement("INSERT INTO fornecedores (nome, cnpj, email, telefone)VALUES(?,?,?,?)");
+            stmt.setString(1, f.getNome());
+            stmt.setString(2, f.getCnpj());
+            stmt.setString(3, f.getEmail());
+            stmt.setString(4, f.getTelefone());
 
             stmt.executeUpdate();
 
@@ -44,38 +48,40 @@ public class CategoriaDAO {
 
     }
 
-    public List<Categoria> read() {
+    public List<Fornecedor> read() {
 
         Connection con = Conexao.getConnection();
         
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        List<Categoria> categorias = new ArrayList<>();
+        List<Fornecedor> fornecedores = new ArrayList<>();
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM categoriaprodutos");
+            stmt = con.prepareStatement("SELECT * FROM fornecedores");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
 
-                Categoria categoria = new Categoria();
+                Fornecedor fornecedor = new Fornecedor();
 
-                categoria.setId(rs.getInt("id"));
-                categoria.setNome(rs.getString("nome"));
-      
-                categorias.add(categoria);
+                fornecedor.setId(rs.getInt("codFornecedor"));
+                fornecedor.setNome(rs.getString("nomeFornecedor"));
+                fornecedor.setCnpj(rs.getString("cnpj"));
+                fornecedor.setEmail(rs.getString("email"));
+                fornecedor.setTelefone(rs.getString("telefone"));
+                
+                fornecedores.add(fornecedor);
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FornecedorDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             Conexao.closeConnection(con, stmt, rs);
         }
 
-        return categorias;
+        return fornecedores;
 
     }
-
     
 }
