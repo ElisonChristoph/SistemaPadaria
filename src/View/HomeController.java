@@ -118,12 +118,34 @@ public class HomeController implements Initializable {
 
     @FXML
     private void ProdutosFalta(ActionEvent event) {
-
+        Connection con = Conexao.getConnection();
+        //Arquivo template do relatorio
+        String local = "src\\Relatorios\\ProdutosFalta.jasper";
+        //Objeto da API responsavel por gerar o relatorio
+        JasperPrint jasperPrint = null;
+        try {
+            jasperPrint = JasperFillManager.fillReport(local, null, con);
+        } catch (JRException ex) {
+            System.out.println("Problem");
+        }
+        JasperViewer view = new JasperViewer(jasperPrint, false);
+        view.setVisible(true);
     }
 
     @FXML
     private void CategoriasProdutos(ActionEvent event) {
-
+        Connection con = Conexao.getConnection();
+        //Arquivo template do relatorio
+        String local = "src\\Relatorios\\ProdutoCategoria.jasper";
+        //Objeto da API responsavel por gerar o relatorio
+        JasperPrint jasperPrint = null;
+        try {
+            jasperPrint = JasperFillManager.fillReport(local, null, con);
+        } catch (JRException ex) {
+            System.out.println("Problem");
+        }
+        JasperViewer view = new JasperViewer(jasperPrint, false);
+        view.setVisible(true);
     }
 
     @FXML
@@ -160,7 +182,18 @@ public class HomeController implements Initializable {
 
     @FXML
     private void RelacaoFuncionarios(ActionEvent event) {
-
+        Connection con = Conexao.getConnection();
+        //Arquivo template do relatorio
+        String local = "src\\Relatorios\\Funcionarios.jasper";
+        //Objeto da API responsavel por gerar o relatorio
+        JasperPrint jasperPrint = null;
+        try {
+            jasperPrint = JasperFillManager.fillReport(local, null, con);
+        } catch (JRException ex) {
+            System.out.println("Problem");
+        }
+        JasperViewer view = new JasperViewer(jasperPrint, false);
+        view.setVisible(true);
     }
 
     @FXML
@@ -168,6 +201,36 @@ public class HomeController implements Initializable {
 
     }
 
+        @FXML
+    private void RelacaoIngredientes(ActionEvent event) {
+        Connection con = Conexao.getConnection();
+        //Arquivo template do relatorio
+        String local = "src\\Relatorios\\Ingredientes.jasper";
+        //Objeto da API responsavel por gerar o relatorio
+        JasperPrint jasperPrint = null;
+        try {
+            jasperPrint = JasperFillManager.fillReport(local, null, con);
+        } catch (JRException ex) {
+            System.out.println("Problem");
+        }
+        JasperViewer view = new JasperViewer(jasperPrint, false);
+        view.setVisible(true);
+    }
+            @FXML
+    private void RelacaoIngredientesFalta(ActionEvent event) {
+        Connection con = Conexao.getConnection();
+        //Arquivo template do relatorio
+        String local = "src\\Relatorios\\IngredientesFalta.jasper";
+        //Objeto da API responsavel por gerar o relatorio
+        JasperPrint jasperPrint = null;
+        try {
+            jasperPrint = JasperFillManager.fillReport(local, null, con);
+        } catch (JRException ex) {
+            System.out.println("Problem");
+        }
+        JasperViewer view = new JasperViewer(jasperPrint, false);
+        view.setVisible(true);
+    }
     //Opções Botão Movimentação
     @FXML
     private void EntradaMatPrima(ActionEvent event) {
