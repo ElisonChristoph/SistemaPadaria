@@ -305,7 +305,7 @@
                   <Image url="@../Imagens/user_icon_comment.png" />
                </image>
             </ImageView>
-            <Label text="Elison R. Christoph" GridPane.columnIndex="1" GridPane.valignment="TOP">
+            <Label fx:id="tfusuario" text="Elison R. Christoph" GridPane.columnIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets left="140.0" top="35.0" />
                </GridPane.margin>
@@ -313,7 +313,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label text="Administrador" GridPane.columnIndex="1">
+            <Label fx:id="tftipo" text="Administrador" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="140.0" />
                </GridPane.margin>

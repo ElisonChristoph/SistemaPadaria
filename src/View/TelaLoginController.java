@@ -56,11 +56,19 @@ public class TelaLoginController implements Initializable {
 
     //varivel user
     protected static StringProperty user = new SimpleStringProperty();
+    protected static StringProperty tipouser = new SimpleStringProperty();
 
     //retrona user
     public String retornaUser() {
 
         return user.get();
+
+    }
+    
+    //retrona user
+    public String retornatipoUser() {
+
+        return tipouser.get();
 
     }
 
@@ -69,64 +77,63 @@ public class TelaLoginController implements Initializable {
         
         bacessar.setOnMouseClicked((MouseEvent e) -> {
             
-//            aprov = false;
-//
-//            if (tflogin.getText().equals("") || pfsenha.getText().equals(""))// se login e senha em branco
-//            {
-//                JOptionPane.showMessageDialog(null, "Campos login e senha são obrigatórios");//mensagem
-//            }else{
-//                
-//                 conn = Conexao.getConnection();
-//                
-//                try {
-//                    
-//                    
-//                    ResultSet rs = conn.createStatement().executeQuery("Select * from usuario where login = '"+ tflogin.getText()+"';");
-//                    
-//                    
-//                    
-//                    while(rs.next()) {
-//                        String loginn = rs.getString("login");
-//                        String senhaa = rs.getString("senha");
-//                        
-//                        
-//                        if(tflogin.getText().equals(loginn) && pfsenha.getText().equals(senhaa)){
-//                            JOptionPane.showMessageDialog(null,"Seja bem vindo: " + loginn,"Restaurante, Padaria e Confeitaria JB",JOptionPane.INFORMATION_MESSAGE);
+            aprov = false;
+
+            if (tflogin.getText().equals("") || pfsenha.getText().equals(""))// se login e senha em branco
+            {
+                JOptionPane.showMessageDialog(null, "Campos login e senha são obrigatórios");//mensagem
+            }else{
+                
+                 conn = Conexao.getConnection();
+                
+                try {
+                   
+                   
+                    ResultSet rs = conn.createStatement().executeQuery("Select * from usuario where login = '"+ tflogin.getText()+"';");
+                    
+                    
+                    
+                    while(rs.next()) {
+                        String loginn = rs.getString("login");
+                        String senhaa = rs.getString("senha");
+                        //user.setValue(rs.getString("nome"));
+                        tipouser.setValue(rs.getString("tipoUsuario"));
+                        
+                        
+                        if(tflogin.getText().equals(loginn) && pfsenha.getText().equals(senhaa)){
+                            JOptionPane.showMessageDialog(null,"Seja bem vindo: " + loginn,"Restaurante, Padaria e Confeitaria JB",JOptionPane.INFORMATION_MESSAGE);
                             
-//                        HomeController hc = new HomeController();
-//                        hc.tfusuario.setText(loginn);
+                        
+                        
                             HomeMain h = new HomeMain();
-            try {
-                h.start(new Stage());
-//                            
-//
-//                            try {
-//                                h.start(new Stage());
-//                            } catch (IOException ex) {
-//                                Logger.getLogger(TelaLoginController.class.getName()).log(Level.SEVERE, null, ex);
-//                            }
-//                            
-//                            aprov = true;
-//                        }
-//                    }
-//                    if(aprov == false){
-//                       JOptionPane.showMessageDialog(null,"Login ou Senha inválidos.","Restaurante, Padaria e Confeitaria JB",JOptionPane.ERROR_MESSAGE);
-//                        pfsenha.setText(""); 
-//                    }
-//                    
-//                    conn.close();
-//                }catch(SQLException a){
-//                    a.printStackTrace(); //vejamos que erro foi gerado e quem o gerou
-//                    JOptionPane.showMessageDialog(null,"Erro na conexão, com o banco de dados!","Restaurante, Padaria e Confeitaria JB",JOptionPane.WARNING_MESSAGE);
-//                }
-//
-//
-//
-//                
-//            }
-            } catch (IOException ex) {
-                Logger.getLogger(TelaLoginController.class.getName()).log(Level.SEVERE, null, ex);
+            
+                            
+
+                            try {
+                                h.start(new Stage());
+                            } catch (IOException ex) {
+                                Logger.getLogger(TelaLoginController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            aprov = true;
+                        }
+                    }
+                    if(aprov == false){
+                       JOptionPane.showMessageDialog(null,"Login ou Senha inválidos.","Restaurante, Padaria e Confeitaria JB",JOptionPane.ERROR_MESSAGE);
+                        pfsenha.setText(""); 
+                    }
+                    
+                    conn.close();
+                }catch(SQLException a){
+                    a.printStackTrace(); //vejamos que erro foi gerado e quem o gerou
+                    JOptionPane.showMessageDialog(null,"Erro na conexão, com o banco de dados!","Restaurante, Padaria e Confeitaria JB",JOptionPane.WARNING_MESSAGE);
+                }
+
+
+
+                
             }
+            
             
             
             
