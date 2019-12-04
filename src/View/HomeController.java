@@ -52,9 +52,14 @@ public class HomeController implements Initializable {
     private Button bacessar;
     @FXML
     private Button bsair;
+    
+    TelaLoginController tlc = new TelaLoginController();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        tftipo.setText("Usuário:" + tlc.retornatipoUser());
+        tfusuario.setText(tlc.retornaUser());
 
     }
 
@@ -103,7 +108,7 @@ public class HomeController implements Initializable {
     private void ProdutosEstoque(ActionEvent event) {
         Connection con = Conexao.getConnection();
         //Arquivo template do relatorio
-        String local = "src/Relatorios/Estoque.jasper";
+        String local = "src\\Relatorios\\EstoqueProdutos.jasper";
         //Objeto da API responsavel por gerar o relatorio
         JasperPrint jasperPrint = null;
         try {
@@ -128,14 +133,25 @@ public class HomeController implements Initializable {
 
     @FXML
     private void RelacaoClientes(ActionEvent event) {
-
+        Connection con = Conexao.getConnection();
+        //Arquivo template do relatorio
+        String local = "src\\Relatorios\\Clientes.jasper";
+        //Objeto da API responsavel por gerar o relatorio
+        JasperPrint jasperPrint = null;
+        try {
+            jasperPrint = JasperFillManager.fillReport(local, null, con);
+        } catch (JRException ex) {
+            System.out.println("Problem");
+        }
+        JasperViewer view = new JasperViewer(jasperPrint, false);
+        view.setVisible(true);
     }
 
     @FXML
     private void RelacaoFornecedores(ActionEvent event) {
         Connection con = Conexao.getConnection();
         //Arquivo template do relatorio
-        String local = "src/Relatorios/Fornecedores.jasper";
+        String local = "src\\Relatorios\\Fornecedores.jasper";
         //Objeto da API responsavel por gerar o relatorio
         JasperPrint jasperPrint = null;
         try {

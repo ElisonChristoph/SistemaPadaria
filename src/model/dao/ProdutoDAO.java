@@ -147,7 +147,7 @@ public class ProdutoDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Categoria categoria = new Categoria(rs.getInt("categoria_id"), rs.getString("nomeCateg"));
+                Categoria categoria = new Categoria(rs.getInt("id_categoria"), rs.getString("nomeCateg"));
                 String ing = rs.getString("ingredientes");
                 ingredientes = new ArrayList<Ingrediente>();
                 List<Ingrediente> ings;
