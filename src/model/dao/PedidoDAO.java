@@ -26,7 +26,7 @@ public class PedidoDAO {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("INSERT INTO pedidos (id, codCliente, data, dataFim, produtos, finalizado)VALUES(?, ?, ?, ?, ?, ?)");
+            stmt = con.prepareStatement("INSERT INTO pedidos (id, codCliente, data, dataFim, produtos, finalizado, usuario)VALUES(?, ?, ?, ?, ?, ?, ?)");
             stmt.setInt(1, p.getId());
             stmt.setInt(2, p.getCodCliente());
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
@@ -44,6 +44,7 @@ public class PedidoDAO {
             } else {
                 stmt.setInt(6, 0);
             }
+            stmt.setInt(7, 1);
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (SQLException ex) {
@@ -226,7 +227,7 @@ public class PedidoDAO {
                 } else {
                     finalizado = false;
                 }
-                Pedido pedido = new Pedido(rs.getInt("id"), rs.getInt("codCliente"), rs.getDate("data"), rs.getDate("dataFim"),itens, finalizado);
+                Pedido pedido = new Pedido(rs.getInt("id"), rs.getInt("codCliente"), rs.getDate("data"), rs.getDate("dataFim"), itens, finalizado);
                 pedidos.add(pedido);
             }
         } catch (SQLException ex) {
