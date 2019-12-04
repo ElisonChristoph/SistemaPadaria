@@ -52,9 +52,14 @@ public class HomeController implements Initializable {
     private Button bacessar;
     @FXML
     private Button bsair;
+    
+    TelaLoginController tlc = new TelaLoginController();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        tftipo.setText("Usuário:" + tlc.retornatipoUser());
+        tfusuario.setText(tlc.retornaUser());
 
     }
 

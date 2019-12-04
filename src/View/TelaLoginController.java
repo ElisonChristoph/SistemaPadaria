@@ -96,7 +96,7 @@ public class TelaLoginController implements Initializable {
                     while(rs.next()) {
                         String loginn = rs.getString("login");
                         String senhaa = rs.getString("senha");
-                        //user.setValue(rs.getString("nome"));
+                        user.setValue(rs.getString("nome"));
                         tipouser.setValue(rs.getString("tipoUsuario"));
                         
                         

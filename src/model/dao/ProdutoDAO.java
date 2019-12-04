@@ -79,11 +79,11 @@ public class ProdutoDAO {
         List<Ingrediente> ingredientes;
 
         try {
-            stmt = con.prepareStatement("SELECT p.id, p.nome, p.categoria_id, c.nome as nomeCateg, p.valor, p.validade, p.ingredientes FROM produtos p LEFT JOIN categoriaprodutos c on p.id = c.id");
+            stmt = con.prepareStatement("SELECT p.id, p.nome, p.id_categoria, c.nome as nomeCateg, p.valor, p.validade, p.ingredientes FROM produtos p LEFT JOIN categoriaprodutos c on p.id = c.id");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Categoria categoria = new Categoria(rs.getInt("categoria_id"), rs.getString("nomeCateg"));
+                Categoria categoria = new Categoria(rs.getInt("id_categoria"), rs.getString("nomeCateg"));
                 String ing = rs.getString("ingredientes");
                 ingredientes = new ArrayList<Ingrediente>();
                 List<Ingrediente> ings;
@@ -142,12 +142,12 @@ public class ProdutoDAO {
         List<Ingrediente> ingredientes;
 
         try {
-            stmt = con.prepareStatement("SELECT p.id, p.nome, p.categoria_id, c.nome as nomeCateg, p.valor, p.validade, p.ingredientes FROM produtos p  LEFT JOIN categoriaprodutos c on p.id = c.id WHERE p.nome like ?");
+            stmt = con.prepareStatement("SELECT p.id, p.nome, p.id_categoria, c.nome as nomeCateg, p.valor, p.validade, p.ingredientes FROM produtos p  LEFT JOIN categoriaprodutos c on p.id = c.id WHERE p.nome like ?");
             stmt.setString(1, "%" + name + "%");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Categoria categoria = new Categoria(rs.getInt("categoria_id"), rs.getString("nomeCateg"));
+                Categoria categoria = new Categoria(rs.getInt("id_categoria"), rs.getString("nomeCateg"));
                 String ing = rs.getString("ingredientes");
                 ingredientes = new ArrayList<Ingrediente>();
                 List<Ingrediente> ings;
@@ -206,12 +206,12 @@ public class ProdutoDAO {
         List<Ingrediente> ingredientes;
 
         try {
-            stmt = con.prepareStatement("SELECT p.id, p.nome, p.categoria_id, c.nome as nomeCateg, p.valor, p.validade, p.ingredientes FROM produtos p  LEFT JOIN categoriaprodutos c on p.id = c.id WHERE p.categoria_id like ?");
+            stmt = con.prepareStatement("SELECT p.id, p.nome, p.id_categoria, c.nome as nomeCateg, p.valor, p.validade, p.ingredientes FROM produtos p  LEFT JOIN categoriaprodutos c on p.id = c.id WHERE p.categoria_id like ?");
             stmt.setInt(1, cat);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Categoria categoria = new Categoria(rs.getInt("categoria_id"), rs.getString("nomeCateg"));
+                Categoria categoria = new Categoria(rs.getInt("id_categoria"), rs.getString("nomeCateg"));
                 String ing = rs.getString("ingredientes");
                 ingredientes = new ArrayList<Ingrediente>();
                 List<Ingrediente> ings;
