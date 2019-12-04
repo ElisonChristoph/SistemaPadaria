@@ -1,3 +1,9 @@
 eclipse.preferences.version=1
 encoding//src/Relatorios/Clientes.jrxml=UTF-8
 encoding//src/Relatorios/EstoqueProdutos.jrxml=UTF-8
+encoding//src/Relatorios/Fornecedores.jrxml=UTF-8
+encoding//src/Relatorios/Funcionarios.jrxml=UTF-8
+encoding//src/Relatorios/Ingredientes.jrxml=UTF-8
+encoding//src/Relatorios/IngredientesFalta.jrxml=UTF-8
+encoding//src/Relatorios/ProdutoCategoria.jrxml=UTF-8
+encoding//src/Relatorios/ProdutosFalta.jrxml=UTF-8

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Funcionarios" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="726eb057-f2d6-40c0-b15e-fe5c9fb4c36b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Padaria"/>
+	<queryString language="SQL">
+		<![CDATA[select * from funcionarios]]>
+	</queryString>
+	<field name="codFuncionario" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codFuncionario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="funcionarios"/>
+	</field>
+	<field name="nomeFuncionario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nomeFuncionario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="funcionarios"/>
+	</field>
+	<field name="catFuncionario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="catFuncionario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="funcionarios"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="35" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="166" y="0" width="222" height="20" uuid="4f951ff5-7470-465a-ac37-f278a68d8882"/>
+				<textElement>
+					<font size="15" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RELAÇÃO DE FUNCIONÁRIOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<rectangle>
+				<reportElement x="-9" y="0" width="569" height="17" forecolor="#FFFFFF" backcolor="#E3E3E3" uuid="2ac24d61-2042-43a5-8246-1bf5769866dd"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="0" width="100" height="17" uuid="233370e2-d461-4fe4-b333-5cadbb29b902">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4aaa9086-b746-403e-9f4d-be5ff028f1ed"/>
+				</reportElement>
+				<text><![CDATA[Codigo Funcionario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="183" y="0" width="100" height="17" uuid="4e67dbda-42e9-4302-b5cd-00a75af89a9e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="10c5a4d9-e06b-4d87-a3b3-f70c5e8a0e98"/>
+				</reportElement>
+				<text><![CDATA[Nome do Funcionario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="0" width="100" height="17" uuid="ca7e38bc-c2ae-41f6-a31e-48bf2254816a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="61aefd28-daaa-4640-9373-5357b8d1f329"/>
+				</reportElement>
+				<text><![CDATA[Função]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField pattern="#,000.###;(#,000.###-)">
+				<reportElement x="30" y="0" width="40" height="15" uuid="a60b0eab-4e2d-44ca-a91d-da026328c42e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4aaa9086-b746-403e-9f4d-be5ff028f1ed"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{codFuncionario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="183" y="0" width="100" height="15" uuid="dbecac39-dc17-4df8-a3fa-ad140a9c8a56">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="10c5a4d9-e06b-4d87-a3b3-f70c5e8a0e98"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nomeFuncionario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="0" width="100" height="15" uuid="9a5d0956-4210-4105-b1c5-a434bb0354fa">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="61aefd28-daaa-4640-9373-5357b8d1f329"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{catFuncionario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="12" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="12" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+</jasperReport>

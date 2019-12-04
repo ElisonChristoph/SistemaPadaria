@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProdutoCategoria" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="23f81cd7-916e-4e74-971c-21c4df68d644">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Padaria"/>
+	<queryString language="SQL">
+		<![CDATA[select * from categoriaprodutos]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="categoriaprodutos"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="categoriaprodutos"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="178" y="0" width="212" height="20" uuid="77ac6522-309f-4816-b5a2-9d0c5daa7451"/>
+				<textElement>
+					<font size="15" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RELAÇÃO DE CATEGORIAS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<rectangle>
+				<reportElement x="-9" y="0" width="569" height="17" forecolor="#FFFFFF" backcolor="#E3E3E3" uuid="fc68caec-09b6-4d1d-a606-1029d1cb7859"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="90" y="3" width="100" height="14" uuid="90164c79-048a-4ca8-9034-5c6aff7fb040">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5b9ae49-38ab-4bb4-87aa-07a8487944b2"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<text><![CDATA[Codigo Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="0" width="100" height="14" uuid="3b3e0d90-0d7d-496a-864c-8612d387ed23">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="03819a79-f77b-4474-8226-1816c35ce6d4"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Nome Categoria]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField pattern="#,000.###;(#,000.###-)">
+				<reportElement x="114" y="3" width="44" height="15" uuid="e7931252-eb88-40e5-ba55-f9e3dc12c466">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5b9ae49-38ab-4bb4-87aa-07a8487944b2"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="345" y="0" width="100" height="15" uuid="d5e1392b-b64a-495f-b1b0-a9a44aa5cea4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="03819a79-f77b-4474-8226-1816c35ce6d4"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="9" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="5" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+</jasperReport>

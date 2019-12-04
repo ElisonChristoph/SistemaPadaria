@@ -137,7 +137,7 @@
                   <Insets left="10.0" top="-35.0" />
                </GridPane.margin>
             </Button>
-            <Button layoutX="280.0" layoutY="200.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Produtos em Falta" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button layoutX="280.0" layoutY="200.0" mnemonicParsing="false" onAction="#ProdutosFalta" prefHeight="50.0" prefWidth="205.0" text="Produtos em Falta" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -145,7 +145,7 @@
                   <Insets left="10.0" top="85.0" />
                </GridPane.margin>
             </Button>
-            <Button layoutX="280.0" layoutY="200.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Categorias" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button layoutX="280.0" layoutY="200.0" mnemonicParsing="false" onAction="#CategoriasProdutos" prefHeight="50.0" prefWidth="205.0" text="Categorias" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -169,7 +169,7 @@
                   <Insets left="440.0" top="-35.0" />
                </GridPane.margin>
             </Button>
-            <Button layoutX="710.0" layoutY="200.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="206.0" text="Ingred. em Estoque" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button layoutX="710.0" layoutY="200.0" mnemonicParsing="false" onAction="#RelacaoIngredientes" prefHeight="50.0" prefWidth="206.0" text="Ingred. em Estoque" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -177,7 +177,7 @@
                   <Insets left="440.0" top="85.0" />
                </GridPane.margin>
             </Button>
-            <Button layoutX="710.0" layoutY="260.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Funcionários" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button layoutX="710.0" layoutY="260.0" mnemonicParsing="false" onAction="#RelacaoFuncionarios" prefHeight="50.0" prefWidth="205.0" text="Funcionários" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -390,7 +390,7 @@
                   <Insets left="10.0" top="-35.0" />
                </GridPane.margin>
             </Button>
-            <Button layoutX="767.0" layoutY="415.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="206.0" text="Ingred. em Falta" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button layoutX="767.0" layoutY="415.0" mnemonicParsing="false" onAction="#RelacaoIngredientesFalta" prefHeight="50.0" prefWidth="206.0" text="Ingred. em Falta" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

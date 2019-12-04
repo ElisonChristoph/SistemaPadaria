@@ -373,5 +373,4 @@ public class HomeController implements Initializable {
         AddEstoqueController ae = new AddEstoqueController(null);
         ae.showStage();
     }
-
 }
